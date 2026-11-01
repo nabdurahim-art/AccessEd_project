@@ -10,8 +10,8 @@ services:
       - db_data:/var/lib/postgresql/data
       # Files in this folder run once, the first time the database is created:
       # first the tables, then the starting data.
-      - ./database/schema.sql:/docker-entrypoint-initdb.d/1_schema.sql:ro
-      - ./database/seed.sql:/docker-entrypoint-initdb.d/2_seed.sql:ro
+      - ./db/schema.sql:/docker-entrypoint-initdb.d/1_schema.sql
+      - ./db/seed.sql:/docker-entrypoint-initdb.d/2_seed.sql
     ports:
       - "5432:5432"
     healthcheck:

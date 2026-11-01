@@ -5,6 +5,9 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const compression = require('compression');
+const syncRoutes = require('./routes/syncRoutes');
+
+
 
 // Stop immediately if the signing secret is missing or too short.
 if (!process.env.JWT_SECRET || process.env.JWT_SECRET.length < 32) {
@@ -38,6 +41,7 @@ app.get('/health', (req, res) => res.json({ status: 'ok' }));
 
 app.use('/api/v1/auth', require('./routes/authRoutes'));
 app.use('/api/v1/content', require('./routes/contentRoutes'));
+app.use('/api/v1/sync', syncRoutes);
 
 // Unknown address
 app.use((req, res) => res.status(404).json({ error: 'Not found.' }));

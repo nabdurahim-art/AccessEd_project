@@ -4,6 +4,8 @@ const db = require('../config/database');
 const { MAX_ID, toId, isId } = require('../utils/ids');
 const { resolvePackFile } = require('../utils/packFiles');
 
+const UUID_RULE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+const PLATFORMS = ['android', 'ios', 'web'];
 const MAX_UPDATE_ITEMS = 200; // most packs a phone may send in one update check
 
 /**
@@ -119,4 +121,75 @@ const checkPackUpdates = async (req, res) => {
   }
 };
 
-module.exports = { downloadContentPack, checkPackUpdates };
+/**
+ * The phone tells us it finished downloading a pack:
+ *   { "device_id": "<uuid made on the phone>", "platform": "android", "version": 2 }
+ * We remember which learner has which version on which device. A device is
+ * not tied to one learner, because phones are shared, so the same device can
+ * appear under several learners.
+ * Call this after the checksum has matched, never before.
+ */
+const confirmDownload = async (req, res) => {
+  try {
+    const userId = req.user.user_id;
+    const packId = toId(req.params.packId);
+    if (packId === null) {
+      return res.status(400).json({ error: 'Invalid pack ID format. Must be a positive whole number.' });
+    }
+
+    const body = req.body || {};
+    const { device_id, platform, version } = body;
+
+    if (typeof device_id !== 'string' || !UUID_RULE.test(device_id)) {
+      return res.status(400).json({ error: 'device_id must be a UUID made on the phone.' });
+    }
+    if (!PLATFORMS.includes(platform)) {
+      return res.status(400).json({ error: `platform must be one of: ${PLATFORMS.join(', ')}.` });
+    }
+    if (!isId(version)) {
+      return res.status(400).json({ error: 'version must be a positive whole number.' });
+    }
+
+    const packRes = await db.query('SELECT version FROM content_packs WHERE pack_id = $1', [packId]);
+    if (packRes.rows.length === 0) {
+      return res.status(404).json({ error: 'Content pack not found.' });
+    }
+    const latest = packRes.rows[0].version;
+
+    // A phone cannot hold a version that does not exist yet.
+    if (version > latest) {
+      return res.status(400).json({ error: 'version is newer than the version on the server.' });
+    }
+
+    // Older than the server's version means the phone should update again.
+    const syncStatus = version < latest ? 'pending_update' : 'synced';
+
+    // One statement: the device and the download are saved together or not at all.
+    const result = await db.query(
+      `WITH device AS (
+         INSERT INTO devices (device_id, platform) VALUES ($1, $2)
+         ON CONFLICT (device_id) DO UPDATE SET last_seen_at = NOW(), platform = EXCLUDED.platform
+         RETURNING device_id
+       )
+       INSERT INTO offline_downloads (user_id, device_id, pack_id, downloaded_version, sync_status)
+       SELECT $3, device_id, $4, $5, $6 FROM device
+       ON CONFLICT ON CONSTRAINT uq_download DO UPDATE SET
+         downloaded_version = EXCLUDED.downloaded_version,
+         downloaded_at = NOW(),
+         sync_status = EXCLUDED.sync_status
+       RETURNING pack_id, downloaded_version, sync_status`,
+      [device_id, platform, userId, packId, version, syncStatus]
+    );
+
+    return res.status(200).json({
+      message: 'Download recorded.',
+      download: result.rows[0],
+      latest_version: latest
+    });
+  } catch (err) {
+    console.error('Confirm download error:', err);
+    return res.status(500).json({ error: 'Internal server error while recording the download.' });
+  }
+};
+
+module.exports = { downloadContentPack, checkPackUpdates, confirmDownload };

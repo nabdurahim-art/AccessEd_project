@@ -10,6 +10,7 @@ router.get('/courses', authenticateToken, courseController.getCourses);
 router.get('/courses/:courseId/packs', authenticateToken, packController.getPacksByCourse);
 router.get('/packs/:packId/download', authenticateToken, downloadController.downloadContentPack);
 router.post('/packs/check-updates', authenticateToken, downloadController.checkPackUpdates);
+router.post('/packs/:packId/confirm', authenticateToken, downloadController.confirmDownload);
 
 // Only an admin can create or change content.
 router.post('/courses', authenticateToken, requireAdmin, courseController.createCourse);
