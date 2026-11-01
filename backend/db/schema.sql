@@ -1,554 +1,136 @@
---
--- PostgreSQL database dump
---
+-- AccessEd database schema (PostgreSQL)
+-- The 11 tables from section 3.5 of the proposal, plus the few extra columns
+-- the backend relies on (marked "added"). Run once on an empty database.
+-- To change a table later, use ALTER TABLE, or recreate the database
+-- (docker compose down -v) while you are still developing.
 
-\restrict 6hshGIaOTaUm2qT7x2JbONWZMoQCZQ2xg8wpvvfw9iuqzjCYMIqyjhcLzl3cc79
+-- ---------------------------------------------------------------- people
 
--- Dumped from database version 15.19
--- Dumped by pg_dump version 15.19
-
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET idle_in_transaction_session_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SELECT pg_catalog.set_config('search_path', '', false);
-SET check_function_bodies = false;
-SET xmloption = content;
-SET client_min_messages = warning;
-SET row_security = off;
-
-SET default_tablespace = '';
-
-SET default_table_access_method = heap;
-
---
--- Name: badges; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.badges (
-    badge_id integer NOT NULL,
-    name character varying(255) NOT NULL,
-    criteria text NOT NULL
+CREATE TABLE users (
+    user_id             UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    username            VARCHAR(50)  NOT NULL UNIQUE,
+    -- Email and phone are optional. UNIQUE still allows many empty (NULL) values.
+    email               VARCHAR(255) UNIQUE,
+    phone_number        VARCHAR(20)  UNIQUE,
+    password_hash       VARCHAR(255) NOT NULL,
+    full_name           VARCHAR(100) NOT NULL,
+    role                VARCHAR(20)  NOT NULL DEFAULT 'learner'
+                        CHECK (role IN ('learner', 'admin')),
+    points              INTEGER      NOT NULL DEFAULT 0 CHECK (points >= 0),
+    streak_days         INTEGER      NOT NULL DEFAULT 0 CHECK (streak_days >= 0),
+    last_activity_date  DATE,        -- added: last day (Rwanda time) the learner studied
+    created_at          TIMESTAMPTZ  NOT NULL DEFAULT NOW()
 );
 
-
---
--- Name: badges_badge_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.badges_badge_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: badges_badge_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.badges_badge_id_seq OWNED BY public.badges.badge_id;
-
-
---
--- Name: content_packs; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.content_packs (
-    pack_id integer NOT NULL,
-    course_id integer NOT NULL,
-    title character varying(255) NOT NULL,
-    week_number integer NOT NULL,
-    version integer NOT NULL,
-    file_path character varying(500) NOT NULL,
-    file_size_kb integer NOT NULL,
-    checksum character varying(64) NOT NULL
+CREATE TABLE devices (
+    -- Created on the device itself, so it exists before the first contact.
+    -- A device is not tied to one learner: phones are shared at the centre.
+    device_id      UUID PRIMARY KEY,
+    platform       VARCHAR(20)  NOT NULL CHECK (platform IN ('android', 'ios', 'web')),
+    last_seen_at   TIMESTAMPTZ  NOT NULL DEFAULT NOW()
 );
 
+-- --------------------------------------------------------------- content
 
---
--- Name: content_packs_pack_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.content_packs_pack_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: content_packs_pack_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.content_packs_pack_id_seq OWNED BY public.content_packs.pack_id;
-
-
---
--- Name: courses; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.courses (
-    course_id integer NOT NULL,
-    title character varying(255) NOT NULL,
-    subject character varying(100) NOT NULL,
-    language character varying(10) NOT NULL
+CREATE TABLE courses (
+    course_id      INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    title          VARCHAR(150) NOT NULL,
+    subject        VARCHAR(80)  NOT NULL,
+    language       VARCHAR(5)   NOT NULL CHECK (language IN ('en', 'fr', 'rw')),
+    description    TEXT,                                  -- added
+    created_at     TIMESTAMPTZ  NOT NULL DEFAULT NOW()    -- added
 );
 
-
---
--- Name: courses_course_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.courses_course_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: courses_course_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.courses_course_id_seq OWNED BY public.courses.course_id;
-
-
---
--- Name: devices; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.devices (
-    device_id uuid NOT NULL,
-    platform character varying(50) NOT NULL,
-    last_seen_at timestamp without time zone DEFAULT now() NOT NULL
+CREATE TABLE content_packs (
+    pack_id        INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    course_id      INTEGER      NOT NULL REFERENCES courses (course_id),
+    title          VARCHAR(150) NOT NULL,
+    week_number    INTEGER      NOT NULL CHECK (week_number >= 1),
+    -- Goes up by one every time the pack is republished.
+    version        INTEGER      NOT NULL DEFAULT 1 CHECK (version >= 1),
+    file_path      VARCHAR(255) NOT NULL,   -- file name inside the packs folder
+    file_size_kb   INTEGER      NOT NULL CHECK (file_size_kb >= 1),
+    checksum       VARCHAR(64)  NOT NULL,   -- SHA-256 of the file
+    -- One pack per course and week. The publish query depends on this rule.
+    CONSTRAINT uq_pack_course_week UNIQUE (course_id, week_number)
 );
 
-
---
--- Name: modules; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.modules (
-    module_id integer NOT NULL,
-    pack_id integer NOT NULL,
-    title character varying(255) NOT NULL,
-    duration_min integer NOT NULL,
-    audio_path character varying(500),
-    sort_order integer NOT NULL
+CREATE TABLE modules (
+    module_id      INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    pack_id        INTEGER      NOT NULL REFERENCES content_packs (pack_id) ON DELETE CASCADE,
+    -- added: the short key used in manifest.json. The phone uses it when syncing,
+    -- so it never needs the database number.
+    module_key     VARCHAR(50)  NOT NULL,
+    title          VARCHAR(150) NOT NULL,
+    duration_min   INTEGER      NOT NULL DEFAULT 10 CHECK (duration_min >= 1),
+    audio_path     VARCHAR(255),
+    sort_order     INTEGER      NOT NULL DEFAULT 1,
+    CONSTRAINT uq_module_key UNIQUE (pack_id, module_key)
 );
 
-
---
--- Name: modules_module_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.modules_module_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: modules_module_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.modules_module_id_seq OWNED BY public.modules.module_id;
-
-
---
--- Name: offline_downloads; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.offline_downloads (
-    download_id integer NOT NULL,
-    user_id uuid NOT NULL,
-    device_id uuid NOT NULL,
-    pack_id integer NOT NULL,
-    downloaded_version integer NOT NULL,
-    downloaded_at timestamp without time zone DEFAULT now() NOT NULL,
-    sync_status character varying(50) DEFAULT 'Synced'::character varying NOT NULL
+CREATE TABLE quizzes (
+    quiz_id        INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    -- UNIQUE: a module has at most one quiz (the "0..1" in the class diagram).
+    module_id      INTEGER      NOT NULL UNIQUE REFERENCES modules (module_id) ON DELETE CASCADE,
+    pass_mark      INTEGER      NOT NULL DEFAULT 70 CHECK (pass_mark BETWEEN 0 AND 100)
 );
 
+-- ------------------------------------------------------ learner activity
 
---
--- Name: offline_downloads_download_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.offline_downloads_download_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: offline_downloads_download_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.offline_downloads_download_id_seq OWNED BY public.offline_downloads.download_id;
-
-
---
--- Name: quiz_attempts; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.quiz_attempts (
-    attempt_id uuid NOT NULL,
-    user_id uuid NOT NULL,
-    quiz_id integer NOT NULL,
-    score integer NOT NULL,
-    attempted_at timestamp without time zone DEFAULT now() NOT NULL
+CREATE TABLE offline_downloads (
+    download_id         INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    user_id             UUID    NOT NULL REFERENCES users (user_id) ON DELETE CASCADE,
+    device_id           UUID    NOT NULL REFERENCES devices (device_id) ON DELETE CASCADE,
+    pack_id             INTEGER NOT NULL REFERENCES content_packs (pack_id) ON DELETE CASCADE,
+    downloaded_version  INTEGER NOT NULL CHECK (downloaded_version >= 1),
+    downloaded_at       TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    sync_status         VARCHAR(20) NOT NULL DEFAULT 'synced'
+                        CHECK (sync_status IN ('synced', 'pending_update')),
+    -- Downloading the same pack again on the same device updates this row.
+    CONSTRAINT uq_download UNIQUE (user_id, device_id, pack_id)
 );
 
-
---
--- Name: quizzes; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.quizzes (
-    quiz_id integer NOT NULL,
-    module_id integer NOT NULL,
-    pass_mark integer NOT NULL
+CREATE TABLE user_progress (
+    -- Made on the phone, so a record sent twice is never stored twice.
+    progress_id       UUID PRIMARY KEY,
+    user_id           UUID    NOT NULL REFERENCES users (user_id) ON DELETE CASCADE,
+    module_id         INTEGER NOT NULL REFERENCES modules (module_id) ON DELETE CASCADE,
+    status            VARCHAR(20) NOT NULL CHECK (status IN ('in_progress', 'completed')),
+    percent_complete  INTEGER NOT NULL DEFAULT 0 CHECK (percent_complete BETWEEN 0 AND 100),
+    -- Set by the phone, with no default on purpose: if a sync forgets it, the
+    -- insert fails loudly instead of quietly using the server's time.
+    updated_at        TIMESTAMPTZ NOT NULL,
+    -- One progress record per learner and module, so "newest wins" has a single row to compare.
+    CONSTRAINT uq_progress UNIQUE (user_id, module_id)
 );
 
-
---
--- Name: quizzes_quiz_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.quizzes_quiz_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: quizzes_quiz_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.quizzes_quiz_id_seq OWNED BY public.quizzes.quiz_id;
-
-
---
--- Name: user_badges; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.user_badges (
-    user_id uuid NOT NULL,
-    badge_id integer NOT NULL,
-    earned_at timestamp without time zone DEFAULT now() NOT NULL
+CREATE TABLE quiz_attempts (
+    attempt_id    UUID PRIMARY KEY,         -- made on the phone
+    user_id       UUID    NOT NULL REFERENCES users (user_id) ON DELETE CASCADE,
+    quiz_id       INTEGER NOT NULL REFERENCES quizzes (quiz_id) ON DELETE CASCADE,
+    score         INTEGER NOT NULL CHECK (score BETWEEN 0 AND 100),
+    attempted_at  TIMESTAMPTZ NOT NULL      -- set by the phone, no default
 );
 
+-- ---------------------------------------------------------------- badges
 
---
--- Name: user_progress; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.user_progress (
-    progress_id uuid NOT NULL,
-    user_id uuid NOT NULL,
-    module_id integer NOT NULL,
-    status character varying(50) DEFAULT 'in_progress'::character varying NOT NULL,
-    percent_complete integer DEFAULT 0 NOT NULL,
-    updated_at timestamp without time zone DEFAULT now() NOT NULL
+CREATE TABLE badges (
+    badge_id   INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    -- UNIQUE: the rewards code finds each badge's rule by its name.
+    name       VARCHAR(80)  NOT NULL UNIQUE,
+    criteria   VARCHAR(255) NOT NULL
 );
 
-
---
--- Name: users; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.users (
-    user_id uuid DEFAULT gen_random_uuid() NOT NULL,
-    username character varying(255) NOT NULL,
-    email character varying(255),
-    phone_number character varying(50),
-    password_hash character varying(255) NOT NULL,
-    full_name character varying(255) NOT NULL,
-    role character varying(50) DEFAULT 'student'::character varying NOT NULL,
-    points integer DEFAULT 0,
-    streak_days integer DEFAULT 0,
-    created_at timestamp without time zone DEFAULT now() NOT NULL
+CREATE TABLE user_badges (
+    user_id    UUID    NOT NULL REFERENCES users (user_id) ON DELETE CASCADE,
+    badge_id   INTEGER NOT NULL REFERENCES badges (badge_id) ON DELETE CASCADE,
+    earned_at  TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    PRIMARY KEY (user_id, badge_id)         -- a badge can be earned only once
 );
 
-
---
--- Name: badges badge_id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.badges ALTER COLUMN badge_id SET DEFAULT nextval('public.badges_badge_id_seq'::regclass);
-
-
---
--- Name: content_packs pack_id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.content_packs ALTER COLUMN pack_id SET DEFAULT nextval('public.content_packs_pack_id_seq'::regclass);
-
-
---
--- Name: courses course_id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.courses ALTER COLUMN course_id SET DEFAULT nextval('public.courses_course_id_seq'::regclass);
-
-
---
--- Name: modules module_id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.modules ALTER COLUMN module_id SET DEFAULT nextval('public.modules_module_id_seq'::regclass);
-
-
---
--- Name: offline_downloads download_id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.offline_downloads ALTER COLUMN download_id SET DEFAULT nextval('public.offline_downloads_download_id_seq'::regclass);
-
-
---
--- Name: quizzes quiz_id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.quizzes ALTER COLUMN quiz_id SET DEFAULT nextval('public.quizzes_quiz_id_seq'::regclass);
-
-
---
--- Name: badges badges_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.badges
-    ADD CONSTRAINT badges_pkey PRIMARY KEY (badge_id);
-
-
---
--- Name: content_packs content_packs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.content_packs
-    ADD CONSTRAINT content_packs_pkey PRIMARY KEY (pack_id);
-
-
---
--- Name: courses courses_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.courses
-    ADD CONSTRAINT courses_pkey PRIMARY KEY (course_id);
-
-
---
--- Name: devices devices_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.devices
-    ADD CONSTRAINT devices_pkey PRIMARY KEY (device_id);
-
-
---
--- Name: modules modules_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.modules
-    ADD CONSTRAINT modules_pkey PRIMARY KEY (module_id);
-
-
---
--- Name: offline_downloads offline_downloads_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.offline_downloads
-    ADD CONSTRAINT offline_downloads_pkey PRIMARY KEY (download_id);
-
-
---
--- Name: quiz_attempts quiz_attempts_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.quiz_attempts
-    ADD CONSTRAINT quiz_attempts_pkey PRIMARY KEY (attempt_id);
-
-
---
--- Name: quizzes quizzes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.quizzes
-    ADD CONSTRAINT quizzes_pkey PRIMARY KEY (quiz_id);
-
-
---
--- Name: user_progress unique_user_module_progress; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.user_progress
-    ADD CONSTRAINT unique_user_module_progress UNIQUE (user_id, module_id);
-
-
---
--- Name: user_badges user_badges_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.user_badges
-    ADD CONSTRAINT user_badges_pkey PRIMARY KEY (user_id, badge_id);
-
-
---
--- Name: user_progress user_progress_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.user_progress
-    ADD CONSTRAINT user_progress_pkey PRIMARY KEY (progress_id);
-
-
---
--- Name: users users_email_key; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.users
-    ADD CONSTRAINT users_email_key UNIQUE (email);
-
-
---
--- Name: users users_phone_number_key; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.users
-    ADD CONSTRAINT users_phone_number_key UNIQUE (phone_number);
-
-
---
--- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.users
-    ADD CONSTRAINT users_pkey PRIMARY KEY (user_id);
-
-
---
--- Name: users users_username_key; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.users
-    ADD CONSTRAINT users_username_key UNIQUE (username);
-
-
---
--- Name: content_packs content_packs_course_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.content_packs
-    ADD CONSTRAINT content_packs_course_id_fkey FOREIGN KEY (course_id) REFERENCES public.courses(course_id) ON DELETE CASCADE;
-
-
---
--- Name: modules modules_pack_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.modules
-    ADD CONSTRAINT modules_pack_id_fkey FOREIGN KEY (pack_id) REFERENCES public.content_packs(pack_id) ON DELETE CASCADE;
-
-
---
--- Name: offline_downloads offline_downloads_device_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.offline_downloads
-    ADD CONSTRAINT offline_downloads_device_id_fkey FOREIGN KEY (device_id) REFERENCES public.devices(device_id) ON DELETE CASCADE;
-
-
---
--- Name: offline_downloads offline_downloads_pack_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.offline_downloads
-    ADD CONSTRAINT offline_downloads_pack_id_fkey FOREIGN KEY (pack_id) REFERENCES public.content_packs(pack_id) ON DELETE CASCADE;
-
-
---
--- Name: offline_downloads offline_downloads_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.offline_downloads
-    ADD CONSTRAINT offline_downloads_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(user_id) ON DELETE CASCADE;
-
-
---
--- Name: quiz_attempts quiz_attempts_quiz_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.quiz_attempts
-    ADD CONSTRAINT quiz_attempts_quiz_id_fkey FOREIGN KEY (quiz_id) REFERENCES public.quizzes(quiz_id) ON DELETE CASCADE;
-
-
---
--- Name: quiz_attempts quiz_attempts_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.quiz_attempts
-    ADD CONSTRAINT quiz_attempts_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(user_id) ON DELETE CASCADE;
-
-
---
--- Name: quizzes quizzes_module_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.quizzes
-    ADD CONSTRAINT quizzes_module_id_fkey FOREIGN KEY (module_id) REFERENCES public.modules(module_id) ON DELETE CASCADE;
-
-
---
--- Name: user_badges user_badges_badge_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.user_badges
-    ADD CONSTRAINT user_badges_badge_id_fkey FOREIGN KEY (badge_id) REFERENCES public.badges(badge_id) ON DELETE CASCADE;
-
-
---
--- Name: user_badges user_badges_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.user_badges
-    ADD CONSTRAINT user_badges_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(user_id) ON DELETE CASCADE;
-
-
---
--- Name: user_progress user_progress_module_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.user_progress
-    ADD CONSTRAINT user_progress_module_id_fkey FOREIGN KEY (module_id) REFERENCES public.modules(module_id) ON DELETE CASCADE;
-
-
---
--- Name: user_progress user_progress_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.user_progress
-    ADD CONSTRAINT user_progress_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(user_id) ON DELETE CASCADE;
-
-
---
--- PostgreSQL database dump complete
---
-
-\unrestrict 6hshGIaOTaUm2qT7x2JbONWZMoQCZQ2xg8wpvvfw9iuqzjCYMIqyjhcLzl3cc79
-
+-- ------------------------------------------------------------- indexes
+-- Speed up the lookups the app does most.
+
+CREATE INDEX idx_modules_pack   ON modules (pack_id);
+CREATE INDEX idx_attempts_user  ON quiz_attempts (user_id);
+CREATE INDEX idx_attempts_quiz  ON quiz_attempts (quiz_id);
