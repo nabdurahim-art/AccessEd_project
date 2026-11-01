@@ -1,0 +1,35 @@
+{
+  "manifest_version": 1,
+  "language": "en",
+  "modules": [
+    {
+      "key": "w2_m1",
+      "title": "Sounds and Letters",
+      "order": 1,
+      "duration_min": 10,
+      "content_type": "markdown",
+      "body_file": "lessons/w2_m1.md",
+      "audio": "audio/w2_m1.mp3",
+      "assets": [
+        {
+          "path": "images/letters.webp",
+          "type": "image",
+          "alt": "The letters A, B and C, each with a small picture"
+        }
+      ],
+      "quiz": {
+        "pass_mark": 70,
+        "questions": [
+          {
+            "key": "q1",
+            "type": "multiple_choice",
+            "prompt": "Which word starts with the letter B?",
+            "options": ["Cat", "Ball", "Dog"],
+            "correct_index": 1,
+            "explanation": "Ball starts with the letter B."
+          }
+        ]
+      }
+    }
+  ]
+}
