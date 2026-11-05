@@ -14,7 +14,7 @@ const loginLimiter = rateLimit({
   message: { error: 'Too many failed login attempts. Try again in 15 minutes.' },
 });
 
-// Each registration runs bcrypt, which uses CPU, so keep it limited.
+// Each registration runs argon2id, which uses CPU, so keep it limited.
 const registerLimiter = rateLimit({
   windowMs: 60 * 60 * 1000,
   max: 50,
