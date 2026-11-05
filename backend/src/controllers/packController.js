@@ -3,11 +3,35 @@
 const db = require('../config/database');
 const { toId, isId } = require('../utils/ids');
 const { resolvePackFile, hashFile, sizeInKb } = require('../utils/packFiles');
+const { readManifest, validateManifest } = require('../utils/manifest');
+const { saveModules } = require('../utils/packImport');
+
+/**
+ * Finds the pack file and checks its manifest.json before anything is saved.
+ * Returns { ok: true, fullPath, modules } or { ok: false, error, details }.
+ */
+function checkPackFile(fileName) {
+  const fullPath = resolvePackFile(fileName);
+  if (!fullPath) {
+    return { ok: false, error: 'File not found in the packs folder.' };
+  }
+
+  const read = readManifest(fullPath);
+  if (!read.ok) return { ok: false, error: read.error };
+
+  const checked = validateManifest(read.manifest, read.files);
+  if (!checked.valid) {
+    return { ok: false, error: 'manifest.json has problems.', details: checked.errors };
+  }
+  return { ok: true, fullPath, modules: checked.modules };
+}
 
 /**
  * Publishes a pack. The zip must already be inside the packs folder, and
- * file_path is just its file name. The server works out the checksum and the
- * size itself, and it raises the version, so the client cannot get them wrong.
+ * file_path is just its file name. The server reads the zip's manifest.json,
+ * works out the checksum and the size itself, and raises the version, so the
+ * client cannot get them wrong. The pack's lessons and quizzes are saved from
+ * the manifest in the same transaction.
  * Publishing the same course and week again replaces the pack and adds 1 to
  * the version.
  */
@@ -28,13 +52,14 @@ const createContentPack = async (req, res) => {
       return res.status(400).json({ error: 'A valid file name is required.' });
     }
 
-    const fullPath = resolvePackFile(file_path);
-    if (!fullPath) {
-      return res.status(400).json({ error: 'File not found in the packs folder.' });
+    // Check the file and its manifest first, so a broken pack is never saved.
+    const checked = checkPackFile(file_path);
+    if (!checked.ok) {
+      return res.status(400).json({ error: checked.error, details: checked.details });
     }
 
-    const checksum = await hashFile(fullPath);
-    const fileSizeKb = sizeInKb(fullPath);
+    const checksum = await hashFile(checked.fullPath);
+    const fileSizeKb = sizeInKb(checked.fullPath);
 
     // One statement does both cases, so two admins publishing at the same
     // moment cannot create two rows for the same week. It needs this rule in
@@ -54,17 +79,28 @@ const createContentPack = async (req, res) => {
                 (xmax = 0) AS inserted;
     `;
 
-    const values = [course_id, title.trim(), week_number, file_path, fileSizeKb, checksum];
-    const result = await db.query(query, values);
+    // The pack and its lessons are saved together or not at all.
+    const client = await db.pool.connect();
+    try {
+      await client.query('BEGIN');
+      const result = await client.query(query, [course_id, title.trim(), week_number, file_path, fileSizeKb, checksum]);
+      const { inserted, ...pack } = result.rows[0];
+      const imported = await saveModules(client, pack.pack_id, checked.modules);
+      await client.query('COMMIT');
 
-    const { inserted, ...pack } = result.rows[0];
-
-    return res.status(inserted ? 201 : 200).json({
-      message: inserted
-        ? 'Content pack created successfully.'
-        : 'Content pack updated successfully with version bump.',
-      pack
-    });
+      return res.status(inserted ? 201 : 200).json({
+        message: inserted
+          ? 'Content pack created successfully.'
+          : 'Content pack updated successfully with version bump.',
+        pack,
+        imported
+      });
+    } catch (err) {
+      await client.query('ROLLBACK');
+      throw err;
+    } finally {
+      client.release();
+    }
   } catch (err) {
     if (err.code === '23503') {
       return res.status(404).json({ error: 'Referenced course does not exist.' });
@@ -131,13 +167,15 @@ const updateContentPack = async (req, res) => {
     }
 
     const targetFile = file_path || existing.rows[0].file_path;
-    const fullPath = resolvePackFile(targetFile);
-    if (!fullPath) {
-      return res.status(400).json({ error: 'File not found in the packs folder.' });
+
+    // The file may have been replaced, so its manifest is read again.
+    const checked = checkPackFile(targetFile);
+    if (!checked.ok) {
+      return res.status(400).json({ error: checked.error, details: checked.details });
     }
 
-    const checksum = await hashFile(fullPath);
-    const fileSizeKb = sizeInKb(fullPath);
+    const checksum = await hashFile(checked.fullPath);
+    const fileSizeKb = sizeInKb(checked.fullPath);
 
     const query = `
       UPDATE content_packs
@@ -150,17 +188,30 @@ const updateContentPack = async (req, res) => {
       RETURNING pack_id, course_id, title, week_number, version, file_size_kb, checksum;
     `;
 
-    const values = [title ? title.trim() : null, targetFile, fileSizeKb, checksum, packId];
-    const result = await db.query(query, values);
+    const client = await db.pool.connect();
+    try {
+      await client.query('BEGIN');
+      const result = await client.query(query, [title ? title.trim() : null, targetFile, fileSizeKb, checksum, packId]);
 
-    if (result.rows.length === 0) {
-      return res.status(404).json({ error: 'Content pack not found.' });
+      if (result.rows.length === 0) {
+        await client.query('ROLLBACK');
+        return res.status(404).json({ error: 'Content pack not found.' });
+      }
+
+      const imported = await saveModules(client, packId, checked.modules);
+      await client.query('COMMIT');
+
+      return res.status(200).json({
+        message: 'Content pack updated successfully with version bump.',
+        pack: result.rows[0],
+        imported
+      });
+    } catch (err) {
+      await client.query('ROLLBACK');
+      throw err;
+    } finally {
+      client.release();
     }
-
-    return res.status(200).json({
-      message: 'Content pack updated successfully with version bump.',
-      pack: result.rows[0]
-    });
   } catch (err) {
     console.error('Update content pack error:', err);
     return res.status(500).json({ error: 'Internal server error while updating content pack.' });
