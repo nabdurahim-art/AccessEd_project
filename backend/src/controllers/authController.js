@@ -1,13 +1,18 @@
-const bcrypt = require('bcrypt');
+const argon2 = require('argon2');
 const jwt = require('jsonwebtoken');
 const db = require('../config/database');
 
-// Pre-computed dummy hash to mitigate timing attacks during invalid login attempts
-const DUMMY_HASH = '$2b$10$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW';
+// Argon2id settings. These are OWASP's recommended minimum: 19 MiB of memory,
+// 2 passes, 1 thread. Raising them makes guessing harder but uses more memory.
+const HASH_OPTIONS = { type: argon2.argon2id, memoryCost: 19456, timeCost: 2, parallelism: 1 };
+
+// Made once at startup, so a failed login for an unknown user still spends
+// real hashing time (this stops timing-based user enumeration).
+const DUMMY_HASH = argon2.hash('not-a-real-password', HASH_OPTIONS);
 
 const registerUser = async (req, res) => {
   try {
-    const { username, email, password, full_name, phone_number } = req.body;
+    const { username, email, password, full_name, phone_number } = req.body || {};
 
     // Strict type and presence validations
     if (!username || typeof username !== 'string') {
@@ -19,13 +24,18 @@ const registerUser = async (req, res) => {
     if (!password || typeof password !== 'string') {
       return res.status(400).json({ error: 'Password is required and must be a string.' });
     }
-
-    if (password.length < 8 || password.length > 72) {
-      return res.status(400).json({ error: 'Password must be between 8 and 72 characters.' });
+    // The database needs a full name, so say so clearly instead of failing with a 500.
+    if (!full_name || typeof full_name !== 'string' || full_name.trim() === '' || full_name.length > 100) {
+      return res.status(400).json({ error: 'Full name is required (up to 100 characters).' });
     }
 
-    const saltRounds = 10;
-    const password_hash = await bcrypt.hash(password, saltRounds);
+    // Argon2id has no 72-byte limit in some older hashing methods, but a cap stops huge inputs
+    // from wasting server memory and time.
+    if (password.length < 8 || password.length > 100) {
+      return res.status(400).json({ error: 'Password must be between 8 and 100 characters.' });
+    }
+
+    const password_hash = await argon2.hash(password, HASH_OPTIONS);
 
     const query = `
       INSERT INTO users (username, email, password_hash, full_name, phone_number)
@@ -34,13 +44,13 @@ const registerUser = async (req, res) => {
     `;
 
     const values = [
-      username.trim(), 
-      email ? email.trim().toLowerCase() : null, 
-      password_hash, 
-      full_name ? full_name.trim() : null, 
+      username.trim(),
+      email ? email.trim().toLowerCase() : null,
+      password_hash,
+      full_name.trim(),
       phone_number ? phone_number.trim() : null
     ];
-    
+
     const result = await db.query(query, values);
 
     return res.status(201).json({
@@ -58,7 +68,7 @@ const registerUser = async (req, res) => {
 
 const loginUser = async (req, res) => {
   try {
-    const { identifier, password } = req.body;
+    const { identifier, password } = req.body || {};
 
     if (!identifier || typeof identifier !== 'string' || !password || typeof password !== 'string') {
       return res.status(400).json({ error: 'Identifier and password are required and must be strings.' });
@@ -78,13 +88,21 @@ const loginUser = async (req, res) => {
 
     if (userResult.rows.length === 0) {
       // Burn equal time to prevent timing-based user enumeration attacks
-      await bcrypt.compare(password, DUMMY_HASH);
+      await argon2.verify(await DUMMY_HASH, password).catch(() => false);
       return res.status(401).json({ error: 'Invalid credentials.' });
     }
 
     const user = userResult.rows[0];
 
-    const isMatch = await bcrypt.compare(password, user.password_hash);
+    // argon2.verify takes the stored hash FIRST, then the password.
+    // It throws if the stored hash is not an argon2 hash (for example an old
+    // different one), which we treat as a wrong password, not a server error.
+    let isMatch = false;
+    try {
+      isMatch = await argon2.verify(user.password_hash, password);
+    } catch {
+      isMatch = false;
+    }
     if (!isMatch) {
       return res.status(401).json({ error: 'Invalid credentials.' });
     }
