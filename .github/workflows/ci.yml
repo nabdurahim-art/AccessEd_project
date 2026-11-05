@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: backend/package-lock.json
+      - run: npm ci
+      - name: Syntax check every server file
+        run: find src -name '*.js' -print0 | xargs -0 -n1 node --check
+      - run: npm test --if-present
+
+  stack:
+    runs-on: ubuntu-latest
+    needs: backend
+    env:
+      # Test-only values. Never put real secrets in this file.
+      DB_PASSWORD: ci-test-password
+      JWT_SECRET: ci-test-secret-at-least-32-characters-long
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build and start API and database
+        run: docker compose -f backend/docker-compose.yml up -d --build
+      - name: Wait for the API and check it answers
+        run: |
+          for i in $(seq 1 30); do
+            code=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:5000/api/v1/content/courses || true)
+            if [ "$code" = "200" ] || [ "$code" = "401" ]; then echo "API is up ($code)"; exit 0; fi
+            sleep 2
+          done
+          echo "API did not start"; docker compose -f backend/docker-compose.yml logs; exit 1
+      - name: Stop the stack
+        if: always()
+        run: docker compose -f backend/docker-compose.yml down -v
