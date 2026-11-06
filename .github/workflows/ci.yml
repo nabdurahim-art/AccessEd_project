@@ -24,6 +24,22 @@ jobs:
         run: find src -name '*.js' -print0 | xargs -0 -n1 node --check
       - run: npm test --if-present
 
+  mobile:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: mobile
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: mobile/package-lock.json
+      - run: npm ci
+      - name: Run the phone-side tests
+        run: npm test
+
   stack:
     runs-on: ubuntu-latest
     needs: backend
