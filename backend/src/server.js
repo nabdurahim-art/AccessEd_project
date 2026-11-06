@@ -42,6 +42,7 @@ app.get('/health', (req, res) => res.json({ status: 'ok' }));
 app.use('/api/v1/auth', require('./routes/authRoutes'));
 app.use('/api/v1/content', require('./routes/contentRoutes'));
 app.use('/api/v1/sync', syncRoutes);
+app.use('/api/v1/progress', require('./routes/progressRoutes'));
 
 // Unknown address
 app.use((req, res) => res.status(404).json({ error: 'Not found.' }));
