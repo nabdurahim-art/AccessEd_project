@@ -8,6 +8,8 @@ const server = http.createServer((req,res)=>{ let d=''; req.on('data',c=>d+=c); 
   const pr=(body.progress_items||[]).map(p=>{
     if(mode==='temp') return {progress_id:p.progress_id,status:'rejected',reason:'Could not be saved. Try again later.',retryable:true};
     if(mode==='perm') return {progress_id:p.progress_id,status:'rejected',reason:'Unknown lesson.'};
+    if(mode==='clash') return {progress_id:p.progress_id,status:'rejected',reason:'Could not be saved. Try again later.',retryable:false};
+    if(mode==='oldtemp') return {progress_id:p.progress_id,status:'rejected',reason:'Could not be saved. Try again later.'};
     return {progress_id:p.progress_id,status:'accepted'};});
   const qr=(body.quiz_attempts||[]).map(q=>({attempt_id:q.attempt_id,status:'accepted',passed:true}));
   send(200,{message:'ok',progress_results:pr,quiz_results:qr,rewards:{points_earned:mode==='ok'?30:0,new_badges:mode==='ok'?[{name:'First Step'}]:[]}});
@@ -35,6 +37,11 @@ mode='ok'; r=await syncNow(); assert.equal(r.sent,2); assert.equal(await D.getUn
 
 await reset(); await addItems(2); mode='perm'; r=await syncNow(); assert.equal(r.rejected,2); assert.equal(await D.getUnsyncedCount(),0);
 const rows=await db.getAllAsync('SELECT synced,reject_reason FROM local_progress'); assert.ok(rows.every(x=>x.synced===2&&x.reject_reason==='Unknown lesson.')); ok('permanent refusal: marked 2 with the reason, not retried');
+
+await reset(); await addItems(2); mode='clash'; r=await syncNow(); assert.equal(r.rejected,2); assert.equal(r.retry_later,0); assert.equal(await D.getUnsyncedCount(),0);
+const clashRows=await db.getAllAsync('SELECT synced FROM local_progress'); assert.ok(clashRows.every(x=>x.synced===2)); ok('retryable:false is believed even when the text says Could not be saved: not retried');
+
+await reset(); await addItems(2); mode='oldtemp'; r=await syncNow(); assert.equal(r.rejected,0); assert.equal(r.retry_later,2); assert.equal(await D.getUnsyncedCount(),2); ok('older server without the flag: falls back to the text, stays queued');
 
 await reset(); await addItems(2); mode='401'; r=await syncNow(); assert.equal(r.status,'unauthorized'); assert.equal(await D.getUnsyncedCount(),2); ok('401: status unauthorized, data kept');
 
