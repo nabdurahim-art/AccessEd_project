@@ -135,12 +135,10 @@ export async function markAsSynced(syncedProgress = [], syncedAttempts = []) {
  */
 export async function markAsRejected(rejectedProgress = [], rejectedAttempts = []) {
   const db = await getDB();
-  const isTemporary = (reason) => reason.startsWith('Could not be saved');
 
   await db.withTransactionAsync(async () => {
     for (const item of rejectedProgress) {
       const reason = item.reason || 'Rejected by server';
-      if (isTemporary(reason)) continue;
       await db.runAsync(
         `UPDATE local_progress SET synced = 2, reject_reason = ?
          WHERE progress_id = ? AND updated_at = ?;`,
@@ -149,7 +147,6 @@ export async function markAsRejected(rejectedProgress = [], rejectedAttempts = [
     }
     for (const item of rejectedAttempts) {
       const reason = item.reason || 'Rejected by server';
-      if (isTemporary(reason)) continue;
       await db.runAsync(
         `UPDATE local_quiz_attempts SET synced = 2, reject_reason = ?
          WHERE attempt_id = ?;`,

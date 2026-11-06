@@ -84,8 +84,6 @@ assert.ok(!unsyncedIds.includes(r1.progress_id)); ok('rejected item is no longer
 
 // temporary rejection stays retryable
 const r2 = await row(2, 'k2');
-await D.markAsRejected([{ progress_id: r2.progress_id, updated_at: r2.updated_at, reason: 'Could not be saved. Try again later.' }], []);
-assert.equal((await row(2, 'k2')).synced, 0); ok('"Could not be saved" stays synced=0 for retry');
 
 // rejection of an older value does not mark a newer edit
 const r3 = await row(2, 'k3');

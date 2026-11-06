@@ -8,9 +8,13 @@ import { retryPendingConfirms } from './downloader.js';
 
 let running = false;
 
-// The server says "Could not be saved" (or retryable: true) for a problem that
-// may go away. Those items stay queued and are NOT counted as finished.
-const isTemporary = (res) => res.retryable === true || String(res.reason || '').startsWith('Could not be saved');
+// A problem that may go away by itself. Those items stay queued and are NOT
+// counted as finished. When the server sends retryable (true or false) we
+// believe it. Only an older server without the flag falls back to the text.
+const isTemporary = (res) =>
+  typeof res.retryable === 'boolean'
+    ? res.retryable
+    : String(res.reason || '').startsWith('Could not be saved');
 
 export async function syncNow() {
   if (running) return { status: 'already_running' };
