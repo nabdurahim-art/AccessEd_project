@@ -10,9 +10,13 @@ import {
   getPacksForCourse,
   getPack,
   getModules,
+  saveLocalProgress,
+  saveLocalQuizAttempt,
+  getUnsyncedCount,
 } from './src/db';
 import { cleanupLeftovers, verifyInstalledPacks, downloadPack, packFileUri } from './src/downloader';
 import { request } from './src/api';
+import { syncNow } from './src/sync';
 import { saveToken } from './src/session';
 
 // TEST SCREEN ONLY. Do not commit this file.
@@ -187,6 +191,32 @@ export default function App() {
     });
   };
 
+  // 7. Pretend the learner finished the first lesson of pack 1 and passed its quiz.
+  //    This only saves on the phone. Nothing is sent until button 8.
+  const handleButton7 = () => {
+    run('Button 7: Save test progress', async () => {
+      const mods = await getModules(1);
+      if (mods.length === 0) return 'No lessons. Download pack 1 first (button 5).';
+      const key = mods[0].module_key;
+      await saveLocalProgress({ pack_id: 1, module_key: key, percent_complete: 100, status: 'completed' });
+      await saveLocalQuizAttempt({ pack_id: 1, module_key: key, score: 85, passed: true });
+      return `Saved progress and a quiz attempt for lesson "${key}". Waiting to sync: ${await getUnsyncedCount()}`;
+    });
+  };
+
+  // 8. Send everything that is waiting. Works with no signal: it just says "offline".
+  const handleButton8 = () => {
+    run('Button 8: Sync now', async () => {
+      const result = await syncNow();
+      return { ...result, still_waiting: await getUnsyncedCount() };
+    });
+  };
+
+  // 10. How many records are waiting to be sent.
+  const handleButton10 = () => {
+    run('Button 10: Unsynced count', async () => `Waiting to sync: ${await getUnsyncedCount()}`);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.header}>AccessEd Test Harness</Text>
@@ -236,6 +266,15 @@ export default function App() {
         </TouchableOpacity>
         <TouchableOpacity style={[styles.button, styles.buttonTeal]} onPress={handleButton9}>
           <Text style={styles.buttonText}>9. Read a lesson</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={[styles.button, styles.buttonOrange]} onPress={handleButton7}>
+          <Text style={styles.buttonText}>7. Save test progress</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={[styles.button, styles.buttonRed]} onPress={handleButton8}>
+          <Text style={styles.buttonText}>8. Sync now</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={[styles.button, styles.buttonTeal]} onPress={handleButton10}>
+          <Text style={styles.buttonText}>10. Unsynced count</Text>
         </TouchableOpacity>
       </View>
 
