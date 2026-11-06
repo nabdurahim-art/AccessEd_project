@@ -1,6 +1,7 @@
 const argon2 = require('argon2');
 const jwt = require('jsonwebtoken');
 const db = require('../config/database');
+const { USERNAME_RULE, EMAIL_RULE, isBlank, normalizePhone, conflictMessage } = require('../utils/identity');
 
 // Argon2id settings. These are OWASP's recommended minimum: 19 MiB of memory,
 // 2 passes, 1 thread. Raising them makes guessing harder but uses more memory.
@@ -15,11 +16,25 @@ const registerUser = async (req, res) => {
     const { username, email, password, full_name, phone_number } = req.body || {};
 
     // Strict type and presence validations
-    if (!username || typeof username !== 'string') {
-      return res.status(400).json({ error: 'Username is required and must be a string.' });
+    if (typeof username !== 'string' || !USERNAME_RULE.test(username.trim())) {
+      return res.status(400).json({ error: 'Username must be 3 to 30 characters: letters, numbers or underscore.' });
     }
-    if ((!email || typeof email !== 'string') && (!phone_number || typeof phone_number !== 'string')) {
-      return res.status(400).json({ error: 'Either a valid email or phone number is required.' });
+    if (isBlank(email) && isBlank(phone_number)) {
+      return res.status(400).json({ error: 'Give an email or a phone number.' });
+    }
+    let cleanEmail = null;
+    if (!isBlank(email)) {
+      cleanEmail = typeof email === 'string' ? email.trim().toLowerCase() : '';
+      if (!EMAIL_RULE.test(cleanEmail) || cleanEmail.length > 255) {
+        return res.status(400).json({ error: 'Email does not look right.' });
+      }
+    }
+    let cleanPhone = null;
+    if (!isBlank(phone_number)) {
+      cleanPhone = normalizePhone(phone_number);
+      if (!cleanPhone) {
+        return res.status(400).json({ error: 'Phone number does not look right. Example: 0788123456.' });
+      }
     }
     if (!password || typeof password !== 'string') {
       return res.status(400).json({ error: 'Password is required and must be a string.' });
@@ -45,10 +60,10 @@ const registerUser = async (req, res) => {
 
     const values = [
       username.trim(),
-      email ? email.trim().toLowerCase() : null,
+      cleanEmail,
       password_hash,
       full_name.trim(),
-      phone_number ? phone_number.trim() : null
+      cleanPhone
     ];
 
     const result = await db.query(query, values);
@@ -59,7 +74,7 @@ const registerUser = async (req, res) => {
     });
   } catch (err) {
     if (err.code === '23505') {
-      return res.status(409).json({ error: 'Username, email, or phone number already exists.' });
+      return res.status(409).json({ error: conflictMessage(err.constraint) });
     }
     console.error('Registration error:', err);
     return res.status(500).json({ error: 'Internal server error during registration.' });
@@ -80,11 +95,11 @@ const loginUser = async (req, res) => {
     const query = `
       SELECT user_id, username, role, password_hash 
       FROM users 
-      WHERE username = $1 OR email = $2 OR phone_number = $1
+      WHERE username = $1 OR email = $2 OR phone_number = $1 OR phone_number = $3
       LIMIT 1
     `;
 
-    const userResult = await db.query(query, [trimmedIdentifier, lowerEmailIdentifier]);
+    const userResult = await db.query(query, [trimmedIdentifier, lowerEmailIdentifier, normalizePhone(trimmedIdentifier)]);
 
     if (userResult.rows.length === 0) {
       // Burn equal time to prevent timing-based user enumeration attacks
