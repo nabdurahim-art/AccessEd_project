@@ -5,6 +5,14 @@ const { awardRewards, POINTS } = require('../utils/rewards');
 const MAX_ITEMS = 100;
 const UUID_RULE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
+// A database error that may go away by itself (busy, deadlock, connection
+// trouble) is worth retrying. Anything else will fail the same way again.
+function isTemporary(err) {
+  const code = (err && err.code) || '';
+  return code === '40001' || code === '40P01' || code === '55P03' ||
+         code.startsWith('08') || code.startsWith('53') || code.startsWith('57P');
+}
+
 // Saves the learner's progress and quiz attempts sent by a phone.
 // Every item gets its own answer, so one bad item never blocks the rest.
 const syncProgress = async (req, res) => {
@@ -77,7 +85,7 @@ const syncProgress = async (req, res) => {
       } catch (err) {
         await client.query('ROLLBACK TO SAVEPOINT item');
         console.error('Progress item failed:', err.message);
-        progressResults.push({ progress_id: progressId, status: 'rejected', reason: 'Could not be saved. Try again later.' });
+        progressResults.push({ progress_id: progressId, status: 'rejected', reason: 'Could not be saved. Try again later.', retryable: isTemporary(err) });
       }
     }
 
@@ -122,7 +130,7 @@ const syncProgress = async (req, res) => {
       } catch (err) {
         await client.query('ROLLBACK TO SAVEPOINT item');
         console.error('Quiz attempt failed:', err.message);
-        quizResults.push({ attempt_id: attemptId, status: 'rejected', reason: 'Could not be saved. Try again later.' });
+        quizResults.push({ attempt_id: attemptId, status: 'rejected', reason: 'Could not be saved. Try again later.', retryable: isTemporary(err) });
       }
     }
 
