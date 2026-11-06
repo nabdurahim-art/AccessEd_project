@@ -55,8 +55,10 @@ const syncProgress = async (req, res) => {
           `INSERT INTO user_progress (progress_id, user_id, module_id, status, percent_complete, updated_at)
            VALUES ($1, $2, $3, $4, $5, $6)
            ON CONFLICT (user_id, module_id) DO UPDATE SET
-             status = EXCLUDED.status,
-             percent_complete = EXCLUDED.percent_complete,
+             status = CASE WHEN user_progress.status = 'completed'
+                           THEN 'completed' ELSE EXCLUDED.status END,
+             percent_complete = CASE WHEN user_progress.status = 'completed'
+                           THEN user_progress.percent_complete ELSE EXCLUDED.percent_complete END,
              updated_at = EXCLUDED.updated_at
            WHERE EXCLUDED.updated_at >= user_progress.updated_at
            RETURNING status`,
