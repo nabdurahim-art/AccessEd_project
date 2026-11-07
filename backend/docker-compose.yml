@@ -24,7 +24,11 @@ services:
     build: .
     environment:
       # "db" is the name of the service above, not localhost.
-      DATABASE_URL: postgresql://accessed:${DB_PASSWORD}@db:5432/accessed
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: accessed
+      DB_NAME: accessed
+      DB_PASSWORD: ${DB_PASSWORD}
       JWT_SECRET: ${JWT_SECRET:?Set JWT_SECRET in the .env file (32+ characters)}
       PACKS_DIR: /app/storage/packs
       PORT: 5000
