@@ -16,7 +16,7 @@ import {
 import { cleanupLeftovers, verifyInstalledPacks, downloadPack, packFileUri, readPackText } from './src/downloader';
 import { registerOfflineShell } from './src/offlineShell';
 import { request } from './src/api';
-import { syncNow } from './src/sync';
+import { refreshSummary, syncAndRefresh, describeSummary } from './src/summary';
 import { saveToken } from './src/session';
 
 // TEST SCREEN ONLY. Do not commit this file.
@@ -211,7 +211,7 @@ export default function App() {
   // 8. Send everything that is waiting. Works with no signal: it just says "offline".
   const handleButton8 = () => {
     run('Button 8: Sync now', async () => {
-      const result = await syncNow();
+      const result = await syncAndRefresh();
       return { ...result, still_waiting: await getUnsyncedCount() };
     });
   };
@@ -219,6 +219,12 @@ export default function App() {
   // 10. How many records are waiting to be sent.
   const handleButton10 = () => {
     run('Button 10: Unsynced count', async () => `Waiting to sync: ${await getUnsyncedCount()}`);
+  };
+
+  // 11. The learner's progress summary: fresh from the server when there is
+  // signal, otherwise the last copy saved on this device.
+  const handleButton11 = () => {
+    run('Button 11: My progress', async () => describeSummary(await refreshSummary()));
   };
 
   return (
@@ -279,6 +285,9 @@ export default function App() {
         </TouchableOpacity>
         <TouchableOpacity style={[styles.button, styles.buttonTeal]} onPress={handleButton10}>
           <Text style={styles.buttonText}>10. Unsynced count</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={[styles.button, styles.buttonSuccess]} onPress={handleButton11}>
+          <Text style={styles.buttonText}>11. My progress</Text>
         </TouchableOpacity>
       </View>
 
