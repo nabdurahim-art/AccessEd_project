@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity, SafeAreaView, Platform, TextInput } from 'react-native';
-import * as FileSystem from 'expo-file-system/legacy';
 import {
   initDatabase,
   saveCourses,
@@ -14,7 +13,8 @@ import {
   saveLocalQuizAttempt,
   getUnsyncedCount,
 } from './src/db';
-import { cleanupLeftovers, verifyInstalledPacks, downloadPack, packFileUri } from './src/downloader';
+import { cleanupLeftovers, verifyInstalledPacks, downloadPack, packFileUri, readPackText } from './src/downloader';
+import { registerOfflineShell } from './src/offlineShell';
 import { request } from './src/api';
 import { syncNow } from './src/sync';
 import { saveToken } from './src/session';
@@ -29,6 +29,10 @@ export default function App() {
   // Create the tables as soon as the app opens, so no button hits a missing table.
   useEffect(() => {
     initDatabase().catch((err) => console.error('initDatabase failed:', err));
+    // Browser only: lets the app open with no internet. Does nothing on the phone.
+    registerOfflineShell().then((r) => {
+      if (r) setLog((prev) => [`Offline shell: ${r}`, ...prev]);
+    });
   }, []);
 
   const show = (msg) => {
@@ -186,7 +190,7 @@ export default function App() {
       if (!pack || !pack.local_path || !mod) return 'No lesson file. Download pack 1 first (button 5).';
 
       const uri = packFileUri(pack, mod.body_file);
-      const text = await FileSystem.readAsStringAsync(uri);
+      const text = await readPackText(pack, mod.body_file);
       return `${mod.module_key} | ${mod.title}\n${uri}\n\n${text.slice(0, 300)}`;
     });
   };
