@@ -3,8 +3,8 @@
 // batches. An item is marked as sent only when the server accepted it.
 import { getUnsyncedData, markAsSynced, markAsRejected } from './db/index.js';
 import { request } from './api.js';
-import { getDeviceId } from './session.js';
-import { retryPendingConfirms } from './downloader.js';
+import { getDeviceId } from './session';
+import { retryPendingConfirms } from './downloader';
 
 let running = false;
 
