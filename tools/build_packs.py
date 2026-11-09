@@ -7,6 +7,7 @@ Folder layout:
   content/<course>/course.json        title, subject, language, description
   content/<course>/week1/pack.json    title, week_number, modules [{key, title, duration_min}]
   content/<course>/week1/m1/lesson.md the lesson text
+  content/<course>/week1/m1/audio.mp3 optional: a spoken version of the lesson (shows a Listen button)
   content/<course>/week1/m1/quiz.json optional: pass_mark, questions [{prompt, options, correct_index, explanation}]
 
 Writes dist/<course>-week<N>.zip and dist/catalog.json. Stops with a list of problems if anything is wrong.
@@ -107,6 +108,13 @@ def build_pack(course_dir, course, week_dir):
         entry = {"key": key, "title": m["title"], "order": order, "duration_min": m.get("duration_min", 10),
                  "content_type": "markdown", "body_file": f"{key}/lesson.md"}
         files[entry["body_file"]] = text.encode("utf-8")
+        audio = week_dir / key / "audio.mp3"
+        if audio.is_file():
+            if audio.stat().st_size > 2 * 1024 * 1024:
+                bad(mw, "audio.mp3 is over 2 MB, make it smaller (mono, 32 kbps is enough for speech)")
+            else:
+                entry["audio"] = f"{key}/audio.mp3"
+                files[entry["audio"]] = audio.read_bytes()
         quiz_file = week_dir / key / "quiz.json"
         if quiz_file.is_file():
             quiz = load(quiz_file, mw)

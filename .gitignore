@@ -19,3 +19,5 @@ mobile/web-build/
 *.zip
 .DS_Store
 dist/
+recordings/
+recordings/
