@@ -1,0 +1,35 @@
+{
+  "pass_mark": 70,
+  "questions": [
+    {
+      "prompt": "Which word do the sounds b + a + g make?",
+      "options": [
+        "bag",
+        "big",
+        "bug"
+      ],
+      "correct_index": 0,
+      "explanation": "b + a + g = bag."
+    },
+    {
+      "prompt": "Which word ends in -at?",
+      "options": [
+        "hut",
+        "hat",
+        "hit"
+      ],
+      "correct_index": 1,
+      "explanation": "Hat ends in -at."
+    },
+    {
+      "prompt": "Change the first letter of cat to m. What word do you get?",
+      "options": [
+        "cot",
+        "met",
+        "mat"
+      ],
+      "correct_index": 2,
+      "explanation": "m + at = mat."
+    }
+  ]
+}

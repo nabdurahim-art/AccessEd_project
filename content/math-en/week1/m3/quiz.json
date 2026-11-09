@@ -1,0 +1,35 @@
+{
+  "pass_mark": 70,
+  "questions": [
+    {
+      "prompt": "A notebook costs 400 RWF and a pen costs 250 RWF. What is the total?",
+      "options": [
+        "650 RWF",
+        "550 RWF",
+        "750 RWF"
+      ],
+      "correct_index": 0,
+      "explanation": "400 + 250 = 650."
+    },
+    {
+      "prompt": "You pay 1,000 RWF for something that costs 700 RWF. How much change do you get?",
+      "options": [
+        "200 RWF",
+        "300 RWF",
+        "400 RWF"
+      ],
+      "correct_index": 1,
+      "explanation": "1,000 - 700 = 300."
+    },
+    {
+      "prompt": "What is change?",
+      "options": [
+        "The money you give",
+        "The money the seller gives back",
+        "The price of the item"
+      ],
+      "correct_index": 1,
+      "explanation": "Change is the money you get back."
+    }
+  ]
+}

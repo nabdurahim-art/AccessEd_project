@@ -1,0 +1,21 @@
+{
+  "title": "Week 1: Numbers and money",
+  "week_number": 1,
+  "modules": [
+    {
+      "key": "m1",
+      "title": "Counting and place value",
+      "duration_min": 10
+    },
+    {
+      "key": "m2",
+      "title": "Adding and subtracting",
+      "duration_min": 15
+    },
+    {
+      "key": "m3",
+      "title": "Using money and change",
+      "duration_min": 15
+    }
+  ]
+}
