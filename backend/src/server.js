@@ -6,6 +6,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const compression = require('compression');
 const syncRoutes = require('./routes/syncRoutes');
+const db = require('./config/database');
 
 
 
@@ -24,10 +25,13 @@ app.set('trust proxy', 1);
 // Safe default headers. The cross-origin setting lets the web app download packs.
 app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
 
-// The token travels in a header, not a cookie, so allowing any origin is fine
-// for the pilot. Later, restrict this to the web app's address.
+// The token travels in a header, not a cookie. With the web app and the API on
+// the same address (Nginx) no CORS is needed. To allow other addresses, set
+// CORS_ORIGIN to a comma separated list, for example https://learn.example.org.
+// Left empty, any origin is allowed (development).
+const allowedOrigins = (process.env.CORS_ORIGIN || '').split(',').map((o) => o.trim()).filter(Boolean);
 app.use(cors({
-  origin: '*',
+  origin: allowedOrigins.length > 0 ? allowedOrigins : '*',
   exposedHeaders: ['X-Checksum-SHA256', 'X-Pack-Version', 'Content-Length'],
 }));
 
@@ -37,7 +41,16 @@ app.use(compression());
 // Sync batches can be bigger than the 100 KB default.
 app.use(express.json({ limit: '1mb' }));
 
-app.get('/health', (req, res) => res.json({ status: 'ok' }));
+// Used by Docker and monitoring: 200 only when the database answers too.
+app.get('/health', async (req, res) => {
+  try {
+    await db.query('SELECT 1');
+    res.json({ status: 'ok' });
+  } catch (err) {
+    console.error('Health check failed:', err.message);
+    res.status(503).json({ status: 'database unavailable' });
+  }
+});
 
 app.use('/api/v1/auth', require('./routes/authRoutes'));
 app.use('/api/v1/content', require('./routes/contentRoutes'));
