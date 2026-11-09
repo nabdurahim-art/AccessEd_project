@@ -1,0 +1,21 @@
+{
+  "title": "Week 1: Health and safety",
+  "week_number": 1,
+  "modules": [
+    {
+      "key": "m1",
+      "title": "Washing your hands",
+      "duration_min": 8
+    },
+    {
+      "key": "m2",
+      "title": "Saving a little each week",
+      "duration_min": 10
+    },
+    {
+      "key": "m3",
+      "title": "Staying safe online",
+      "duration_min": 10
+    }
+  ]
+}

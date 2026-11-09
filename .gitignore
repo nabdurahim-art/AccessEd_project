@@ -18,3 +18,4 @@ mobile/web-build/
 *.bak
 *.zip
 .DS_Store
+dist/

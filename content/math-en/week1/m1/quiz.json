@@ -1,0 +1,35 @@
+{
+  "pass_mark": 70,
+  "questions": [
+    {
+      "prompt": "In the number 47, what does the 4 mean?",
+      "options": [
+        "4 ones",
+        "4 tens",
+        "4 hundreds"
+      ],
+      "correct_index": 1,
+      "explanation": "The 4 is in the tens place, so it means 40."
+    },
+    {
+      "prompt": "85 is the same as which sum?",
+      "options": [
+        "80 + 5",
+        "8 + 50",
+        "800 + 5"
+      ],
+      "correct_index": 0,
+      "explanation": "8 tens is 80, and 5 ones is 5."
+    },
+    {
+      "prompt": "Count in tens: 10, 20, 30, __",
+      "options": [
+        "50",
+        "35",
+        "40"
+      ],
+      "correct_index": 2,
+      "explanation": "After 30 comes 40."
+    }
+  ]
+}

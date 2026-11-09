@@ -1,0 +1,35 @@
+{
+  "pass_mark": 70,
+  "questions": [
+    {
+      "prompt": "If you save 200 RWF every week, how much do you have after 10 weeks?",
+      "options": [
+        "1,000 RWF",
+        "2,000 RWF",
+        "200 RWF"
+      ],
+      "correct_index": 1,
+      "explanation": "200 x 10 = 2,000."
+    },
+    {
+      "prompt": "What is a savings goal?",
+      "options": [
+        "Something you want to pay for later",
+        "A bill you must pay today",
+        "A kind of loan"
+      ],
+      "correct_index": 0,
+      "explanation": "A goal is what you are saving for."
+    },
+    {
+      "prompt": "Which one is a need, not a want?",
+      "options": [
+        "Sweets",
+        "A new game",
+        "Food for the day"
+      ],
+      "correct_index": 2,
+      "explanation": "Food is a need."
+    }
+  ]
+}

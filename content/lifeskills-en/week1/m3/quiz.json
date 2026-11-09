@@ -1,0 +1,35 @@
+{
+  "pass_mark": 70,
+  "questions": [
+    {
+      "prompt": "Someone calls and asks for the code sent to your phone. What should you do?",
+      "options": [
+        "Give it to them quickly",
+        "Never share it and end the call",
+        "Send it by message"
+      ],
+      "correct_index": 1,
+      "explanation": "Never share codes or PINs."
+    },
+    {
+      "prompt": "Which password is the strongest?",
+      "options": [
+        "amina",
+        "12345678",
+        "tR7!mango42"
+      ],
+      "correct_index": 2,
+      "explanation": "It is long and mixes letters, numbers and a symbol."
+    },
+    {
+      "prompt": "Which one is private information?",
+      "options": [
+        "Your favourite colour",
+        "Your password",
+        "The weather today"
+      ],
+      "correct_index": 1,
+      "explanation": "Your password must stay private."
+    }
+  ]
+}

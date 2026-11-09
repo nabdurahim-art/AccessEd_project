@@ -1,9 +1,6 @@
 -- Starting data for development and the pilot. Safe to run once after schema.sql.
 
-INSERT INTO courses (title, subject, language, description) VALUES
-  ('Literacy Basics',   'Literacy',    'en', 'Reading and writing for beginners'),
-  ('Everyday Maths',    'Mathematics', 'en', 'Numbers and simple calculations'),
-  ('Life Skills',       'Life skills', 'en', 'Money, health and safety in daily life');
+-- Courses are created by tools/publish.py from the content/ folder.
 
 INSERT INTO badges (name, criteria) VALUES
   ('First Step',    'Complete your first module'),
