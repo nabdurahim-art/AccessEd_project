@@ -37,6 +37,8 @@ CREATE TABLE courses (
     title          VARCHAR(150) NOT NULL,
     subject        VARCHAR(80)  NOT NULL,
     language       VARCHAR(5)   NOT NULL CHECK (language IN ('en', 'fr', 'rw')),
+    -- Which school level the course is for.
+    level          VARCHAR(10)  NOT NULL DEFAULT 'secondary' CHECK (level IN ('primary', 'secondary')),
     description    TEXT,                                  -- added
     created_at     TIMESTAMPTZ  NOT NULL DEFAULT NOW()    -- added
 );
