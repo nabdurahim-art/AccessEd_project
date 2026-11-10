@@ -1,0 +1,9 @@
+{
+  "name": "AccessEd",
+  "short_name": "AccessEd",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#F7F3EA",
+  "theme_color": "#0B6B6B",
+  "icons": [{ "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
+}
