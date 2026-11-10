@@ -1,0 +1,35 @@
+{
+  "pass_mark": 70,
+  "questions": [
+    {
+      "prompt": "Which part takes in water from the soil?",
+      "options": [
+        "Leaves",
+        "Flower",
+        "Roots"
+      ],
+      "correct_index": 2,
+      "explanation": "Roots take in water."
+    },
+    {
+      "prompt": "What does a plant need to grow?",
+      "options": [
+        "Sunlight and water",
+        "Darkness and no water",
+        "Only stones"
+      ],
+      "correct_index": 0,
+      "explanation": "Plants need sunlight, water, air and soil."
+    },
+    {
+      "prompt": "Leaves use sunlight to make...",
+      "options": [
+        "Stones",
+        "Food for the plant",
+        "Soil"
+      ],
+      "correct_index": 1,
+      "explanation": "Leaves make food for the plant."
+    }
+  ]
+}

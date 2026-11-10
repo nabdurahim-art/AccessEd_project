@@ -4,13 +4,13 @@
     python3 tools/build_packs.py
 
 Folder layout:
-  content/<course>/course.json        title, subject, language, description
-  content/<course>/week1/pack.json    title, week_number, modules [{key, title, duration_min}]
-  content/<course>/week1/m1/lesson.md the lesson text
-  content/<course>/week1/m1/audio.mp3 optional: a spoken version of the lesson (shows a Listen button)
-  content/<course>/week1/m1/quiz.json optional: pass_mark, questions [{prompt, options, correct_index, explanation}]
+  content/<level>/<course>/course.json        title, subject, language, description   (level = primary or secondary)
+  content/<level>/<course>/week1/pack.json    title, week_number, modules [{key, title, duration_min}]
+  content/<level>/<course>/week1/m1/lesson.md the lesson text
+  content/<level>/<course>/week1/m1/audio.mp3 optional: a spoken version of the lesson (shows a Listen button)
+  content/<level>/<course>/week1/m1/quiz.json optional: pass_mark, questions [{prompt, options, correct_index, explanation}]
 
-Writes dist/<course>-week<N>.zip and dist/catalog.json. Stops with a list of problems if anything is wrong.
+Writes dist/<level>-<course>-week<N>.zip and dist/catalog.json. Stops with a list of problems if anything is wrong.
 """
 import hashlib, json, re, sys, zipfile
 from pathlib import Path
@@ -20,6 +20,16 @@ CONTENT, DIST = ROOT / "content", ROOT / "dist"
 LANGS = {"en", "fr", "rw"}
 KEY_RULE = re.compile(r"^[A-Za-z0-9_-]{1,30}$")
 problems = []
+
+LEVELS = ("primary", "secondary")
+
+def course_dirs():
+    """Every course folder as (level, folder): content/primary/<course> and content/secondary/<course>."""
+    for level in LEVELS:
+        base = CONTENT / level
+        if base.is_dir():
+            for p in sorted(x for x in base.iterdir() if x.is_dir()):
+                yield level, p
 
 def bad(where, msg):
     problems.append(f"{where}: {msg}")
@@ -72,7 +82,7 @@ def check_quiz(quiz, where):
     return out
 
 def build_pack(course_dir, course, week_dir):
-    where = f"{course_dir.name}/{week_dir.name}"
+    where = f"{course_dir.parent.name}/{course_dir.name}/{week_dir.name}"
     pack = load(week_dir / "pack.json", where)
     if not pack:
         return None
@@ -137,13 +147,16 @@ def write_zip(path, manifest, files):
 def main():
     catalog = []
     built = []
-    for course_dir in sorted(p for p in CONTENT.iterdir() if p.is_dir()):
+    for stray in sorted(p for p in CONTENT.iterdir() if p.is_dir() and p.name not in LEVELS):
+        print(f"skipping content/{stray.name}: put courses inside content/primary or content/secondary")
+    for level, course_dir in course_dirs():
         if not (course_dir / "course.json").is_file():
-            print(f"skipping {course_dir.name}: no course.json")
+            print(f"skipping {level}/{course_dir.name}: no course.json")
             continue
         course = load(course_dir / "course.json", course_dir.name)
         if not course:
             continue
+        course["level"] = level
         if course.get("language") not in LANGS:
             bad(course_dir.name, "language must be en, fr or rw")
             continue
@@ -165,7 +178,7 @@ def main():
     for old in DIST.glob("*.zip"):
         old.unlink()
     for course_dir, course, week_dir, pack, manifest, files in built:
-        name = f"{course_dir.name}-week{pack['week_number']}.zip"
+        name = f"{course_dir.parent.name}-{course_dir.name}-week{pack['week_number']}.zip"
         write_zip(DIST / name, manifest, files)
         data = (DIST / name).read_bytes()
         catalog.append({"course": course, "pack": {"title": pack["title"], "week_number": pack["week_number"]},

@@ -1,8 +1,9 @@
 // Keeps the app shell available offline. Network first so updates show up while developing.
-const CACHE = 'accessed-shell-v6';
+const CACHE = 'accessed-shell-v9';
 const SHELL = ['./', './index.html', './css/styles.css', './js/app.js', './js/api.js', './js/store.js',
   './js/config.js', './js/strings.js', './js/db.js', './js/packs.js', './js/sync.js', './js/markdown.js', './js/learn.js', './js/theme.js', './js/avatar.js',
-  './vendor/jszip.min.js', './vendor/sha256.min.js', './manifest.webmanifest', './icon.svg'];
+  './vendor/jszip.min.js', './vendor/sha256.min.js', './manifest.webmanifest', './icon.svg',
+  './icons/icon-192.png', './icons/icon-512.png', './icons/apple-touch-icon.png'];
 
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(SHELL)));

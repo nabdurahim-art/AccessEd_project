@@ -209,8 +209,9 @@ a.course { text-decoration: none; color: inherit; }
   .tab[aria-current="page"] { background: var(--primary-soft); }
 
   /* course cards sit in a grid */
-  #list { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
-  #list .course { margin-bottom: 0; min-height: 84px; }
+  .course-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
+  .course-list .course { margin-bottom: 0; min-height: 84px; }
+  #list .segment { max-width: 420px; }
   #app h1 { font-size: 34px; margin: 0 0 6px; }
   .tiles { max-width: 560px; }
   /* keep the side menu inside lessons and quizzes when signed in */

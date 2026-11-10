@@ -1,0 +1,35 @@
+{
+  "pass_mark": 70,
+  "questions": [
+    {
+      "prompt": "Which is a living thing?",
+      "options": [
+        "Stone",
+        "Tree",
+        "Chair"
+      ],
+      "correct_index": 1,
+      "explanation": "A tree grows and makes seeds."
+    },
+    {
+      "prompt": "Which is NOT a living thing?",
+      "options": [
+        "Goat",
+        "Bicycle",
+        "Bird"
+      ],
+      "correct_index": 1,
+      "explanation": "A bicycle is not alive."
+    },
+    {
+      "prompt": "What does a living thing do?",
+      "options": [
+        "Grow",
+        "Never change",
+        "Need no food"
+      ],
+      "correct_index": 0,
+      "explanation": "Living things grow."
+    }
+  ]
+}

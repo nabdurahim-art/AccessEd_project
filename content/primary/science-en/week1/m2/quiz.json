@@ -1,0 +1,35 @@
+{
+  "pass_mark": 70,
+  "questions": [
+    {
+      "prompt": "Which part do we use to hear?",
+      "options": [
+        "Ears",
+        "Nose",
+        "Skin"
+      ],
+      "correct_index": 0,
+      "explanation": "We hear with our ears."
+    },
+    {
+      "prompt": "We taste food with our...",
+      "options": [
+        "Eyes",
+        "Ears",
+        "Tongue"
+      ],
+      "correct_index": 2,
+      "explanation": "The tongue tastes."
+    },
+    {
+      "prompt": "Which sense helps you feel that a pot is hot?",
+      "options": [
+        "Smell",
+        "Hearing",
+        "Touch"
+      ],
+      "correct_index": 2,
+      "explanation": "We feel heat through our skin. Touch it carefully."
+    }
+  ]
+}

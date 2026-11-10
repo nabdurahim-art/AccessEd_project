@@ -10,6 +10,18 @@ import { avatarHTML, resizeToAvatar } from './avatar.js';
 
 applyTheme();
 
+// Ask the browser to keep downloaded lessons even when the phone is low on space.
+if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => {});
+
+// "Install" button: the browser tells us when installing is possible.
+let installEvent = null;
+const isInstalled = () => window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault(); installEvent = e;
+  if (currentName() === 'profile') screens.profile();
+});
+window.addEventListener('appinstalled', () => { installEvent = null; if (currentName() === 'profile') screens.profile(); });
+
 const $app = document.getElementById('app');
 const $banner = document.getElementById('banner');
 const $tabbar = document.getElementById('tabbar');
@@ -264,6 +276,8 @@ const screens = {
       </div>
       <p class="small muted">${esc(t('photoHint'))}</p>
       <p class="form-error" id="photo-msg" role="alert" hidden></p>
+      ${installEvent && !isInstalled() ? `<div class="note">${icon('shield', 22)}<span>${esc(t('installHint'))}</span></div>
+        <div class="photo-actions"><button class="btn btn--primary" id="install-btn">${esc(t('installApp'))}</button></div>` : ''}
       <h2>${esc(t('appearance'))}</h2>
       <div class="segment" role="group" aria-label="${esc(t('appearance'))}">
         ${THEMES.map((m) => `<button data-theme-pick="${m}" aria-pressed="${m === theme}">${esc(t(themeNames[m]))}</button>`).join('')}
@@ -277,6 +291,13 @@ const screens = {
       b.addEventListener('click', () => { setLanguage(b.dataset.lang); route(); }));
     $app.querySelectorAll('[data-theme-pick]').forEach((b) =>
       b.addEventListener('click', () => { setTheme(b.dataset.themePick); screens.profile(); }));
+
+    const installBtn = $app.querySelector('#install-btn');
+    if (installBtn) installBtn.addEventListener('click', async () => {
+      const ev = installEvent; installEvent = null;
+      if (ev) { ev.prompt(); await ev.userChoice.catch(() => {}); }
+      screens.profile();
+    });
 
     const input = $app.querySelector('#photo-input');
     const msg = $app.querySelector('#photo-msg');

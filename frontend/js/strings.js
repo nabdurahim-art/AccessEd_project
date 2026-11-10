@@ -317,3 +317,13 @@ Object.assign(strings.rw, {
   photoTypeError: 'Hitamo ifoto.', photoBigError: 'Iyo foto ni nini cyane. Hitamo iyoroheje.',
   photoSaveError: 'Ifoto ntiyabitswe. Gerageza iyoroheje.',
 });
+
+// Install the app
+Object.assign(strings.en, { installApp: 'Install AccessEd', installHint: 'Add AccessEd to your home screen. It opens like an app and works offline.', installed: 'AccessEd is installed on this device.' });
+Object.assign(strings.fr, { installApp: 'Installer AccessEd', installHint: "Ajoutez AccessEd à votre écran d'accueil. Elle s'ouvre comme une application et fonctionne hors ligne.", installed: 'AccessEd est installée sur cet appareil.' });
+Object.assign(strings.rw, { installApp: 'Shyira AccessEd kuri telefoni', installHint: 'Shyira AccessEd ku rupapuro rwa mbere rwa telefoni. Ifunguka nka porogaramu kandi ikora nta murongo wa interineti.', installed: 'AccessEd isanzwe iri kuri iki gikoresho.' });
+
+// School level
+Object.assign(strings.en, { schoolLevel: 'School level', levelPrimary: 'Primary', levelSecondary: 'Secondary', noCoursesLevel: 'No courses in this level yet.' });
+Object.assign(strings.fr, { schoolLevel: 'Niveau scolaire', levelPrimary: 'Primaire', levelSecondary: 'Secondaire', noCoursesLevel: "Aucun cours dans ce niveau pour l'instant." });
+Object.assign(strings.rw, { schoolLevel: 'Urwego rw’amashuri', levelPrimary: 'Amashuri abanza', levelSecondary: 'Amashuri yisumbuye', noCoursesLevel: 'Nta masomo ari muri uru rwego kugeza ubu.' });

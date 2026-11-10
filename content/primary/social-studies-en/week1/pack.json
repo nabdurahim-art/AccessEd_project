@@ -1,0 +1,21 @@
+{
+  "title": "Week 1: Me, my family and my country",
+  "week_number": 1,
+  "modules": [
+    {
+      "key": "m1",
+      "title": "My family",
+      "duration_min": 10
+    },
+    {
+      "key": "m2",
+      "title": "Our community",
+      "duration_min": 10
+    },
+    {
+      "key": "m3",
+      "title": "Rwanda, our country",
+      "duration_min": 10
+    }
+  ]
+}

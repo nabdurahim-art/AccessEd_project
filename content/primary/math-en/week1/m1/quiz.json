@@ -1,0 +1,35 @@
+{
+  "pass_mark": 70,
+  "questions": [
+    {
+      "prompt": "What number comes after 29?",
+      "options": [
+        "28",
+        "30",
+        "39"
+      ],
+      "correct_index": 1,
+      "explanation": "One more than 29 is 30."
+    },
+    {
+      "prompt": "Count in tens: 10, 20, 30, __",
+      "options": [
+        "35",
+        "40",
+        "50"
+      ],
+      "correct_index": 1,
+      "explanation": "After 30 comes 40."
+    },
+    {
+      "prompt": "Which number is one less than 50?",
+      "options": [
+        "49",
+        "51",
+        "40"
+      ],
+      "correct_index": 0,
+      "explanation": "One less than 50 is 49."
+    }
+  ]
+}

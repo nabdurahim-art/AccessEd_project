@@ -9,7 +9,11 @@ export function createLearnScreens(ctx) {
   const userId = () => (store.getUser() || {}).user_id;
   const alive = (id) => id === nav.id; // false once the learner has moved to another screen
   const COLORS = ['var(--tint-green)', 'var(--primary-soft)', 'var(--tint-sun)'];
-  const courseIcon = (c) => (/math/i.test(`${c.subject} ${c.title}`) ? 'calc' : /life/i.test(`${c.subject} ${c.title}`) ? 'leaf' : 'courses');
+  const courseIcon = (c) => (/math/i.test(`${c.subject} ${c.title}`) ? 'calc' : /life|science/i.test(`${c.subject} ${c.title}`) ? 'leaf' : 'courses');
+  // Courses from an older server have no level: treat them as secondary.
+  const levelOf = (c) => (c.level === 'primary' ? 'primary' : 'secondary');
+  const LEVELS = ['primary', 'secondary'];
+  const getLevel = () => (LEVELS.includes(store.getLevel()) ? store.getLevel() : 'primary');
   const back = (href, label) => `<a class="back" href="${href}">${icon('back', 18)} <span>${esc(label)}</span></a>`;
   const sortedModules = (lp) => [...(lp.manifest.modules || [])].sort((a, b) => (a.order || 0) - (b.order || 0));
   const lessonHref = (packId, key) => `lesson/${packId}/${encodeURIComponent(key)}`;
@@ -18,20 +22,38 @@ export function createLearnScreens(ctx) {
   const stopAudio = () => { if (audio) { audio.pause(); audio = null; } };
   let qs = null; // state of the quiz being taken
 
+  // Subjects always appear in the same order: Literacy, Maths, English, Science, Social studies, Life skills.
+  const SUBJECT_ORDER = ['literacy', 'math', 'english', 'science', 'social', 'life'];
+  const subjectRank = (c) => {
+    const i = SUBJECT_ORDER.findIndex((s) => `${c.subject} ${c.title}`.toLowerCase().includes(s));
+    return i < 0 ? SUBJECT_ORDER.length : i;
+  };
+
   function courseRows(courses) {
     const lang = ctx.lang();
-    return [...courses].sort((a, b) => (b.language === lang) - (a.language === lang)).map((c, i) =>
-      `<a class="course" href="#/course/${c.course_id}" style="background:${COLORS[i % 3]}">${icon(courseIcon(c), 22)}` +
+    const ordered = [...courses].sort((a, b) =>
+      ((b.language === lang) - (a.language === lang)) || (subjectRank(a) - subjectRank(b)) || String(a.title).localeCompare(String(b.title)));
+    return `<div class="course-list">` + ordered.map((c) =>
+      `<a class="course" href="#/course/${c.course_id}" style="background:${COLORS[subjectRank(c) % 3]}">${icon(courseIcon(c), 22)}` +
       `<span>${esc(c.title)}${c.language !== lang ? ` <small class="tag">${esc(c.language)}</small>` : ''}</span>${icon('chevron', 18)}</a>`
-    ).join('');
+    ).join('') + `</div>`;
   }
 
   async function fillCourseList(id) {
     let r;
     try { r = await packs.loadCourses(); } catch { r = { value: [], failed: true }; }
     if (!alive(id)) return;
-    $app.querySelector('#list').innerHTML = r.value.length ? courseRows(r.value)
-      : `<p class="muted">${esc(t(r.failed ? 'errGeneric' : 'noCourses'))}</p>`;
+    const box = $app.querySelector('#list');
+    if (!r.value.length) { box.innerHTML = `<p class="muted">${esc(t(r.failed ? 'errGeneric' : 'noCourses'))}</p>`; return; }
+    const draw = () => {
+      const level = getLevel();
+      const shown = r.value.filter((c) => levelOf(c) === level);
+      box.innerHTML = `<div class="segment" role="group" aria-label="${esc(t('schoolLevel'))}">` +
+        LEVELS.map((l) => `<button data-level="${l}" aria-pressed="${l === level}">${esc(t(l === 'primary' ? 'levelPrimary' : 'levelSecondary'))}</button>`).join('') +
+        `</div>` + (shown.length ? courseRows(shown) : `<p class="muted">${esc(t('noCoursesLevel'))}</p>`);
+      box.querySelectorAll('[data-level]').forEach((b) => b.addEventListener('click', () => { store.setLevel(b.dataset.level); draw(); }));
+    };
+    draw();
   }
 
   function home() {
