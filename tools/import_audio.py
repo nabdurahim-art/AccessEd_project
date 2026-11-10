@@ -2,10 +2,10 @@
 """Turns recordings into lesson audio.
 
 Put recordings in recordings/ named  <course>-week<N>-<lesson>.<ext>, for example
-    recordings/literacy-en-week1-m1.m4a
+    recordings/secondary-literacy-en-week1-m1.m4a
 then run:
     python3 tools/import_audio.py
-Each one becomes content/<course>/week<N>/<lesson>/audio.mp3 (mono, small). Needs ffmpeg.
+Each one becomes content/<level>/<course>/week<N>/<lesson>/audio.mp3 (the name starts with primary- or secondary-) (mono, small). Needs ffmpeg.
 After that: python3 tools/build_packs.py, then tools/publish.py.
 """
 import re, shutil, subprocess, sys
@@ -13,7 +13,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 REC = ROOT / "recordings"
-NAME = re.compile(r"^(?P<course>.+)-week(?P<week>\d+)-(?P<mod>[A-Za-z0-9_]+)\.(m4a|mp3|wav|ogg|aac|opus|webm|amr|flac)$", re.I)
+NAME = re.compile(r"^(?P<level>primary|secondary)-(?P<course>.+)-week(?P<week>\d+)-(?P<mod>[A-Za-z0-9_]+)\.(m4a|mp3|wav|ogg|aac|opus|webm|amr|flac)$", re.I)
 
 if not shutil.which("ffmpeg"):
     sys.exit("ffmpeg is not installed. Run: sudo apt install ffmpeg")
@@ -26,10 +26,10 @@ for f in sorted(REC.iterdir()):
         continue
     m = NAME.match(f.name)
     if not m:
-        print(f"skip  {f.name}: name must look like literacy-en-week1-m1.m4a")
+        print(f"skip  {f.name}: name must look like secondary-literacy-en-week1-m1.m4a")
         bad += 1
         continue
-    lesson_dir = ROOT / "content" / m["course"] / f"week{m['week']}" / m["mod"]
+    lesson_dir = ROOT / "content" / m["level"] / m["course"] / f"week{m['week']}" / m["mod"]
     if not (lesson_dir / "lesson.md").is_file():
         print(f"skip  {f.name}: no lesson at {lesson_dir.relative_to(ROOT)}")
         bad += 1

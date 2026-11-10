@@ -1,0 +1,35 @@
+{
+  "pass_mark": 70,
+  "questions": [
+    {
+      "prompt": "Your mother's mother is your...",
+      "options": [
+        "Aunt",
+        "Grandmother",
+        "Cousin"
+      ],
+      "correct_index": 1,
+      "explanation": "She is your grandmother."
+    },
+    {
+      "prompt": "Your father's brother is your...",
+      "options": [
+        "Uncle",
+        "Cousin",
+        "Grandfather"
+      ],
+      "correct_index": 0,
+      "explanation": "He is your uncle."
+    },
+    {
+      "prompt": "Which shows respect for older people?",
+      "options": [
+        "Ignoring them",
+        "Shouting at them",
+        "Greeting them politely"
+      ],
+      "correct_index": 2,
+      "explanation": "A polite greeting shows respect."
+    }
+  ]
+}

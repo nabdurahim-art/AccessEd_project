@@ -1,0 +1,35 @@
+{
+  "pass_mark": 70,
+  "questions": [
+    {
+      "prompt": "Which is a correct sentence?",
+      "options": [
+        "am I student a.",
+        "student I am a.",
+        "I am a student."
+      ],
+      "correct_index": 2,
+      "explanation": "The words are in the right order, with a capital letter and a full stop."
+    },
+    {
+      "prompt": "A sentence starts with a...",
+      "options": [
+        "Capital letter",
+        "Full stop",
+        "Number"
+      ],
+      "correct_index": 0,
+      "explanation": "A sentence starts with a capital letter."
+    },
+    {
+      "prompt": "She ___ my sister.",
+      "options": [
+        "am",
+        "is",
+        "are"
+      ],
+      "correct_index": 1,
+      "explanation": "We say: She is."
+    }
+  ]
+}

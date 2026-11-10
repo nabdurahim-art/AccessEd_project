@@ -1,0 +1,21 @@
+{
+  "title": "Week 1: Numbers and shapes",
+  "week_number": 1,
+  "modules": [
+    {
+      "key": "m1",
+      "title": "Counting to 100",
+      "duration_min": 10
+    },
+    {
+      "key": "m2",
+      "title": "Adding and taking away",
+      "duration_min": 15
+    },
+    {
+      "key": "m3",
+      "title": "Shapes around us",
+      "duration_min": 10
+    }
+  ]
+}

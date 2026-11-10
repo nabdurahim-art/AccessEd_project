@@ -1,0 +1,35 @@
+{
+  "pass_mark": 70,
+  "questions": [
+    {
+      "prompt": "How many sides does a triangle have?",
+      "options": [
+        "2",
+        "3",
+        "4"
+      ],
+      "correct_index": 1,
+      "explanation": "Tri means three."
+    },
+    {
+      "prompt": "Which shape is round and has no corners?",
+      "options": [
+        "Square",
+        "Triangle",
+        "Circle"
+      ],
+      "correct_index": 2,
+      "explanation": "A circle is round."
+    },
+    {
+      "prompt": "A door is usually which shape?",
+      "options": [
+        "Circle",
+        "Rectangle",
+        "Triangle"
+      ],
+      "correct_index": 1,
+      "explanation": "A door has two long sides and two short sides."
+    }
+  ]
+}

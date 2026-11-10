@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Publishes the packs in dist/ to the running API (admin only). Safe to run again:
-it reuses a course with the same title and language, and a pack for the same week gets a new version.
+it reuses a course with the same title, language and level, and a pack for the same week gets a new version.
 
     ADMIN_PASSWORD='...' python3 tools/publish.py --user admin_name
 
@@ -45,7 +45,7 @@ existing = res.get("courses", []) if st == 200 else []
 
 for item in catalog:
     c, p = item["course"], item["pack"]
-    found = next((x for x in existing if x["title"] == c["title"] and x["language"] == c["language"]), None)
+    found = next((x for x in existing if x["title"] == c["title"] and x["language"] == c["language"] and x.get("level", "secondary") == c["level"]), None)
     if found:
         course_id = found["course_id"]
     else:
@@ -62,7 +62,7 @@ for item in catalog:
     st, res = call("POST", "/content/packs", {"course_id": course_id, "title": p["title"], "week_number": p["week_number"], "file_path": item["file"]}, token)
     if st in (200, 201):
         pk = res["pack"]
-        print(f"OK  {c['title']} / {p['title']}  (pack {pk['pack_id']}, version {pk['version']}, {'new' if st == 201 else 'updated'})")
+        print(f"OK  [{c['level']}] {c['title']} / {p['title']}  (pack {pk['pack_id']}, version {pk['version']}, {'new' if st == 201 else 'updated'})")
     else:
         print(f"FAIL {item['file']} ({st}): {res.get('error')}")
         for d in res.get("details", []):

@@ -1,0 +1,35 @@
+{
+  "pass_mark": 70,
+  "questions": [
+    {
+      "prompt": "Who looks after sick people at the health centre?",
+      "options": [
+        "Farmer",
+        "Builder",
+        "Nurse"
+      ],
+      "correct_index": 2,
+      "explanation": "A nurse cares for the sick."
+    },
+    {
+      "prompt": "What is umuganda?",
+      "options": [
+        "A kind of food",
+        "Community work done together",
+        "A school exam"
+      ],
+      "correct_index": 1,
+      "explanation": "People work together for their community."
+    },
+    {
+      "prompt": "A farmer...",
+      "options": [
+        "Grows food",
+        "Teaches children",
+        "Drives buses"
+      ],
+      "correct_index": 0,
+      "explanation": "Farmers grow the food we eat."
+    }
+  ]
+}

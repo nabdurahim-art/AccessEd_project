@@ -1,0 +1,21 @@
+{
+  "title": "Week 1: Hello, English!",
+  "week_number": 1,
+  "modules": [
+    {
+      "key": "m1",
+      "title": "Greetings and my name",
+      "duration_min": 10
+    },
+    {
+      "key": "m2",
+      "title": "Colours and everyday things",
+      "duration_min": 10
+    },
+    {
+      "key": "m3",
+      "title": "Simple sentences",
+      "duration_min": 15
+    }
+  ]
+}
