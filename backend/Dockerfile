@@ -9,6 +9,8 @@ RUN npm install --omit=dev
 
 COPY . .
 
+RUN mkdir -p /app/storage/packs
+
 ENV NODE_ENV=production
 EXPOSE 5000
 CMD ["node", "src/server.js"]
