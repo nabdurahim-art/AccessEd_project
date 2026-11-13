@@ -133,7 +133,21 @@ def build_pack(course_dir, course, week_dir):
                 if qs:
                     entry["quiz"] = {"pass_mark": quiz.get("pass_mark", 70), "questions": qs}
         manifest_mods.append(entry)
-    manifest = {"manifest_version": 1, "language": course["language"], "modules": manifest_mods}
+    # The pack describes itself: the course it belongs to, its level and its week.
+    # The admin screen and the publisher read this, so nobody has to type it again.
+    manifest = {
+        "manifest_version": 1,
+        "language": course["language"],
+        "course": {
+            "title": course["title"],
+            "subject": course["subject"],
+            "language": course["language"],
+            "level": course["level"],
+            "description": course.get("description", ""),
+        },
+        "pack": {"title": pack["title"], "week_number": pack["week_number"]},
+        "modules": manifest_mods,
+    }
     return pack, manifest, files
 
 def write_zip(path, manifest, files):
