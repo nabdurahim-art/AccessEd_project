@@ -7,13 +7,33 @@ import { createLearnScreens } from './learn.js';
 import * as packs from './packs.js';
 import { applyTheme, setTheme, getTheme, THEMES } from './theme.js';
 import { avatarHTML, resizeToAvatar } from './avatar.js';
+import { createAdminScreen } from './admin.js';
+import { createEditorScreens } from './editor.js';
 
 applyTheme();
+
+// Ask the browser to keep downloaded lessons even when the phone is low on space.
+if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => {});
+
+// "Install" button: the browser tells us when installing is possible.
+let installEvent = null;
+const isInstalled = () => window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault(); installEvent = e;
+  if (currentName() === 'profile') screens.profile();
+});
+window.addEventListener('appinstalled', () => { installEvent = null; if (currentName() === 'profile') screens.profile(); });
 
 const $app = document.getElementById('app');
 const $banner = document.getElementById('banner');
 const $tabbar = document.getElementById('tabbar');
-const TABS = ['home', 'courses', 'progress', 'profile'];
+const LEARNER_TABS = ['home', 'courses', 'progress', 'profile'];
+const ADMIN_TABS = ['content', 'admin', 'profile']; // Lessons, Upload zip, Account
+const LEARNER_ONLY = ['home', 'courses', 'progress', 'course', 'pack', 'lesson', 'quiz'];
+const isAdmin = () => (store.getUser() || {}).role === 'admin';
+const adminMode = () => isAdmin() && store.getView() !== 'learner'; // false for learners, and for an admin viewing as a learner
+const tabsNow = () => (adminMode() ? ADMIN_TABS : LEARNER_TABS);
+const homeFor = () => (adminMode() ? 'content' : 'home');
 const USERNAME_RULE = /^[A-Za-z0-9_]{3,30}$/; // same rule as the backend
 
 let lang = store.getLang() || 'en';
@@ -39,6 +59,9 @@ const ICONS = {
   flame: '<path d="M12 3c1 4 5 5 5 10a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-3-1-5 1-9z"/>',
   calc: '<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 12h2M12 12h2M8 16h2M12 16h2"/>',
   leaf: '<path d="M5 19c0-8 5-14 15-14 0 10-6 15-14 15"/><path d="M5 19l7-7"/>',
+  upload: '<path d="M12 16V4M7 9l5-5 5 5M4 20h16"/>',
+  pencil: '<path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13 7l4 4"/>',
+  list: '<path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>',
   eye: '<path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
   eyeOff: '<path d="M3 3l18 18"/><path d="M6.6 6.6C3.8 8.4 2 12 2 12s3.6 7 10 7c1.7 0 3.2-.4 4.5-1M10.6 5.1A10.9 10.9 0 0 1 12 5c6.4 0 10 7 10 7a17 17 0 0 1-3.2 4.2"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/>',
 };
@@ -84,11 +107,13 @@ window.addEventListener('online', () => { renderBanner(); afterSave(); refreshUs
 
 /* ---------- tab bar ---------- */
 function renderTabs(current) {
-  const show = TABS.includes(current);
+  const tabs = tabsNow();
+  const show = tabs.includes(current);
   $tabbar.hidden = !show; // phones hide the menu inside a lesson; desktop keeps it (see CSS)
-  const names = { home: 'tabHome', courses: 'tabCourses', progress: 'tabProgress', profile: 'tabProfile' };
-  $tabbar.innerHTML = TABS.map((tab) =>
-    `<a class="tab" href="#/${tab}" ${show && tab === current ? 'aria-current="page"' : ''}>${icon(tab)}<span>${esc(t(names[tab]))}</span></a>`
+  const names = { home: 'tabHome', courses: 'tabCourses', progress: 'tabProgress', profile: adminMode() ? 'tabAccount' : 'tabProfile', admin: 'tabPublish', content: 'tabContent' };
+  const icons = { admin: 'upload', content: 'pencil' };
+  $tabbar.innerHTML = tabs.map((tab) =>
+    `<a class="tab" href="#/${tab}" ${show && tab === current ? 'aria-current="page"' : ''}>${icon(icons[tab] || tab)}<span>${esc(t(names[tab]))}</span></a>`
   ).join('');
 }
 
@@ -102,10 +127,12 @@ function route() {
   const [first, ...args] = parts();
   const name = first || 'welcome';
   const signedIn = Boolean(store.getToken());
-  const tab = TABS.includes(name);
-  const inside = tab || ['course', 'pack', 'lesson', 'quiz'].includes(name);
+  const tab = tabsNow().includes(name);
+  const inside = tab || LEARNER_ONLY.includes(name) || ['admin', 'content', 'edit', 'profile'].includes(name);
   if (!signedIn && inside) return go('welcome');
-  if (signedIn && (name === 'welcome' || name === 'auth')) return go('home');
+  if (signedIn && (name === 'welcome' || name === 'auth')) return go(homeFor());
+  if (signedIn && adminMode() && LEARNER_ONLY.includes(name)) return go('content'); // admins see the admin screens
+  if (signedIn && !isAdmin() && ['admin', 'content', 'edit'].includes(name)) return go('home');
 
   document.getElementById('shell').dataset.auth = signedIn ? 'in' : 'out';
   nav.id++;
@@ -123,8 +150,13 @@ const form = { mode: 'register', name: '', username: '', password: '', contact: 
 
 const learn = createLearnScreens({ $app, t, esc, icon, go, nav, store, lang: () => lang, afterSave, reroute: () => route() });
 
+const adminScreens = createAdminScreen({ $app, t, esc, icon, nav, store });
+const editorScreens = createEditorScreens({ $app, t, esc, icon, nav, store });
+
 const screens = {
   ...learn,
+  ...adminScreens,
+  ...editorScreens,
   stopAudio: undefined, // helper, not a screen
 
   welcome() {
@@ -257,6 +289,8 @@ const screens = {
         ${avatarHTML(u, 88)}
         <div><h1>${esc(u.full_name || u.username || '')}</h1><p class="muted">@${esc(u.username || '')}</p></div>
       </div>
+      <p class="role-chip role-chip--${u.role === 'admin' ? 'admin' : 'learner'}">${esc(t('loggedInAs', { role: t(u.role === 'admin' ? 'roleAdmin' : 'roleLearner') }))} · @${esc(u.username || '')}</p>
+      ${isAdmin() ? `<button class="btn ${adminMode() ? 'btn--outline' : 'btn--primary'} admin-cta" id="view-swap">${esc(t(adminMode() ? 'viewAsLearner' : 'backToAdmin'))}</button>` : ''}
       <div class="photo-actions">
         <button class="btn btn--outline" id="photo-btn">${esc(t(hasPhoto ? 'changePhoto' : 'addPhoto'))}</button>
         ${hasPhoto ? `<button class="btn btn--outline" id="photo-remove">${esc(t('removePhoto'))}</button>` : ''}
@@ -264,6 +298,8 @@ const screens = {
       </div>
       <p class="small muted">${esc(t('photoHint'))}</p>
       <p class="form-error" id="photo-msg" role="alert" hidden></p>
+      ${installEvent && !isInstalled() ? `<div class="note">${icon('shield', 22)}<span>${esc(t('installHint'))}</span></div>
+        <div class="photo-actions"><button class="btn btn--primary" id="install-btn">${esc(t('installApp'))}</button></div>` : ''}
       <h2>${esc(t('appearance'))}</h2>
       <div class="segment" role="group" aria-label="${esc(t('appearance'))}">
         ${THEMES.map((m) => `<button data-theme-pick="${m}" aria-pressed="${m === theme}">${esc(t(themeNames[m]))}</button>`).join('')}
@@ -277,6 +313,13 @@ const screens = {
       b.addEventListener('click', () => { setLanguage(b.dataset.lang); route(); }));
     $app.querySelectorAll('[data-theme-pick]').forEach((b) =>
       b.addEventListener('click', () => { setTheme(b.dataset.themePick); screens.profile(); }));
+
+    const installBtn = $app.querySelector('#install-btn');
+    if (installBtn) installBtn.addEventListener('click', async () => {
+      const ev = installEvent; installEvent = null;
+      if (ev) { ev.prompt(); await ev.userChoice.catch(() => {}); }
+      screens.profile();
+    });
 
     const input = $app.querySelector('#photo-input');
     const msg = $app.querySelector('#photo-msg');
@@ -298,7 +341,9 @@ const screens = {
     if (rm) rm.addEventListener('click', () => { store.delAvatar(u.user_id); screens.profile(); });
 
     // Lessons stay on the phone after log out, so the next learner can use them.
-    $app.querySelector('#logout').addEventListener('click', () => { store.clearSession(); pending = 0; go('welcome'); });
+    $app.querySelector('#logout').addEventListener('click', () => { store.clearSession(); store.setView('admin'); pending = 0; go('welcome'); });
+    const swap = $app.querySelector('#view-swap');
+    if (swap) swap.addEventListener('click', () => { store.setView(adminMode() ? 'learner' : 'admin'); go(adminMode() ? 'content' : 'home'); });
   },
 };
 
@@ -334,7 +379,7 @@ async function submitAuth() {
     form.busy = false;
     refreshUser();
     afterSave();
-    go('home');
+    go(homeFor());
   } catch (e) {
     form.busy = false;
     if (!(e instanceof api.ApiError)) form.error = t('errGeneric');

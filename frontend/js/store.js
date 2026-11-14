@@ -16,8 +16,14 @@ export const getSummary = (uid) => { try { return JSON.parse(get('summary:' + ui
 export const setSummary = (uid, s) => set('summary:' + uid, JSON.stringify(s));
 
 // Colour mode ('auto', 'light' or 'dark') and profile pictures (one per learner, kept on this device only).
+export const getLevel = () => get('level');
+export const setLevel = (l) => set('level', l);
 export const getTheme = () => get('theme');
 export const setTheme = (m) => set('theme', m);
 export const getAvatar = (uid) => get('avatar:' + uid);
 export const setAvatar = (uid, dataUrl) => { try { localStorage.setItem('avatar:' + uid, dataUrl); return true; } catch { return false; } };
 export const delAvatar = (uid) => del('avatar:' + uid);
+
+// Admins start in the admin view. "View as learner" switches to the learner screens.
+export const getView = () => get('adminView') || 'admin';
+export const setView = (v) => set('adminView', v);
