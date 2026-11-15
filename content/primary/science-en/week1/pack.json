@@ -1,0 +1,21 @@
+{
+  "title": "Week 1: Living things and our senses",
+  "week_number": 1,
+  "modules": [
+    {
+      "key": "m1",
+      "title": "Living and non-living things",
+      "duration_min": 10
+    },
+    {
+      "key": "m2",
+      "title": "Our five senses",
+      "duration_min": 10
+    },
+    {
+      "key": "m3",
+      "title": "Plants and what they need",
+      "duration_min": 15
+    }
+  ]
+}

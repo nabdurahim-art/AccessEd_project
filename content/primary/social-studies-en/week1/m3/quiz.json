@@ -1,0 +1,35 @@
+{
+  "pass_mark": 70,
+  "questions": [
+    {
+      "prompt": "What is the capital city of Rwanda?",
+      "options": [
+        "Musanze",
+        "Kigali",
+        "Huye"
+      ],
+      "correct_index": 1,
+      "explanation": "Kigali is the capital."
+    },
+    {
+      "prompt": "Which colours are on the flag of Rwanda?",
+      "options": [
+        "Red, white and black",
+        "Orange and purple",
+        "Blue, yellow and green"
+      ],
+      "correct_index": 2,
+      "explanation": "The flag is blue, yellow and green with a golden sun."
+    },
+    {
+      "prompt": "Bugesera is a...",
+      "options": [
+        "District",
+        "Country",
+        "Continent"
+      ],
+      "correct_index": 0,
+      "explanation": "Bugesera is a district in the Eastern Province."
+    }
+  ]
+}

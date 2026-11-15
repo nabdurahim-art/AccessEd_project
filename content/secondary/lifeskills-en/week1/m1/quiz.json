@@ -1,0 +1,35 @@
+{
+  "pass_mark": 70,
+  "questions": [
+    {
+      "prompt": "How long should you scrub your hands with soap?",
+      "options": [
+        "5 seconds",
+        "At least 20 seconds",
+        "1 hour"
+      ],
+      "correct_index": 1,
+      "explanation": "Scrub for at least 20 seconds."
+    },
+    {
+      "prompt": "When should you wash your hands?",
+      "options": [
+        "Before eating",
+        "Only on Sundays",
+        "Never if they look clean"
+      ],
+      "correct_index": 0,
+      "explanation": "Always wash before eating."
+    },
+    {
+      "prompt": "Where else should you scrub?",
+      "options": [
+        "Only the palms",
+        "Only the thumbs",
+        "Between the fingers and under the nails"
+      ],
+      "correct_index": 2,
+      "explanation": "Germs hide between fingers and under nails."
+    }
+  ]
+}

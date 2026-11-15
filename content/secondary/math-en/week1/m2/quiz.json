@@ -1,0 +1,35 @@
+{
+  "pass_mark": 70,
+  "questions": [
+    {
+      "prompt": "25 + 14 = ?",
+      "options": [
+        "29",
+        "49",
+        "39"
+      ],
+      "correct_index": 2,
+      "explanation": "5 + 4 = 9 and 2 + 1 = 3, so 39."
+    },
+    {
+      "prompt": "38 - 12 = ?",
+      "options": [
+        "26",
+        "50",
+        "46"
+      ],
+      "correct_index": 0,
+      "explanation": "8 - 2 = 6 and 3 - 1 = 2, so 26."
+    },
+    {
+      "prompt": "You have 500 RWF and spend 150 RWF. How much is left?",
+      "options": [
+        "650 RWF",
+        "350 RWF",
+        "450 RWF"
+      ],
+      "correct_index": 1,
+      "explanation": "500 - 150 = 350."
+    }
+  ]
+}

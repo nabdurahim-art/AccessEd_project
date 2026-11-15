@@ -1,0 +1,21 @@
+{
+  "title": "Week 1: Letters and sounds",
+  "week_number": 1,
+  "modules": [
+    {
+      "key": "m1",
+      "title": "Vowels and consonants",
+      "duration_min": 10
+    },
+    {
+      "key": "m2",
+      "title": "Building short words",
+      "duration_min": 12
+    },
+    {
+      "key": "m3",
+      "title": "Reading a short sentence",
+      "duration_min": 12
+    }
+  ]
+}

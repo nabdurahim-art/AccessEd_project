@@ -1,0 +1,35 @@
+{
+  "pass_mark": 70,
+  "questions": [
+    {
+      "prompt": "How does a sentence start?",
+      "options": [
+        "With a small letter",
+        "With a capital letter",
+        "With a number"
+      ],
+      "correct_index": 1,
+      "explanation": "A sentence starts with a capital letter."
+    },
+    {
+      "prompt": "What goes at the end of the sentence The sun is hot?",
+      "options": [
+        "A full stop",
+        "A capital letter",
+        "A space"
+      ],
+      "correct_index": 0,
+      "explanation": "A sentence ends with a full stop."
+    },
+    {
+      "prompt": "Which one is a sentence?",
+      "options": [
+        "hot",
+        "sun hot the",
+        "The sun is hot."
+      ],
+      "correct_index": 2,
+      "explanation": "It has a capital letter, a full stop and one idea."
+    }
+  ]
+}

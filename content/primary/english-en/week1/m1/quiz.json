@@ -1,0 +1,35 @@
+{
+  "pass_mark": 70,
+  "questions": [
+    {
+      "prompt": "What do you say in the morning?",
+      "options": [
+        "Good night",
+        "Goodbye",
+        "Good morning"
+      ],
+      "correct_index": 2,
+      "explanation": "We say good morning in the morning."
+    },
+    {
+      "prompt": "Someone asks: How are you? A good answer is...",
+      "options": [
+        "I am fine, thank you.",
+        "Goodbye.",
+        "Good night."
+      ],
+      "correct_index": 0,
+      "explanation": "We answer: I am fine, thank you."
+    },
+    {
+      "prompt": "Which question asks for a name?",
+      "options": [
+        "How old are you?",
+        "What is your name?",
+        "Where is the market?"
+      ],
+      "correct_index": 1,
+      "explanation": "What is your name? asks for a name."
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "pass_mark": 70,
+  "questions": [
+    {
+      "prompt": "How many letters are in the English alphabet?",
+      "options": [
+        "24",
+        "26",
+        "28"
+      ],
+      "correct_index": 1,
+      "explanation": "There are 26 letters."
+    },
+    {
+      "prompt": "Which of these letters is a vowel?",
+      "options": [
+        "T",
+        "M",
+        "E"
+      ],
+      "correct_index": 2,
+      "explanation": "The vowels are A, E, I, O, U."
+    },
+    {
+      "prompt": "Which letter is the vowel in the word sun?",
+      "options": [
+        "u",
+        "s",
+        "n"
+      ],
+      "correct_index": 0,
+      "explanation": "Sun has the vowel u."
+    }
+  ]
+}

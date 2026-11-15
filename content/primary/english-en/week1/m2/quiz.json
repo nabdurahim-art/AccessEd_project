@@ -1,0 +1,35 @@
+{
+  "pass_mark": 70,
+  "questions": [
+    {
+      "prompt": "Which word is a colour?",
+      "options": [
+        "Pen",
+        "Chair",
+        "Green"
+      ],
+      "correct_index": 2,
+      "explanation": "Green is a colour."
+    },
+    {
+      "prompt": "You write with a...",
+      "options": [
+        "Pen",
+        "Chair",
+        "Door"
+      ],
+      "correct_index": 0,
+      "explanation": "A pen is for writing."
+    },
+    {
+      "prompt": "Finish the sentence: This is a ___ bag.",
+      "options": [
+        "sit",
+        "red",
+        "door"
+      ],
+      "correct_index": 1,
+      "explanation": "Red is a colour word. This is a red bag."
+    }
+  ]
+}
