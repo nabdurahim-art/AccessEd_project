@@ -251,3 +251,53 @@ a.course { text-decoration: none; color: inherit; }
 .profile-head p { margin: 2px 0 0; }
 .photo-actions { display: flex; flex-wrap: wrap; gap: 10px; margin: 16px 0 4px; }
 .photo-actions .btn { width: auto; min-height: 44px; font-size: 15px; padding: 0 16px; }
+
+/* admin: publish content */
+a.btn { text-decoration: none; }
+.pack.is-fail { border-color: var(--error); }
+.fail-mark { display: inline-flex; color: var(--error); }
+.fail-list { margin: 8px 0 0; padding-left: 18px; font-size: 14px; color: var(--error); }
+.admin-line { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-top: 6px; font-size: 14px; color: var(--muted); }
+#queue { margin-top: 12px; }
+.admin-cta { margin: 0 0 16px; max-width: 420px; }
+
+.role-chip { display: inline-block; margin: 0 0 12px; padding: 4px 12px; border-radius: 999px; font-size: 14px; font-weight: 700; }
+.role-chip--admin { background: var(--tint-sun); color: var(--warning); }
+.role-chip--learner { background: var(--primary-soft); color: var(--primary); }
+
+/* lesson editor */
+.field textarea, .field select {
+  width: 100%; padding: 12px 14px; font: inherit; border: 1.5px solid var(--border);
+  border-radius: var(--radius); background: var(--surface); color: var(--text);
+}
+.field select { min-height: 52px; }
+.field textarea { line-height: 1.5; resize: vertical; min-height: 84px; }
+.field textarea.ed-body { min-height: 220px; }
+.field input:disabled, .field select:disabled, .segment button:disabled { opacity: .6; }
+.field .hint, .ed-bar .hint, .ed-lesson .hint { font-size: 14px; color: var(--muted); margin: 6px 0 0; }
+.ed-sec { margin-bottom: 24px; }
+.ed-lesson { margin-bottom: 14px; }
+.ed-lesson-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+.ed-tools { display: flex; gap: 6px; flex-wrap: wrap; }
+.ed-tools .btn, .ed-q .btn--sm, .ed-answers .btn--sm, .ed-lesson > .btn--sm { width: auto; min-width: 44px; }
+.ed-lesson > .btn--sm { margin-bottom: 16px; }
+.ed-q { border-top: 1px dashed var(--line); padding-top: 12px; margin-top: 12px; }
+.ed-answers { border: 0; padding: 0; margin: 0 0 16px; }
+.ed-answers legend { font-weight: 700; margin-bottom: 8px; padding: 0; }
+.ed-opt { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; }
+.ed-opt input[type="text"] { flex: 1; min-width: 0; min-height: 48px; padding: 0 12px; font: inherit;
+  border: 1.5px solid var(--border); border-radius: var(--radius); background: var(--surface); color: var(--text); }
+.ed-opt input[type="radio"] { width: 24px; height: 24px; flex: none; accent-color: var(--primary); }
+.ed-preview { background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius); padding: 4px 14px; }
+.ed-box { border-radius: var(--radius); padding: 12px 14px; margin-bottom: 14px; }
+.ed-box ul { margin: 8px 0 0; padding-left: 18px; }
+.ed-box--ok { background: var(--tint-green); color: var(--good); }
+.ed-box--bad { border: 1.5px solid var(--error); color: var(--error); }
+.ed-bar { position: sticky; bottom: 0; background: var(--bg); padding: 12px 0 8px; border-top: 1px solid var(--line); margin-top: 16px; z-index: 2; }
+.ed-bar .btn { margin-top: 8px; }
+.ed-lesson audio { width: 100%; margin-bottom: 8px; }
+@media (min-width: 900px) { #ed { max-width: 760px; } }
+.admin-line .btn--sm { width: auto; min-height: 36px; padding: 0 12px; font-size: 14px; }
+.admin-line { align-items: center; flex-wrap: nowrap; }
+.admin-meta { display: flex; flex-direction: column; min-width: 0; }
+.admin-meta small { color: var(--muted); font-weight: 400; }

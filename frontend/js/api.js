@@ -65,3 +65,53 @@ export async function fetchPack(packId) {
 
 /* sync */
 export const syncBatch = (body) => request('/sync', { method: 'POST', body });
+
+/* admin: publish content (admin accounts only) */
+export const getPublished = () => request('/content/admin/published');
+
+// The body is the zip file itself, so the browser sends it in one piece.
+export async function uploadPack(file) {
+  let res;
+  try {
+    res = await fetch(`${API_URL}/content/admin/upload`, {
+      method: 'POST', headers: { 'Content-Type': 'application/zip', ...authHeaders() }, body: file,
+    });
+  } catch {
+    throw new ApiError('NETWORK', 0);
+  }
+  let data = null;
+  try { data = await res.json(); } catch {}
+  if (!res.ok) {
+    if (res.status === 401) window.dispatchEvent(new Event('session-expired'));
+    const err = new ApiError((data && data.error) || 'REQUEST_FAILED', res.status);
+    err.details = (data && data.details) || [];
+    throw err;
+  }
+  return data;
+}
+
+/* admin: lesson editor */
+async function adminFetch(path, { method = 'GET', json, raw, type } = {}) {
+  const headers = { ...authHeaders() };
+  let body;
+  if (json !== undefined) { headers['Content-Type'] = 'application/json'; body = JSON.stringify(json); }
+  else if (raw !== undefined) { headers['Content-Type'] = type; body = raw; }
+  let res;
+  try {
+    res = await fetch(API_URL + path, { method, headers, body });
+  } catch {
+    throw new ApiError('NETWORK', 0);
+  }
+  let data = null;
+  try { data = await res.json(); } catch {}
+  if (!res.ok) {
+    if (res.status === 401) window.dispatchEvent(new Event('session-expired'));
+    const err = new ApiError((data && data.error) || 'REQUEST_FAILED', res.status);
+    err.details = (data && data.details) || [];
+    throw err;
+  }
+  return data;
+}
+export const getPackSource = (packId) => adminFetch(`/content/admin/packs/${packId}/source`);
+export const saveLessons = (spec) => adminFetch('/content/admin/lessons', { method: 'POST', json: spec });
+export const uploadAudio = (file) => adminFetch('/content/admin/audio', { method: 'POST', raw: file, type: 'audio/mpeg' });

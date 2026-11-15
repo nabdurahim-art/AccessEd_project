@@ -61,8 +61,12 @@ export function createLearnScreens(ctx) {
     const u = store.getUser() || {};
     $app.innerHTML = `
       <div class="home-head">${avatarHTML(u, 56)}<h1>${esc(t('hi', { name: u.full_name || u.username || '' }))}</h1></div>
+      <p class="role-chip role-chip--${u.role === 'admin' ? 'admin' : 'learner'}">${esc(t('loggedInAs', { role: t(u.role === 'admin' ? 'roleAdmin' : 'roleLearner') }))} · @${esc(u.username || '')}</p>
       <div class="stats">${icon('flame', 20)} ${esc(t('days', { n: u.streak_days ?? 0 }))} <span class="pts">${u.points ?? 0} pts</span></div>
+      ${u.role === 'admin' ? `<a class="btn btn--primary admin-cta" id="back-admin" href="#/content">${esc(t('backToAdmin'))}</a>` : ''}
       <h2>${esc(t('yourCourses'))}</h2><div id="list"><p class="muted">${esc(t('loading'))}</p></div>`;
+    const back = $app.querySelector('#back-admin');
+    if (back) back.addEventListener('click', () => store.setView('admin'));
     fillCourseList(id);
   }
 

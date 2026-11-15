@@ -327,3 +327,4 @@ Object.assign(strings.rw, { installApp: 'Shyira AccessEd kuri telefoni', install
 Object.assign(strings.en, { schoolLevel: 'School level', levelPrimary: 'Primary', levelSecondary: 'Secondary', noCoursesLevel: 'No courses in this level yet.' });
 Object.assign(strings.fr, { schoolLevel: 'Niveau scolaire', levelPrimary: 'Primaire', levelSecondary: 'Secondaire', noCoursesLevel: "Aucun cours dans ce niveau pour l'instant." });
 Object.assign(strings.rw, { schoolLevel: 'Urwego rw’amashuri', levelPrimary: 'Amashuri abanza', levelSecondary: 'Amashuri yisumbuye', noCoursesLevel: 'Nta masomo ari muri uru rwego kugeza ubu.' });
+
