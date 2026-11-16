@@ -1,0 +1,105 @@
+{
+  "pass_mark": 70,
+  "questions": [
+    {
+      "prompt": "The number of goals scored in a football match is...",
+      "options": [
+        "discrete data",
+        "continuous data",
+        "qualitative data"
+      ],
+      "correct_index": 0,
+      "explanation": "Goals are counted in whole numbers, so the data is discrete."
+    },
+    {
+      "prompt": "Two angles on a straight line are 110° and p. What is p?",
+      "options": [
+        "110°",
+        "70°",
+        "250°"
+      ],
+      "correct_index": 1,
+      "explanation": "Angles on a straight line add up to 180°: 180 - 110 = 70. 250 comes from using 360."
+    },
+    {
+      "prompt": "The frequencies in a table are 4, 6, 10. What are the cumulative frequencies?",
+      "options": [
+        "4, 6, 10",
+        "20, 16, 10",
+        "4, 10, 20"
+      ],
+      "correct_index": 2,
+      "explanation": "Keep a running total from the top: 4, 4+6=10, 10+10=20."
+    },
+    {
+      "prompt": "What is the mean of 9, 11, 13, 7?",
+      "options": [
+        "40",
+        "11",
+        "10"
+      ],
+      "correct_index": 2,
+      "explanation": "The sum is 40 and there are 4 values: 40 ÷ 4 = 10."
+    },
+    {
+      "prompt": "What is the sum of the interior angles of a quadrilateral?",
+      "options": [
+        "360°",
+        "720°",
+        "180°"
+      ],
+      "correct_index": 0,
+      "explanation": "(4 - 2) × 180 = 360. 180° is for a triangle."
+    },
+    {
+      "prompt": "In a table, the value 5 has frequency 4 and the value 10 has frequency 1. What is the mean?",
+      "options": [
+        "15",
+        "7.5",
+        "6"
+      ],
+      "correct_index": 2,
+      "explanation": "(5 × 4) + (10 × 1) = 30 and the total frequency is 5: 30 ÷ 5 = 6. (5 + 10) ÷ 2 = 7.5 ignores the frequencies."
+    },
+    {
+      "prompt": "What is the median of 8, 2, 6, 4, 10?",
+      "options": [
+        "30",
+        "6",
+        "2"
+      ],
+      "correct_index": 1,
+      "explanation": "In order: 2, 4, 6, 8, 10. The middle value is 6."
+    },
+    {
+      "prompt": "A transversal crosses two parallel lines. One angle is 70°. What is its corresponding angle?",
+      "options": [
+        "70°",
+        "110°",
+        "20°"
+      ],
+      "correct_index": 0,
+      "explanation": "Corresponding angles are equal. 110° would be the co-interior angle."
+    },
+    {
+      "prompt": "What is the mode of 5, 8, 5, 9, 8, 5?",
+      "options": [
+        "5",
+        "8",
+        "9"
+      ],
+      "correct_index": 0,
+      "explanation": "5 appears three times. 8 appears only twice."
+    },
+    {
+      "prompt": "An angle of 300° is...",
+      "options": [
+        "reflex",
+        "obtuse",
+        "acute"
+      ],
+      "correct_index": 0,
+      "explanation": "300° is between 180° and 360°, so it is reflex."
+    }
+  ]
+}

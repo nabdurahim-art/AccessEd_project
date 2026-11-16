@@ -1,0 +1,75 @@
+{
+  "pass_mark": 70,
+  "questions": [
+    {
+      "prompt": "Choose the correct word: Last weekend we ____ to a football match.",
+      "options": [
+        "goed",
+        "went",
+        "go"
+      ],
+      "correct_index": 1,
+      "explanation": "Go is irregular: its past simple is went. We never say goed."
+    },
+    {
+      "prompt": "What is the past simple of 'meet'?",
+      "options": [
+        "meet",
+        "met",
+        "meeted"
+      ],
+      "correct_index": 1,
+      "explanation": "Meet is irregular: met. It does not take -ed."
+    },
+    {
+      "prompt": "Choose the correct word: I ____ seven years old when I started school.",
+      "options": [
+        "am",
+        "was",
+        "were"
+      ],
+      "correct_index": 1,
+      "explanation": "With I, the past of be is was. Were goes with you, we and they. Am is the present."
+    },
+    {
+      "prompt": "Choose the correct word: They ____ happy yesterday.",
+      "options": [
+        "is",
+        "were",
+        "was"
+      ],
+      "correct_index": 1,
+      "explanation": "With they, the past of be is were. Was goes with I, he, she and it."
+    },
+    {
+      "prompt": "Which connector shows the last thing that happened?",
+      "options": [
+        "First",
+        "Finally",
+        "Then"
+      ],
+      "correct_index": 1,
+      "explanation": "Finally comes at the end of a list of events. First is for the start."
+    },
+    {
+      "prompt": "Which story is in the correct order?",
+      "options": [
+        "Then, I woke up. Finally, I washed my face. First, I walked to school.",
+        "Finally, I woke up. First, I walked to school. Then, I washed my face.",
+        "First, I woke up. Then, I washed my face. Finally, I walked to school."
+      ],
+      "correct_index": 2,
+      "explanation": "First starts the story, Then gives the next step and Finally ends it."
+    },
+    {
+      "prompt": "Choose the correct word: He ____ his first book at school.",
+      "options": [
+        "gets",
+        "getted",
+        "got"
+      ],
+      "correct_index": 2,
+      "explanation": "Get is irregular: got. Gets is the present simple."
+    }
+  ]
+}

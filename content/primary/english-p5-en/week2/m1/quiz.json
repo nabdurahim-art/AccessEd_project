@@ -1,0 +1,65 @@
+{
+  "pass_mark": 70,
+  "questions": [
+    {
+      "prompt": "Choose the correct word: A bus is ____ than a bicycle.",
+      "options": [
+        "more big",
+        "bigger",
+        "biger"
+      ],
+      "correct_index": 1,
+      "explanation": "Big is short and ends in one vowel and one consonant, so the g doubles: bigger. Short adjectives take -er, not more."
+    },
+    {
+      "prompt": "Choose the correct word: Lake Kivu is ____ than Lake Muhazi.",
+      "options": [
+        "deepest",
+        "deeper",
+        "deep"
+      ],
+      "correct_index": 1,
+      "explanation": "To compare two things, add -er: deeper than. Deepest is for comparing one with all the others."
+    },
+    {
+      "prompt": "Which word comes after a comparative when we compare two things?",
+      "options": [
+        "than",
+        "then",
+        "that"
+      ],
+      "correct_index": 0,
+      "explanation": "We say taller than, bigger than. Then is a time word and that is a pointing word."
+    },
+    {
+      "prompt": "What is the comparative of 'heavy'?",
+      "options": [
+        "more heavy",
+        "heavyer",
+        "heavier"
+      ],
+      "correct_index": 2,
+      "explanation": "Heavy ends in a consonant and y, so y changes to -ier: heavier."
+    },
+    {
+      "prompt": "Which sentence is correct?",
+      "options": [
+        "My brother is tall than me.",
+        "My brother is more taller than me.",
+        "My brother is taller than me."
+      ],
+      "correct_index": 2,
+      "explanation": "Taller already means more tall, so we do not add more. And tall alone cannot compare."
+    },
+    {
+      "prompt": "Choose the correct word: The market is ____ than the bridge.",
+      "options": [
+        "wideer",
+        "wider",
+        "widder"
+      ],
+      "correct_index": 1,
+      "explanation": "Wide already ends in e, so add only -r: wider."
+    }
+  ]
+}

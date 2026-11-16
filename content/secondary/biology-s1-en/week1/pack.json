@@ -1,0 +1,26 @@
+{
+  "title": "Week 1: Classifying living things",
+  "week_number": 1,
+  "modules": [
+    {
+      "key": "m1",
+      "title": "Why we classify, and how to use a key",
+      "duration_min": 10
+    },
+    {
+      "key": "m2",
+      "title": "Groups inside groups, and scientific names",
+      "duration_min": 10
+    },
+    {
+      "key": "m3",
+      "title": "The five kingdoms",
+      "duration_min": 10
+    },
+    {
+      "key": "recap",
+      "title": "Week 1 recap: classifying living things",
+      "duration_min": 10
+    }
+  ]
+}

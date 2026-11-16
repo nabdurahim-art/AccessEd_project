@@ -1,0 +1,105 @@
+{
+  "pass_mark": 70,
+  "questions": [
+    {
+      "prompt": "Choose the correct word: We ____ the house last weekend.",
+      "options": [
+        "cleaning",
+        "cleaned",
+        "clean"
+      ],
+      "correct_index": 1,
+      "explanation": "Last weekend is in the past, so the verb takes -ed: cleaned."
+    },
+    {
+      "prompt": "What is the past simple of 'carry'?",
+      "options": [
+        "caried",
+        "carryed",
+        "carried"
+      ],
+      "correct_index": 2,
+      "explanation": "Carry ends in a consonant and y, so y changes to -ied: carried."
+    },
+    {
+      "prompt": "Choose the correct word: Did you ____ your mother yesterday?",
+      "options": [
+        "helps",
+        "helped",
+        "help"
+      ],
+      "correct_index": 2,
+      "explanation": "After did, use the plain verb: did you help. Did already shows the past."
+    },
+    {
+      "prompt": "What is the past simple of 'eat'?",
+      "options": [
+        "eat",
+        "eated",
+        "ate"
+      ],
+      "correct_index": 2,
+      "explanation": "Eat is irregular: ate. It does not take -ed."
+    },
+    {
+      "prompt": "Choose the correct word: We ____ at the market on Saturday.",
+      "options": [
+        "was",
+        "are",
+        "were"
+      ],
+      "correct_index": 2,
+      "explanation": "With we, the past of be is were. Are is the present."
+    },
+    {
+      "prompt": "Which connector do you use for the first thing that happened?",
+      "options": [
+        "After that",
+        "First",
+        "Finally"
+      ],
+      "correct_index": 1,
+      "explanation": "First starts the story. Finally ends it."
+    },
+    {
+      "prompt": "Choose the correct word: My sister ____ going to cook rice tonight.",
+      "options": [
+        "are",
+        "is",
+        "am"
+      ],
+      "correct_index": 1,
+      "explanation": "My sister is she, and she goes with is."
+    },
+    {
+      "prompt": "Which sentence is about the future?",
+      "options": [
+        "I visited my uncle yesterday.",
+        "I went to my uncle's house last week.",
+        "I am going to visit my uncle tomorrow."
+      ],
+      "correct_index": 2,
+      "explanation": "Going to and tomorrow both point to the future. Visited and went are past simple."
+    },
+    {
+      "prompt": "Choose the correct word: She ____ to be an engineer.",
+      "options": [
+        "wanting",
+        "want",
+        "wants"
+      ],
+      "correct_index": 2,
+      "explanation": "With she we add s: she wants to be."
+    },
+    {
+      "prompt": "Choose the correct word: I would like to ____ a house for my parents.",
+      "options": [
+        "building",
+        "built",
+        "build"
+      ],
+      "correct_index": 2,
+      "explanation": "After would like to, use the plain verb: build. Built is the past simple."
+    }
+  ]
+}

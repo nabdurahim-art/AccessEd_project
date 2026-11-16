@@ -1,0 +1,105 @@
+{
+  "pass_mark": 70,
+  "questions": [
+    {
+      "prompt": "Sorting organisms into groups by their similarities and differences is called...",
+      "options": [
+        "classification",
+        "photosynthesis",
+        "reproduction"
+      ],
+      "correct_index": 0,
+      "explanation": "Sorting into groups is classification. The other two are life processes."
+    },
+    {
+      "prompt": "How many choices does each step of a dichotomous key give?",
+      "options": [
+        "Five",
+        "Two",
+        "Three"
+      ],
+      "correct_index": 1,
+      "explanation": "Di means two. Each step has a pair of statements."
+    },
+    {
+      "prompt": "A key says: Step 1: it has legs, go to Step 2; it has no legs, go to Step 3. Step 2: it has feathers, it is a hen; it has fur, it is a goat. Step 3: it has fins, it is a tilapia; it has no fins, it is an earthworm. An animal has legs and fur. What is it?",
+      "options": [
+        "A goat",
+        "A hen",
+        "A tilapia"
+      ],
+      "correct_index": 0,
+      "explanation": "Legs sends you to Step 2. Fur at Step 2 gives the goat. The hen has feathers."
+    },
+    {
+      "prompt": "Which of these groups is the smallest?",
+      "options": [
+        "Species",
+        "Genus",
+        "Kingdom"
+      ],
+      "correct_index": 0,
+      "explanation": "The species is the smallest group. A genus can hold several species."
+    },
+    {
+      "prompt": "Which level comes straight after Kingdom?",
+      "options": [
+        "Phylum",
+        "Family",
+        "Class"
+      ],
+      "correct_index": 0,
+      "explanation": "The order is kingdom, phylum, class, order, family, genus, species."
+    },
+    {
+      "prompt": "Which scientific name is written correctly?",
+      "options": [
+        "Bos Taurus",
+        "bos taurus",
+        "Bos taurus"
+      ],
+      "correct_index": 2,
+      "explanation": "Capital letter for the genus, small letter for the species."
+    },
+    {
+      "prompt": "In the scientific name Apis mellifera, the word mellifera is the...",
+      "options": [
+        "family",
+        "species",
+        "genus"
+      ],
+      "correct_index": 1,
+      "explanation": "The second name is the species. The first name, Apis, is the genus."
+    },
+    {
+      "prompt": "Yeast does not photosynthesise and is used to make bread rise. Which kingdom does it belong to?",
+      "options": [
+        "Animalia",
+        "Plantae",
+        "Fungi"
+      ],
+      "correct_index": 2,
+      "explanation": "Yeast is a single-celled fungus. It has no chlorophyll, so it is not a plant."
+    },
+    {
+      "prompt": "Which kingdom has cells with no true nucleus?",
+      "options": [
+        "Plantae",
+        "Protoctista",
+        "Monera"
+      ],
+      "correct_index": 2,
+      "explanation": "Monera, such as bacteria, have no membrane around their genetic material."
+    },
+    {
+      "prompt": "Which feature do plants have that animals do not?",
+      "options": [
+        "The ability to reproduce",
+        "Chlorophyll for photosynthesis",
+        "Cells"
+      ],
+      "correct_index": 1,
+      "explanation": "Both plants and animals have cells and reproduce. Only plants have chlorophyll to make their own food."
+    }
+  ]
+}

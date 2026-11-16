@@ -1,0 +1,66 @@
+{
+  "pass_mark": 70,
+  "questions": [
+    {
+      "prompt": "Which of these is a right angle?",
+      "options": [
+        "180°",
+        "45°",
+        "90°"
+      ],
+      "correct_index": 2,
+      "explanation": "A right angle is exactly 90°, like the corner of a book. 180° is a straight angle."
+    },
+    {
+      "prompt": "An angle measures 130°. What kind of angle is it?",
+      "options": [
+        "Right",
+        "Obtuse",
+        "Acute"
+      ],
+      "correct_index": 1,
+      "explanation": "130° is bigger than 90° and smaller than 180°, so it is obtuse. Acute angles are smaller than 90°."
+    },
+    {
+      "prompt": "You bisect an angle of 90°. How big is each part?",
+      "options": [
+        "180°",
+        "30°",
+        "45°"
+      ],
+      "correct_index": 2,
+      "explanation": "Bisect means cut into two equal parts: 90 ÷ 2 = 45. Doubling gives 180, which is the opposite of bisecting."
+    },
+    {
+      "prompt": "You bisect 60°, then you bisect one of the parts again. What angle do you get?",
+      "options": [
+        "20°",
+        "120°",
+        "30°",
+        "15°"
+      ],
+      "correct_index": 3,
+      "explanation": "60 ÷ 2 = 30, then 30 ÷ 2 = 15. If you stop after one cut you only reach 30°."
+    },
+    {
+      "prompt": "An angle was bisected. Each part is 35°. How big was the whole angle?",
+      "options": [
+        "70°",
+        "17.5°",
+        "35°"
+      ],
+      "correct_index": 0,
+      "explanation": "Two equal parts make the whole: 35 + 35 = 70. Dividing 35 by 2 goes the wrong way."
+    },
+    {
+      "prompt": "Where do you put the centre of the protractor?",
+      "options": [
+        "At the end of the longer line",
+        "On the point where the two lines meet",
+        "Anywhere inside the angle"
+      ],
+      "correct_index": 1,
+      "explanation": "The centre sits on the meeting point, with the zero line along one side. Anywhere else gives a wrong reading."
+    }
+  ]
+}

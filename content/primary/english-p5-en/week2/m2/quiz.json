@@ -1,0 +1,65 @@
+{
+  "pass_mark": 70,
+  "questions": [
+    {
+      "prompt": "Choose the correct words: Travelling by aeroplane is ____ than travelling by bus.",
+      "options": [
+        "more expensive",
+        "more expensiver",
+        "expensiver"
+      ],
+      "correct_index": 0,
+      "explanation": "Expensive is a long adjective, so it takes more: more expensive. It never takes -er."
+    },
+    {
+      "prompt": "What is the comparative of 'good'?",
+      "options": [
+        "more good",
+        "better",
+        "gooder"
+      ],
+      "correct_index": 1,
+      "explanation": "Good is irregular: better. We never say gooder."
+    },
+    {
+      "prompt": "What is the comparative of 'bad'?",
+      "options": [
+        "worse",
+        "more bad",
+        "badder"
+      ],
+      "correct_index": 0,
+      "explanation": "Bad is irregular: worse."
+    },
+    {
+      "prompt": "Choose the correct word: A bus carries ____ people than a motorbike.",
+      "options": [
+        "many",
+        "much",
+        "more"
+      ],
+      "correct_index": 2,
+      "explanation": "The comparative of many is more: more people than. Many alone cannot compare."
+    },
+    {
+      "prompt": "Which sentence is correct?",
+      "options": [
+        "This road is more dangerous that one.",
+        "This road is dangerouser than that one.",
+        "This road is more dangerous than that one."
+      ],
+      "correct_index": 2,
+      "explanation": "Dangerous is long, so it takes more, and the comparing word is than, not that."
+    },
+    {
+      "prompt": "Choose the correct word: Huye is ____ from Kigali than Muhanga.",
+      "options": [
+        "farer",
+        "farther",
+        "more far"
+      ],
+      "correct_index": 1,
+      "explanation": "Far is irregular: farther."
+    }
+  ]
+}

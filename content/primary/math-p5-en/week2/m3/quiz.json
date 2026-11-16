@@ -1,0 +1,65 @@
+{
+  "pass_mark": 70,
+  "questions": [
+    {
+      "prompt": "What does a line graph show best?",
+      "options": [
+        "The names of the pupils",
+        "The colours that pupils like",
+        "How something changes over time"
+      ],
+      "correct_index": 2,
+      "explanation": "A line graph follows one value as time passes. Favourite colours are groups, so a bar chart is better for them."
+    },
+    {
+      "prompt": "On a line graph, the line goes down from Monday to Tuesday. What does that mean?",
+      "options": [
+        "The value went up",
+        "Nothing changed",
+        "The value went down"
+      ],
+      "correct_index": 2,
+      "explanation": "A line going down means the value is falling. A flat line would mean nothing changed."
+    },
+    {
+      "prompt": "The temperature was 16°C at 8 am, 20°C at 10 am, 25°C at 12 noon, 27°C at 2 pm and 23°C at 4 pm. When was it hottest?",
+      "options": [
+        "12 noon",
+        "2 pm",
+        "4 pm"
+      ],
+      "correct_index": 1,
+      "explanation": "The highest value is 27°C, at 2 pm. It was still rising at 12 noon."
+    },
+    {
+      "prompt": "The temperature was 16°C at 8 am, 20°C at 10 am, 25°C at 12 noon, 27°C at 2 pm and 23°C at 4 pm. How much did the temperature rise between 8 am and 12 noon?",
+      "options": [
+        "4°C",
+        "9°C",
+        "41°C"
+      ],
+      "correct_index": 1,
+      "explanation": "Subtract: 25 - 16 = 9. Adding the two gives 41, and 4 is only the rise from 8 am to 10 am."
+    },
+    {
+      "prompt": "The temperature was 16°C at 8 am, 20°C at 10 am, 25°C at 12 noon, 27°C at 2 pm and 23°C at 4 pm. Between which times did the temperature fall?",
+      "options": [
+        "2 pm to 4 pm",
+        "12 noon to 2 pm",
+        "8 am to 10 am"
+      ],
+      "correct_index": 0,
+      "explanation": "It went from 27°C down to 23°C between 2 pm and 4 pm. Before that it was rising each time."
+    },
+    {
+      "prompt": "A maize plant is 10 cm tall in week 1 and 30 cm tall in week 4. How much did it grow?",
+      "options": [
+        "3 cm",
+        "20 cm",
+        "40 cm"
+      ],
+      "correct_index": 1,
+      "explanation": "Growth is the difference: 30 - 10 = 20 cm. Adding the two heights gives 40, which is not the growth."
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "pass_mark": 70,
+  "questions": [
+    {
+      "prompt": "What is the sum of the interior angles of a pentagon?",
+      "options": [
+        "720°",
+        "360°",
+        "900°",
+        "540°"
+      ],
+      "correct_index": 3,
+      "explanation": "(5 - 2) × 180 = 540. Forgetting to subtract 2 gives 5 × 180 = 900."
+    },
+    {
+      "prompt": "What is the sum of the exterior angles of a hexagon?",
+      "options": [
+        "1,080°",
+        "720°",
+        "360°"
+      ],
+      "correct_index": 2,
+      "explanation": "The exterior angles of any polygon add up to 360°. 720° is the sum of the interior angles of a hexagon."
+    },
+    {
+      "prompt": "How big is each interior angle of a regular hexagon?",
+      "options": [
+        "60°",
+        "720°",
+        "120°"
+      ],
+      "correct_index": 2,
+      "explanation": "The sum is 720° and there are 6 equal angles: 720 ÷ 6 = 120. 60° is each exterior angle."
+    },
+    {
+      "prompt": "A quadrilateral has angles of 100°, 80° and 95°. What is the fourth angle?",
+      "options": [
+        "95°",
+        "85°",
+        "275°"
+      ],
+      "correct_index": 1,
+      "explanation": "The angles of a quadrilateral add up to 360°: 100 + 80 + 95 = 275 and 360 - 275 = 85."
+    },
+    {
+      "prompt": "How big is each exterior angle of a regular octagon?",
+      "options": [
+        "45°",
+        "360°",
+        "135°"
+      ],
+      "correct_index": 0,
+      "explanation": "360 ÷ 8 = 45. 135° is each interior angle of a regular octagon."
+    },
+    {
+      "prompt": "The interior angles of a polygon add up to 1,080°. How many sides does it have?",
+      "options": [
+        "6",
+        "8",
+        "10"
+      ],
+      "correct_index": 1,
+      "explanation": "1,080 ÷ 180 = 6, so n - 2 = 6 and n = 8. Stopping at 6 forgets to add the 2 back."
+    }
+  ]
+}

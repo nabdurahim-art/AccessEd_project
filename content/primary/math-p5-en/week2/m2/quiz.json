@@ -1,0 +1,66 @@
+{
+  "pass_mark": 70,
+  "questions": [
+    {
+      "prompt": "In a tally chart, what does a bundle of four strokes with one stroke across them mean?",
+      "options": [
+        "10",
+        "4",
+        "5"
+      ],
+      "correct_index": 2,
+      "explanation": "The stroke across is the fifth mark, so a bundle is 5. Counting only the upright strokes gives 4."
+    },
+    {
+      "prompt": "A tally shows two full bundles and three more strokes. What is the frequency?",
+      "options": [
+        "23",
+        "13",
+        "5"
+      ],
+      "correct_index": 1,
+      "explanation": "Each bundle is 5: 5 + 5 + 3 = 13. Writing the 2 and the 3 side by side gives 23, which is wrong."
+    },
+    {
+      "prompt": "Pupils chose a favourite fruit: banana 8, mango 6, avocado 4, orange 2. Which fruit has the tallest bar?",
+      "options": [
+        "Orange",
+        "Mango",
+        "Banana"
+      ],
+      "correct_index": 2,
+      "explanation": "The tallest bar is the biggest frequency. Banana has 8, the most."
+    },
+    {
+      "prompt": "Pupils chose a favourite fruit: banana 8, mango 6, avocado 4, orange 2. How many more pupils chose banana than avocado?",
+      "options": [
+        "4",
+        "2",
+        "12"
+      ],
+      "correct_index": 0,
+      "explanation": "How many more means subtract: 8 - 4 = 4. Adding gives 12, which is how many chose the two fruits together."
+    },
+    {
+      "prompt": "Pupils chose a favourite fruit: banana 8, mango 6, avocado 4, orange 2. How many pupils were asked altogether?",
+      "options": [
+        "20",
+        "18",
+        "8",
+        "4"
+      ],
+      "correct_index": 0,
+      "explanation": "Add all the frequencies: 8 + 6 + 4 + 2 = 20. 8 is only the biggest group."
+    },
+    {
+      "prompt": "What does the height of a bar show?",
+      "options": [
+        "The width of the paper",
+        "The name of the group",
+        "The frequency (how many)"
+      ],
+      "correct_index": 2,
+      "explanation": "The height of each bar is the frequency. The name of the group is written under the bar."
+    }
+  ]
+}

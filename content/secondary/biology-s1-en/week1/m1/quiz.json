@@ -1,0 +1,65 @@
+{
+  "pass_mark": 70,
+  "questions": [
+    {
+      "prompt": "What is classification?",
+      "options": [
+        "Giving every animal a pet name",
+        "Sorting living things into groups by their similarities and differences",
+        "Counting how many animals live in a forest"
+      ],
+      "correct_index": 1,
+      "explanation": "Classification is sorting into groups using shared features. It is not naming pets or counting."
+    },
+    {
+      "prompt": "What is the science of classifying organisms called?",
+      "options": [
+        "Ecology",
+        "Taxonomy",
+        "Anatomy"
+      ],
+      "correct_index": 1,
+      "explanation": "Taxonomy is the science of classification. Anatomy studies body structure, and ecology studies organisms and their surroundings."
+    },
+    {
+      "prompt": "Why do scientists classify organisms?",
+      "options": [
+        "To make them grow faster",
+        "To make them easier to identify and study",
+        "Because all organisms are the same"
+      ],
+      "correct_index": 1,
+      "explanation": "Groups make millions of organisms easier to identify, study and talk about. Organisms are not all the same, which is why we need groups."
+    },
+    {
+      "prompt": "What does the word 'dichotomous' tell you about a key?",
+      "options": [
+        "Each step gives ten choices",
+        "Each step gives two choices",
+        "It only works for plants"
+      ],
+      "correct_index": 1,
+      "explanation": "Di means two. At each step you choose between two statements."
+    },
+    {
+      "prompt": "A key says: Step 1: it has legs, go to Step 2; it has no legs, go to Step 3. Step 2: it has feathers, it is a hen; it has fur, it is a goat. Step 3: it has fins, it is a tilapia; it has no fins, it is an earthworm. An animal has no legs and no fins. What is it?",
+      "options": [
+        "An earthworm",
+        "A hen",
+        "A tilapia"
+      ],
+      "correct_index": 0,
+      "explanation": "No legs sends you to Step 3. No fins at Step 3 gives the earthworm. The tilapia is the one with fins."
+    },
+    {
+      "prompt": "In a key, a hen and a goat both have legs. Which question separates them?",
+      "options": [
+        "Does it have feathers or fur?",
+        "Is it alive?",
+        "Does it have legs?"
+      ],
+      "correct_index": 0,
+      "explanation": "A useful question must give different answers for the two animals. Both have legs and both are alive."
+    }
+  ]
+}

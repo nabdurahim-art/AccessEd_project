@@ -1,0 +1,65 @@
+{
+  "pass_mark": 70,
+  "questions": [
+    {
+      "prompt": "Which part is the control centre of the cell?",
+      "options": [
+        "The vacuole",
+        "The cell membrane",
+        "The nucleus"
+      ],
+      "correct_index": 2,
+      "explanation": "The nucleus controls the cell and holds the hereditary information. The membrane controls only what goes in and out."
+    },
+    {
+      "prompt": "Which part controls what enters and leaves the cell?",
+      "options": [
+        "The cytoplasm",
+        "The mitochondrion",
+        "The cell membrane"
+      ],
+      "correct_index": 2,
+      "explanation": "The cell membrane is selectively permeable. The cytoplasm is the jelly-like substance inside."
+    },
+    {
+      "prompt": "In which organelles does the cell release energy?",
+      "options": [
+        "The vacuoles",
+        "The nucleus",
+        "The mitochondria"
+      ],
+      "correct_index": 2,
+      "explanation": "Cellular respiration takes place in the mitochondria. The nucleus is the control centre and does not release energy."
+    },
+    {
+      "prompt": "Why do muscle cells have many mitochondria?",
+      "options": [
+        "Muscle cells need a lot of energy",
+        "Muscle cells store a lot of water",
+        "Muscle cells make food from sunlight"
+      ],
+      "correct_index": 0,
+      "explanation": "Muscles do a lot of work, so their cells need many mitochondria to release energy."
+    },
+    {
+      "prompt": "What is the cytoplasm?",
+      "options": [
+        "A rigid outer layer",
+        "The hereditary information",
+        "A jelly-like substance in which reactions take place"
+      ],
+      "correct_index": 2,
+      "explanation": "The cytoplasm fills the cell and holds the organelles. The hereditary information is in the nucleus."
+    },
+    {
+      "prompt": "'Selectively permeable' means that the cell membrane...",
+      "options": [
+        "lets some substances pass and stops others",
+        "lets every substance pass",
+        "lets no substance pass"
+      ],
+      "correct_index": 0,
+      "explanation": "Selective means it chooses. Some substances pass through and others are kept in or out."
+    }
+  ]
+}

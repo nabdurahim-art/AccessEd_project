@@ -1,0 +1,26 @@
+{
+  "title": "Week 1: Points, lines and angles",
+  "week_number": 1,
+  "modules": [
+    {
+      "key": "m1",
+      "title": "Lines and types of angles",
+      "duration_min": 10
+    },
+    {
+      "key": "m2",
+      "title": "Angle facts: straight lines, points and parallel lines",
+      "duration_min": 10
+    },
+    {
+      "key": "m3",
+      "title": "Angles in polygons",
+      "duration_min": 10
+    },
+    {
+      "key": "recap",
+      "title": "Week 1 recap: points, lines and angles",
+      "duration_min": 10
+    }
+  ]
+}

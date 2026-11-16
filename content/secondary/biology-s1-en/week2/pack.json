@@ -1,0 +1,26 @@
+{
+  "title": "Week 2: Plant and animal cells",
+  "week_number": 2,
+  "modules": [
+    {
+      "key": "m1",
+      "title": "Cells: the building blocks of life",
+      "duration_min": 10
+    },
+    {
+      "key": "m2",
+      "title": "Inside a cell: the parts and their jobs",
+      "duration_min": 10
+    },
+    {
+      "key": "m3",
+      "title": "Plant cells and animal cells",
+      "duration_min": 10
+    },
+    {
+      "key": "recap",
+      "title": "Week 2 recap: plant and animal cells",
+      "duration_min": 10
+    }
+  ]
+}

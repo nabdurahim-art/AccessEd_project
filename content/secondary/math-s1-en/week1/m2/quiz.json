@@ -1,0 +1,66 @@
+{
+  "pass_mark": 70,
+  "questions": [
+    {
+      "prompt": "Two angles on a straight line are 2x and x. What is x?",
+      "options": [
+        "45°",
+        "120°",
+        "60°",
+        "90°"
+      ],
+      "correct_index": 2,
+      "explanation": "2x + x = 180, so 3x = 180 and x = 60. 120° is the size of the angle 2x, not x itself."
+    },
+    {
+      "prompt": "Three angles at a point are 140°, 85° and a. What is a?",
+      "options": [
+        "225°",
+        "45°",
+        "135°"
+      ],
+      "correct_index": 2,
+      "explanation": "Angles at a point add up to 360°: 140 + 85 = 225 and 360 - 225 = 135. 225 is only the sum of the two you know."
+    },
+    {
+      "prompt": "Two straight lines cross. One angle is 72°. What is the vertically opposite angle?",
+      "options": [
+        "72°",
+        "288°",
+        "108°"
+      ],
+      "correct_index": 0,
+      "explanation": "Vertically opposite angles are equal. 108° is the angle next to it on the straight line."
+    },
+    {
+      "prompt": "A transversal crosses two parallel lines. One angle is 56°. What is its corresponding angle?",
+      "options": [
+        "56°",
+        "124°",
+        "34°"
+      ],
+      "correct_index": 0,
+      "explanation": "Corresponding angles (the F shape) are equal. 124° would be the co-interior angle."
+    },
+    {
+      "prompt": "Two co-interior angles between parallel lines are 112° and y. What is y?",
+      "options": [
+        "112°",
+        "68°",
+        "248°"
+      ],
+      "correct_index": 1,
+      "explanation": "Co-interior angles add up to 180°: 180 - 112 = 68. They are not equal, and 248 comes from using 360."
+    },
+    {
+      "prompt": "Which pair of angles on parallel lines is NOT equal?",
+      "options": [
+        "Corresponding angles",
+        "Alternate angles",
+        "Co-interior angles"
+      ],
+      "correct_index": 2,
+      "explanation": "Co-interior angles add up to 180°. Alternate and corresponding angles are equal."
+    }
+  ]
+}

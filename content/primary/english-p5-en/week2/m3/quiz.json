@@ -1,0 +1,75 @@
+{
+  "pass_mark": 70,
+  "questions": [
+    {
+      "prompt": "Choose the correct words: Mount Karisimbi is ____ mountain in Rwanda.",
+      "options": [
+        "the highest",
+        "higher",
+        "the most high"
+      ],
+      "correct_index": 0,
+      "explanation": "It is compared with all the mountains in Rwanda, so use the superlative: the highest. High is short, so it takes -est, not most."
+    },
+    {
+      "prompt": "Which form compares one thing with all the others in a group?",
+      "options": [
+        "The superlative (tallest)",
+        "The plain adjective (tall)",
+        "The comparative (taller)"
+      ],
+      "correct_index": 0,
+      "explanation": "The superlative is for one against all the others. The comparative is for two things only."
+    },
+    {
+      "prompt": "What is the superlative of 'good'?",
+      "options": [
+        "the goodest",
+        "the best",
+        "the most good"
+      ],
+      "correct_index": 1,
+      "explanation": "Good is irregular: good, better, the best."
+    },
+    {
+      "prompt": "Choose the correct words: An aeroplane is ____ means of transport.",
+      "options": [
+        "fastest than",
+        "the fastest",
+        "the faster"
+      ],
+      "correct_index": 1,
+      "explanation": "The superlative is the fastest. Than is used with the comparative, not the superlative."
+    },
+    {
+      "prompt": "Choose the correct words: This is ____ dress in the shop.",
+      "options": [
+        "the beautifullest",
+        "the more beautiful",
+        "the most beautiful"
+      ],
+      "correct_index": 2,
+      "explanation": "Beautiful is a long adjective, so the superlative is the most beautiful. More is for comparing two."
+    },
+    {
+      "prompt": "Keza is taller than Aline. Aline is taller than Jane. Who is the shortest?",
+      "options": [
+        "Aline",
+        "Keza",
+        "Jane"
+      ],
+      "correct_index": 2,
+      "explanation": "Both Keza and Aline are taller than Jane, so Jane is the shortest of the three."
+    },
+    {
+      "prompt": "What is the superlative of 'big'?",
+      "options": [
+        "the biggest",
+        "the most big",
+        "the bigest"
+      ],
+      "correct_index": 0,
+      "explanation": "Big doubles the g, just as in bigger: the biggest."
+    }
+  ]
+}

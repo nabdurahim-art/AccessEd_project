@@ -1,0 +1,65 @@
+{
+  "pass_mark": 70,
+  "questions": [
+    {
+      "prompt": "Choose the correct word: Yesterday I ____ my uniform.",
+      "options": [
+        "washing",
+        "wash",
+        "washed"
+      ],
+      "correct_index": 2,
+      "explanation": "Yesterday shows the past, so the verb takes -ed: washed. Wash is for now, and washing needs a helping verb like was."
+    },
+    {
+      "prompt": "Which words tell you that a sentence is about the past?",
+      "options": [
+        "last week",
+        "next year",
+        "tomorrow"
+      ],
+      "correct_index": 0,
+      "explanation": "Last week has already gone. Tomorrow and next year are still to come."
+    },
+    {
+      "prompt": "What is the past simple of 'study'?",
+      "options": [
+        "studed",
+        "studied",
+        "studyed"
+      ],
+      "correct_index": 1,
+      "explanation": "Study ends in a consonant and y, so y changes to -ied: studied."
+    },
+    {
+      "prompt": "What is the past simple of 'stop'?",
+      "options": [
+        "stoped",
+        "stopt",
+        "stopped"
+      ],
+      "correct_index": 2,
+      "explanation": "A short verb that ends in one vowel and one consonant doubles the last letter: stopped."
+    },
+    {
+      "prompt": "Choose the correct word: She did not ____ football yesterday.",
+      "options": [
+        "plays",
+        "play",
+        "played"
+      ],
+      "correct_index": 1,
+      "explanation": "After did not, use the plain verb: did not play. Did already shows the past, so we do not add -ed again."
+    },
+    {
+      "prompt": "Which sentence is correct?",
+      "options": [
+        "We cleaning the classroom yesterday.",
+        "We clean the classroom yesterday.",
+        "We cleaned the classroom yesterday."
+      ],
+      "correct_index": 2,
+      "explanation": "Yesterday needs the past simple: cleaned. Clean is the present, and cleaning cannot stand alone."
+    }
+  ]
+}

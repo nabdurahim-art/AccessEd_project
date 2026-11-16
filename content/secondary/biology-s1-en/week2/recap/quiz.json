@@ -1,0 +1,105 @@
+{
+  "pass_mark": 70,
+  "questions": [
+    {
+      "prompt": "Yeast is made of only one cell. Yeast is...",
+      "options": [
+        "a tissue",
+        "multicellular",
+        "unicellular"
+      ],
+      "correct_index": 2,
+      "explanation": "One cell means unicellular. A tissue is a group of similar cells in a multicellular organism."
+    },
+    {
+      "prompt": "Which kingdom does yeast belong to?",
+      "options": [
+        "Fungi",
+        "Plantae",
+        "Monera"
+      ],
+      "correct_index": 0,
+      "explanation": "Yeast is a single-celled fungus. It has a true nucleus, so it is not in Monera."
+    },
+    {
+      "prompt": "Which part of the cell holds the hereditary information?",
+      "options": [
+        "The vacuole",
+        "The nucleus",
+        "The cell membrane"
+      ],
+      "correct_index": 1,
+      "explanation": "The hereditary, or genetic, information is in the nucleus."
+    },
+    {
+      "prompt": "In which organelles does cellular respiration take place?",
+      "options": [
+        "The chloroplasts",
+        "The nucleus",
+        "The mitochondria"
+      ],
+      "correct_index": 2,
+      "explanation": "Respiration takes place in the mitochondria. Chloroplasts are for photosynthesis."
+    },
+    {
+      "prompt": "Which scientific name is written correctly?",
+      "options": [
+        "Panthera Leo",
+        "panthera leo",
+        "Panthera leo"
+      ],
+      "correct_index": 2,
+      "explanation": "Capital letter for the genus, small letter for the species."
+    },
+    {
+      "prompt": "Which structure is found only in plant cells?",
+      "options": [
+        "Cell membrane",
+        "Chloroplast",
+        "Mitochondrion"
+      ],
+      "correct_index": 1,
+      "explanation": "Chloroplasts are found in plant cells. Mitochondria and the cell membrane are found in both kinds of cell."
+    },
+    {
+      "prompt": "Under a light microscope, onion cells look like neat boxes. Why?",
+      "options": [
+        "Onion cells are animal cells",
+        "Each cell has a rigid cell wall",
+        "Each cell has a nucleus"
+      ],
+      "correct_index": 1,
+      "explanation": "The rigid cell wall gives plant cells a regular shape. Cheek cells also have a nucleus, and they are not box-shaped."
+    },
+    {
+      "prompt": "Which list is in the correct order from the largest group to the smallest?",
+      "options": [
+        "Kingdom, class, family, species",
+        "Species, family, class, kingdom",
+        "Kingdom, family, class, species"
+      ],
+      "correct_index": 0,
+      "explanation": "The full order is kingdom, phylum, class, order, family, genus, species, so class comes before family."
+    },
+    {
+      "prompt": "What does the large central vacuole of a plant cell contain?",
+      "options": [
+        "Cell sap",
+        "Cellulose",
+        "Chlorophyll"
+      ],
+      "correct_index": 0,
+      "explanation": "The vacuole holds cell sap: water with dissolved salts and food. Chlorophyll is in the chloroplasts."
+    },
+    {
+      "prompt": "An organism has cells with walls and chlorophyll. Which kingdom does it belong to?",
+      "options": [
+        "Fungi",
+        "Animalia",
+        "Plantae"
+      ],
+      "correct_index": 2,
+      "explanation": "Chlorophyll means it makes its own food by photosynthesis, so it is a plant."
+    }
+  ]
+}

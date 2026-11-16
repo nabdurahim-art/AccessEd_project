@@ -1,0 +1,67 @@
+{
+  "pass_mark": 70,
+  "questions": [
+    {
+      "prompt": "Two lines meet at 90°. What do we call them?",
+      "options": [
+        "Perpendicular lines",
+        "Opposite lines",
+        "Parallel lines"
+      ],
+      "correct_index": 0,
+      "explanation": "Lines that meet at 90° are perpendicular. Parallel lines never meet at all."
+    },
+    {
+      "prompt": "Two angles sit on a straight line. One is 130°. What is the other?",
+      "options": [
+        "60°",
+        "130°",
+        "50°",
+        "230°"
+      ],
+      "correct_index": 2,
+      "explanation": "Angles on a straight line add up to 180°: 180 - 130 = 50. Taking 130 from 360 gives 230, but 360 is the rule for a full turn round a point."
+    },
+    {
+      "prompt": "Two lines cross. One angle is 75°. What is the angle opposite it?",
+      "options": [
+        "75°",
+        "105°",
+        "15°"
+      ],
+      "correct_index": 0,
+      "explanation": "Opposite angles are equal, so it is 75°. 105° is the angle next to it, not the one opposite."
+    },
+    {
+      "prompt": "Three angles meet at a point. Two of them are 150° and 90°. What is the third?",
+      "options": [
+        "120°",
+        "240°",
+        "60°"
+      ],
+      "correct_index": 0,
+      "explanation": "Angles at a point add up to 360°: 150 + 90 = 240 and 360 - 240 = 120. 240 is only the sum of the two you know."
+    },
+    {
+      "prompt": "Two angles add up to 90°. One is 40°. What is the other?",
+      "options": [
+        "50°",
+        "140°",
+        "60°"
+      ],
+      "correct_index": 0,
+      "explanation": "90 - 40 = 50. Taking 40 from 180 gives 140, but these two angles make a right angle, not a straight line."
+    },
+    {
+      "prompt": "Two lines cross and one angle is 60°. What is the angle next to it on the same straight line?",
+      "options": [
+        "120°",
+        "300°",
+        "60°",
+        "30°"
+      ],
+      "correct_index": 0,
+      "explanation": "Angles on a straight line add up to 180°: 180 - 60 = 120. 60° is the opposite angle, not the one next to it."
+    }
+  ]
+}

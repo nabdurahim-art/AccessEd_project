@@ -1,0 +1,65 @@
+{
+  "pass_mark": 70,
+  "questions": [
+    {
+      "prompt": "Choose the correct word: I ____ going to study hard next term.",
+      "options": [
+        "am",
+        "are",
+        "is"
+      ],
+      "correct_index": 0,
+      "explanation": "I goes with am. Is goes with he, she and it, and are goes with you, we and they."
+    },
+    {
+      "prompt": "Choose the correct word: She ____ going to visit her aunt tomorrow.",
+      "options": [
+        "is",
+        "am",
+        "are"
+      ],
+      "correct_index": 0,
+      "explanation": "She goes with is. Are is for you, we and they."
+    },
+    {
+      "prompt": "Choose the correct word: He ____ to become a teacher.",
+      "options": [
+        "want",
+        "wanting",
+        "wants"
+      ],
+      "correct_index": 2,
+      "explanation": "With he, she or it we add s: he wants. Want is for I, you, we and they."
+    },
+    {
+      "prompt": "Which sentence is correct?",
+      "options": [
+        "I would like to am a doctor.",
+        "I would like be a doctor.",
+        "I would like to be a doctor."
+      ],
+      "correct_index": 2,
+      "explanation": "Would like needs to and then the plain verb: would like to be. Leaving out to is a common mistake."
+    },
+    {
+      "prompt": "Which words tell you that a sentence is about the future?",
+      "options": [
+        "last year",
+        "next year",
+        "yesterday"
+      ],
+      "correct_index": 1,
+      "explanation": "Next year has not come yet. Yesterday and last year are in the past."
+    },
+    {
+      "prompt": "Choose the correct word: They are going to ____ trees next Saturday.",
+      "options": [
+        "planting",
+        "plant",
+        "planted"
+      ],
+      "correct_index": 1,
+      "explanation": "After going to, use the plain verb: plant. Planted is the past simple."
+    }
+  ]
+}
