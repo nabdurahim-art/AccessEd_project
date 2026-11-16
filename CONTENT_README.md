@@ -57,6 +57,35 @@ Put a recording named `audio.mp3` in the lesson folder (next to `lesson.md`). Th
 Record with a phone, then shrink it: `ffmpeg -i recording.m4a -ac 1 -b:a 32k audio.mp3` (about 250 KB per minute, limit 2 MB).
 Video is not supported: it is too big for phones with little data and offline storage.
 
+### Audio with a computer voice
+The REB-based courses use a computer voice, so every lesson has a Listen button. To make the audio again after changing a lesson:
+
+    pip install --user edge-tts
+    python3 tools/make_tts.py --only primary-math-p5-en-week1-m1 --force
+    python3 tools/import_audio.py --bitrate 32k --only primary-math-p5-en-week1-m1
+    python3 tools/build_packs.py
+
+Leave out `--only` to do every lesson that has no recording yet. A lesson of 350 words is about 2.5 minutes and 600 KB.
+The voice reads the text of `lesson.md`. It skips pictures and spells out word endings, so `-ed` is read as "E D".
+Listen to each lesson once before you publish. A computer voice can say a word wrongly, and only a person can hear that.
+There is no Kinyarwanda voice: record those lessons with a person.
+
+## Pictures (optional)
+Put a `.webp`, `.png` or `.jpg` file in the lesson folder and show it in `lesson.md` on a line of its own:
+
+    ![Two lines cross and make four angles](crossing-lines.webp)
+
+The words in the square brackets say what the picture shows. Screen readers read them, so they are required.
+Keep each picture under 100 KB. Use a picture only when it teaches something: a diagram, a chart, a labelled drawing.
+
+The diagrams in the REB-based courses are drawn by a script, so anyone can change them:
+
+    pip install --user Pillow
+    python3 tools/make_pictures.py            # draws every picture again
+    python3 tools/make_pictures.py --list     # shows each picture and its lesson
+
+To change a diagram, edit its function in `tools/make_pictures.py` and run it again.
+
 ## quiz.json
 `correct_index` counts from 0 (0 = the first option). `explanation` is optional.
 
