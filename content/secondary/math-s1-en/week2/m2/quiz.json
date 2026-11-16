@@ -1,0 +1,65 @@
+{
+  "pass_mark": 70,
+  "questions": [
+    {
+      "prompt": "What is the mean of 6, 10, 8, 12 and 4?",
+      "options": [
+        "10",
+        "40",
+        "8"
+      ],
+      "correct_index": 2,
+      "explanation": "The sum is 40 and there are 5 values: 40 ÷ 5 = 8. 40 is the sum, not the mean."
+    },
+    {
+      "prompt": "A shop sold 12, 15, 9, 18 and 21 sodas on five days. What is the mean number sold per day?",
+      "options": [
+        "15",
+        "18",
+        "75"
+      ],
+      "correct_index": 0,
+      "explanation": "The sum is 75 and 75 ÷ 5 = 15. 75 is the total for the week."
+    },
+    {
+      "prompt": "In a table, the value 2 has frequency 3 and the value 4 has frequency 2. What is the mean?",
+      "options": [
+        "2.8",
+        "7",
+        "3"
+      ],
+      "correct_index": 0,
+      "explanation": "(2 × 3) + (4 × 2) = 14 and the total frequency is 5: 14 ÷ 5 = 2.8. Taking (2 + 4) ÷ 2 = 3 ignores the frequencies."
+    },
+    {
+      "prompt": "To find the mean from a frequency table, you divide the sum of value × frequency by...",
+      "options": [
+        "the sum of the frequencies",
+        "the number of rows in the table",
+        "the biggest value"
+      ],
+      "correct_index": 0,
+      "explanation": "You divide by how many values there are altogether, which is the sum of the frequencies, not the number of rows."
+    },
+    {
+      "prompt": "The mean of 4 numbers is 10. Three of them are 8, 12 and 9. What is the fourth?",
+      "options": [
+        "29",
+        "11",
+        "10"
+      ],
+      "correct_index": 1,
+      "explanation": "The total must be 4 × 10 = 40. The three known numbers add up to 29, so the fourth is 40 - 29 = 11."
+    },
+    {
+      "prompt": "In a basket, 2 mangoes have a mass of 50 g, 5 have a mass of 60 g and 3 have a mass of 70 g. What is the mean mass?",
+      "options": [
+        "60 g",
+        "61 g",
+        "180 g"
+      ],
+      "correct_index": 1,
+      "explanation": "(50 × 2) + (60 × 5) + (70 × 3) = 610 and there are 10 mangoes: 610 ÷ 10 = 61 g. (50 + 60 + 70) ÷ 3 = 60 ignores the frequencies."
+    }
+  ]
+}

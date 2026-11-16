@@ -1,0 +1,76 @@
+{
+  "pass_mark": 70,
+  "questions": [
+    {
+      "prompt": "What is the mode of 4, 7, 4, 9, 6, 4, 7?",
+      "options": [
+        "7",
+        "4",
+        "6"
+      ],
+      "correct_index": 1,
+      "explanation": "4 appears three times, more than any other value. 7 appears only twice."
+    },
+    {
+      "prompt": "What is the median of 9, 3, 7, 1, 5?",
+      "options": [
+        "25",
+        "7",
+        "5"
+      ],
+      "correct_index": 2,
+      "explanation": "In order: 1, 3, 5, 7, 9. The middle value is 5. Taking the middle of the unsorted list gives 7, which is wrong."
+    },
+    {
+      "prompt": "What is the median of 4, 10, 6, 8?",
+      "options": [
+        "7",
+        "6",
+        "8",
+        "28"
+      ],
+      "correct_index": 0,
+      "explanation": "In order: 4, 6, 8, 10. There are two middle values, so take their mean: (6 + 8) ÷ 2 = 7."
+    },
+    {
+      "prompt": "What must you do first to find the median?",
+      "options": [
+        "Add all the values",
+        "Find the biggest value",
+        "Arrange the values in order"
+      ],
+      "correct_index": 2,
+      "explanation": "The median is the middle of the ordered data. Adding the values is the first step for the mean."
+    },
+    {
+      "prompt": "What is the mode of 2, 3, 5, 8?",
+      "options": [
+        "2",
+        "8",
+        "There is no mode"
+      ],
+      "correct_index": 2,
+      "explanation": "Every value appears once, so no value is the most common."
+    },
+    {
+      "prompt": "Shoe sizes sold in a day: 38, 40, 38, 41, 39, 38, 40. What is the median size?",
+      "options": [
+        "38",
+        "39",
+        "41"
+      ],
+      "correct_index": 1,
+      "explanation": "In order: 38, 38, 38, 39, 40, 40, 41. The fourth of seven values is 39. 38 is the mode, not the median."
+    },
+    {
+      "prompt": "Which measure tells a shopkeeper which shoe size to stock most?",
+      "options": [
+        "The mode",
+        "The median",
+        "The mean"
+      ],
+      "correct_index": 0,
+      "explanation": "The mode is the size sold most often. The mean could even be a size that does not exist, such as 39.1."
+    }
+  ]
+}

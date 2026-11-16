@@ -1,0 +1,65 @@
+{
+  "pass_mark": 70,
+  "questions": [
+    {
+      "prompt": "Which of these is qualitative data?",
+      "options": [
+        "A student's favourite subject",
+        "The number of goals in a match",
+        "The mass of a bag of rice"
+      ],
+      "correct_index": 0,
+      "explanation": "A favourite subject is a word, not a number. Goals and mass are numbers, so they are quantitative."
+    },
+    {
+      "prompt": "The mass of a bag of rice is...",
+      "options": [
+        "qualitative data",
+        "continuous quantitative data",
+        "discrete quantitative data"
+      ],
+      "correct_index": 1,
+      "explanation": "Mass is measured and can take any value, such as 4.8 kg, so it is continuous. Discrete data is counted."
+    },
+    {
+      "prompt": "In a frequency table, the frequency of a value is...",
+      "options": [
+        "the biggest value in the data",
+        "how many times the value appears",
+        "the sum of all the values"
+      ],
+      "correct_index": 1,
+      "explanation": "Frequency means how often. It is a count, not a total of the values."
+    },
+    {
+      "prompt": "The frequencies in a table are 2, 3, 6, 5, 4. What are the cumulative frequencies?",
+      "options": [
+        "2, 5, 11, 16, 20",
+        "2, 3, 6, 5, 4",
+        "20, 18, 15, 9, 4"
+      ],
+      "correct_index": 0,
+      "explanation": "Keep a running total from the top: 2, 2+3=5, 5+6=11, 11+5=16, 16+4=20."
+    },
+    {
+      "prompt": "The last cumulative frequency in a table is 40. What does this tell you?",
+      "options": [
+        "The mode is 40",
+        "The biggest value is 40",
+        "There are 40 data values in total"
+      ],
+      "correct_index": 2,
+      "explanation": "The last running total counts every value, so it is the total number of values."
+    },
+    {
+      "prompt": "Marks in a short test: 2 students scored 1, 3 students scored 2, 6 students scored 3, 5 students scored 4 and 4 students scored 5. How many students scored 3 or less?",
+      "options": [
+        "11",
+        "6",
+        "9"
+      ],
+      "correct_index": 0,
+      "explanation": "Add the frequencies up to mark 3: 2 + 3 + 6 = 11. 6 is only the students who scored exactly 3."
+    }
+  ]
+}

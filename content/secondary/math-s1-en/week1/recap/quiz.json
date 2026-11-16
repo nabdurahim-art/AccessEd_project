@@ -1,0 +1,105 @@
+{
+  "pass_mark": 70,
+  "questions": [
+    {
+      "prompt": "Which of these goes on forever in both directions?",
+      "options": [
+        "A ray",
+        "A line segment",
+        "A line"
+      ],
+      "correct_index": 2,
+      "explanation": "A line has no endpoints. A ray goes on forever in one direction only."
+    },
+    {
+      "prompt": "An angle of 95° is...",
+      "options": [
+        "acute",
+        "right",
+        "obtuse"
+      ],
+      "correct_index": 2,
+      "explanation": "95° is a little more than 90°, so it is obtuse. A right angle is exactly 90°."
+    },
+    {
+      "prompt": "Which of these is a reflex angle?",
+      "options": [
+        "210°",
+        "170°",
+        "90°"
+      ],
+      "correct_index": 0,
+      "explanation": "Reflex angles are between 180° and 360°. 170° is obtuse."
+    },
+    {
+      "prompt": "Two angles on a straight line are 3x and 2x. What is x?",
+      "options": [
+        "36°",
+        "18°",
+        "72°"
+      ],
+      "correct_index": 0,
+      "explanation": "3x + 2x = 180, so 5x = 180 and x = 36. Using 360 instead of 180 gives 72."
+    },
+    {
+      "prompt": "Angles at a point are 90°, 130° and b. What is b?",
+      "options": [
+        "40°",
+        "140°",
+        "220°"
+      ],
+      "correct_index": 1,
+      "explanation": "90 + 130 = 220 and 360 - 220 = 140. 220 is only the sum of the two you know."
+    },
+    {
+      "prompt": "A transversal crosses two parallel lines. One angle is 63°. What is its alternate angle?",
+      "options": [
+        "117°",
+        "27°",
+        "63°"
+      ],
+      "correct_index": 2,
+      "explanation": "Alternate angles (the Z shape) are equal. 117° would be the co-interior angle."
+    },
+    {
+      "prompt": "Two co-interior angles between parallel lines are 95° and z. What is z?",
+      "options": [
+        "95°",
+        "265°",
+        "85°"
+      ],
+      "correct_index": 2,
+      "explanation": "Co-interior angles add up to 180°: 180 - 95 = 85."
+    },
+    {
+      "prompt": "What is the sum of the interior angles of a hexagon?",
+      "options": [
+        "1,080°",
+        "360°",
+        "720°"
+      ],
+      "correct_index": 2,
+      "explanation": "(6 - 2) × 180 = 720. Forgetting to subtract 2 gives 6 × 180 = 1,080."
+    },
+    {
+      "prompt": "How big is each exterior angle of a regular pentagon?",
+      "options": [
+        "108°",
+        "540°",
+        "72°"
+      ],
+      "correct_index": 2,
+      "explanation": "360 ÷ 5 = 72. 108° is each interior angle."
+    },
+    {
+      "prompt": "How big is each interior angle of a regular octagon?",
+      "options": [
+        "1,080°",
+        "135°",
+        "45°"
+      ],
+      "correct_index": 1,
+      "explanation": "(8 - 2) × 180 = 1,080 and 1,080 ÷ 8 = 135. 45° is each exterior angle."
+    }
+  ]
+}

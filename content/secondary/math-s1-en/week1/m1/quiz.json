@@ -1,0 +1,65 @@
+{
+  "pass_mark": 70,
+  "questions": [
+    {
+      "prompt": "Which of these has exactly one endpoint?",
+      "options": [
+        "A line",
+        "A ray",
+        "A line segment"
+      ],
+      "correct_index": 1,
+      "explanation": "A ray starts at one endpoint and goes on forever in one direction. A line has no endpoints and a segment has two."
+    },
+    {
+      "prompt": "Which of these can be measured with a ruler because it has two endpoints?",
+      "options": [
+        "A line",
+        "A ray",
+        "A line segment"
+      ],
+      "correct_index": 2,
+      "explanation": "A segment has two endpoints, so it has a length. A line and a ray go on forever."
+    },
+    {
+      "prompt": "An angle of 135° is...",
+      "options": [
+        "acute",
+        "obtuse",
+        "reflex"
+      ],
+      "correct_index": 1,
+      "explanation": "135° is between 90° and 180°, so it is obtuse. Reflex angles are bigger than 180°."
+    },
+    {
+      "prompt": "An angle of 250° is...",
+      "options": [
+        "obtuse",
+        "reflex",
+        "straight"
+      ],
+      "correct_index": 1,
+      "explanation": "250° is between 180° and 360°, so it is reflex. Obtuse angles stop at 180°."
+    },
+    {
+      "prompt": "A straight angle measures...",
+      "options": [
+        "360°",
+        "180°",
+        "90°"
+      ],
+      "correct_index": 1,
+      "explanation": "A straight angle is a half turn, 180°. 90° is a right angle and 360° is a full turn."
+    },
+    {
+      "prompt": "Which statement is true?",
+      "options": [
+        "An acute angle is smaller than 90°.",
+        "A reflex angle is smaller than 180°.",
+        "An obtuse angle is smaller than 90°."
+      ],
+      "correct_index": 0,
+      "explanation": "Acute means less than 90°. Obtuse is between 90° and 180°, and reflex is more than 180°."
+    }
+  ]
+}
