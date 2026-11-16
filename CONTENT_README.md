@@ -10,6 +10,32 @@ Courses live in one of two folders:
 
 The folder tells the app which level a course belongs to. Learners switch between **Primary** and **Secondary** on the Courses screen.
 
+## Courses cut from the REB books
+Four small courses follow the official REB books (downloaded from elearning.reb.rw). Each course takes two units of the book, one unit per week.
+
+| Folder | Course | REB book | Week 1 | Week 2 |
+|---|---|---|---|---|
+| `content/primary/math-p5-en` | Maths P5: Angles and data | Mathematics Pupil's Book, Primary 5 (2025 edition) | Unit 11: angles and lines | Unit 14: data handling |
+| `content/primary/english-p5-en` | English P5: Grammar | English Pupil's Book, Primary 5 | Unit 1: past and future events | Units 5 and 6: comparatives and superlatives |
+| `content/secondary/math-s1-en` | Maths S1: Angles and statistics | Mathematics Student's Book, Senior 1 (2026-2027) | Unit 6: points, lines and angles | Unit 7: statistics with ungrouped data |
+| `content/secondary/biology-s1-en` | Biology S1: Classification and cells | Biology Student's Book, Senior 1 | Unit 2: introduction to classification | Unit 5: plant and animal cells |
+
+The lessons follow the order and the competences of each unit, but the wording, examples and questions are our own. The books belong to REB, so do not paste text or pictures from them into a lesson, and do not add the PDFs to this repository.
+
+### Shape of a week in these courses
+Each week has four modules: `m1`, `m2`, `m3` and `recap`.
+
+A lesson (`m1` to `m3`) has the same parts in the same order:
+- `## Think first`: one easy question, no marks.
+- The teaching part: short sentences, about 300 to 400 words, one small skill.
+- `## Example`, then `## Try it`: one worked example, then two for the learner with a hint and the answers.
+- `## Think back`: one closing question.
+- `quiz.json`: 5 to 8 questions with 3 or 4 options. Wrong options are real mistakes learners make, and every explanation says why the common wrong answer is wrong.
+
+A `recap` has the three big ideas of the week, one real-life challenge that uses all three lessons, and a quiz of exactly 10 questions. The week 2 recap mixes 6 questions from week 2 with 4 from week 1.
+
+To cut another unit into a course: write the goal sentence, write the recap questions first, keep only what those questions need, then split it into three lessons from easy to hard.
+
 ## Add a lesson
 1. Make a folder: `content/primary/<course>/week1/m4/` with `lesson.md` and (optional) `quiz.json`.
 2. Add it to `content/primary/<course>/week1/pack.json` under `modules`.
