@@ -1,0 +1,75 @@
+{
+  "pass_mark": 70,
+  "questions": [
+    {
+      "prompt": "Which structure is found in plant cells but not in animal cells?",
+      "options": [
+        "A cell membrane",
+        "A nucleus",
+        "A cell wall"
+      ],
+      "correct_index": 2,
+      "explanation": "Only plant cells have a cell wall. Both kinds of cell have a membrane and a nucleus."
+    },
+    {
+      "prompt": "What substance is the plant cell wall made of?",
+      "options": [
+        "Cytoplasm",
+        "Chlorophyll",
+        "Cellulose"
+      ],
+      "correct_index": 2,
+      "explanation": "The cell wall is made of cellulose. Chlorophyll is the green pigment in chloroplasts."
+    },
+    {
+      "prompt": "What takes place in the chloroplasts?",
+      "options": [
+        "Cellular respiration",
+        "Photosynthesis",
+        "Control of the cell"
+      ],
+      "correct_index": 1,
+      "explanation": "Chloroplasts carry out photosynthesis. Respiration takes place in the mitochondria."
+    },
+    {
+      "prompt": "A cell has a nucleus, a cell membrane, small vacuoles and no cell wall. It is most likely...",
+      "options": [
+        "an animal cell",
+        "a leaf cell",
+        "a plant cell"
+      ],
+      "correct_index": 0,
+      "explanation": "No cell wall and only small vacuoles are features of animal cells. Plant cells, including leaf cells, have a cell wall."
+    },
+    {
+      "prompt": "Why do plant cells have a fixed, regular shape?",
+      "options": [
+        "They have a nucleus",
+        "They have a rigid cell wall",
+        "They have many mitochondria"
+      ],
+      "correct_index": 1,
+      "explanation": "The rigid cell wall holds the shape. Animal cells also have a nucleus and mitochondria, and their shapes vary."
+    },
+    {
+      "prompt": "Which statement is true of both plant cells and animal cells?",
+      "options": [
+        "Both have a cell membrane and mitochondria",
+        "Both have chloroplasts",
+        "Both have a cell wall"
+      ],
+      "correct_index": 0,
+      "explanation": "Chloroplasts and cell walls are found only in plant cells. The membrane and mitochondria are in both."
+    },
+    {
+      "prompt": "Which green pigment is found in chloroplasts?",
+      "options": [
+        "Cell sap",
+        "Cellulose",
+        "Chlorophyll"
+      ],
+      "correct_index": 2,
+      "explanation": "Chlorophyll is the green pigment used in photosynthesis. Cell sap is the liquid in the vacuole."
+    }
+  ]
+}

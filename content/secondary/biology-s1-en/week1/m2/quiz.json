@@ -1,0 +1,75 @@
+{
+  "pass_mark": 70,
+  "questions": [
+    {
+      "prompt": "Which of these groups is the largest?",
+      "options": [
+        "Kingdom",
+        "Family",
+        "Species"
+      ],
+      "correct_index": 0,
+      "explanation": "The kingdom is the biggest group and holds many different organisms. The species is the smallest."
+    },
+    {
+      "prompt": "Which list is in the correct order from the largest group to the smallest?",
+      "options": [
+        "Kingdom, Phylum, Class, Order, Family, Genus, Species",
+        "Kingdom, Class, Phylum, Family, Order, Species, Genus",
+        "Species, Genus, Family, Order, Class, Phylum, Kingdom"
+      ],
+      "correct_index": 0,
+      "explanation": "Remember K P C O F G S. The third list has the right groups but runs from smallest to largest."
+    },
+    {
+      "prompt": "In the scientific name Panthera leo, the word Panthera is the...",
+      "options": [
+        "genus",
+        "species",
+        "kingdom"
+      ],
+      "correct_index": 0,
+      "explanation": "The first name is always the genus. The second name, leo, is the species."
+    },
+    {
+      "prompt": "Which scientific name is written correctly?",
+      "options": [
+        "Homo Sapiens",
+        "homo sapiens",
+        "Homo sapiens"
+      ],
+      "correct_index": 2,
+      "explanation": "The genus starts with a capital letter and the species with a small letter."
+    },
+    {
+      "prompt": "Who developed the binomial system of naming organisms?",
+      "options": [
+        "Pasteur",
+        "Darwin",
+        "Linnaeus"
+      ],
+      "correct_index": 2,
+      "explanation": "Linnaeus developed the system of two Latin names for each organism."
+    },
+    {
+      "prompt": "Why do scientists use scientific names?",
+      "options": [
+        "Common names are always wrong",
+        "The same organism has different common names in different languages",
+        "Latin names are always shorter"
+      ],
+      "correct_index": 1,
+      "explanation": "One scientific name is understood everywhere. Common names are not wrong, but they change from language to language."
+    },
+    {
+      "prompt": "A species is a group of organisms that...",
+      "options": [
+        "live in the same forest",
+        "can breed together and produce offspring that can also reproduce",
+        "have the same colour"
+      ],
+      "correct_index": 1,
+      "explanation": "What makes a species is breeding and producing offspring that can reproduce, not where the organisms live or their colour."
+    }
+  ]
+}

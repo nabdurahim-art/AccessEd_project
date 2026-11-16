@@ -1,0 +1,65 @@
+{
+  "pass_mark": 70,
+  "questions": [
+    {
+      "prompt": "What is the basic unit of all living organisms?",
+      "options": [
+        "The cell",
+        "The tissue",
+        "The organ"
+      ],
+      "correct_index": 0,
+      "explanation": "Every living thing is made of cells. Tissues and organs are made of cells too."
+    },
+    {
+      "prompt": "An organism made of only one cell is called...",
+      "options": [
+        "an organ",
+        "multicellular",
+        "unicellular"
+      ],
+      "correct_index": 2,
+      "explanation": "Uni means one. Multicellular organisms have many cells."
+    },
+    {
+      "prompt": "Which of these is a multicellular organism?",
+      "options": [
+        "An amoeba",
+        "A bacterium",
+        "A maize plant"
+      ],
+      "correct_index": 2,
+      "explanation": "A maize plant has many cells. A bacterium and an amoeba are each a single cell."
+    },
+    {
+      "prompt": "Why do we need a microscope to study cells?",
+      "options": [
+        "Cells move too fast to see",
+        "Cells are found only in water",
+        "Most cells are too small to see with the naked eye"
+      ],
+      "correct_index": 2,
+      "explanation": "Cells are very small, so they must be magnified. They are found in every living thing, not only in water."
+    },
+    {
+      "prompt": "Which order goes from the smallest to the largest?",
+      "options": [
+        "Cell, tissue, organ, organism",
+        "Organ, cell, tissue, organism",
+        "Tissue, cell, organism, organ"
+      ],
+      "correct_index": 0,
+      "explanation": "Cells form tissues, tissues form organs, and organs work together in an organism."
+    },
+    {
+      "prompt": "Which instrument shows the smallest structures inside a cell?",
+      "options": [
+        "A light microscope",
+        "A hand lens",
+        "An electron microscope"
+      ],
+      "correct_index": 2,
+      "explanation": "An electron microscope is far more powerful than a light microscope. A hand lens is too weak to show cells clearly."
+    }
+  ]
+}

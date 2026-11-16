@@ -1,0 +1,65 @@
+{
+  "pass_mark": 70,
+  "questions": [
+    {
+      "prompt": "Which kingdom do bacteria belong to?",
+      "options": [
+        "Fungi",
+        "Monera",
+        "Protoctista"
+      ],
+      "correct_index": 1,
+      "explanation": "Bacteria are single cells with no true nucleus, so they are Monera. Protoctista have a true nucleus."
+    },
+    {
+      "prompt": "An organism has cell walls and chlorophyll and makes its own food. Which kingdom does it belong to?",
+      "options": [
+        "Plantae",
+        "Animalia",
+        "Fungi"
+      ],
+      "correct_index": 0,
+      "explanation": "Chlorophyll and photosynthesis are features of plants. Fungi have cell walls too, but they cannot make their own food."
+    },
+    {
+      "prompt": "A mushroom reproduces by spores and cannot photosynthesise. Which kingdom does it belong to?",
+      "options": [
+        "Fungi",
+        "Monera",
+        "Plantae"
+      ],
+      "correct_index": 0,
+      "explanation": "Spores and no photosynthesis point to Fungi. A mushroom grows from the ground, but it is not a plant."
+    },
+    {
+      "prompt": "Which of these is a feature of animals?",
+      "options": [
+        "Their cells have no cell wall",
+        "They reproduce by spores",
+        "They make food by photosynthesis"
+      ],
+      "correct_index": 0,
+      "explanation": "Animal cells have no cell wall. Photosynthesis belongs to plants and spores belong to fungi."
+    },
+    {
+      "prompt": "Amoeba is a single cell with a true nucleus. Which kingdom does it belong to?",
+      "options": [
+        "Monera",
+        "Animalia",
+        "Protoctista"
+      ],
+      "correct_index": 2,
+      "explanation": "Single cells with a true nucleus are Protoctista. Monera have no true nucleus, and animals have many cells."
+    },
+    {
+      "prompt": "What is the main difference between Monera and Protoctista?",
+      "options": [
+        "Monera have no true nucleus, but Protoctista have a true nucleus",
+        "Monera are plants, but Protoctista are animals",
+        "Monera have many cells, but Protoctista have one cell"
+      ],
+      "correct_index": 0,
+      "explanation": "Both are made of single cells. The difference is the nucleus: Monera have no membrane around their genetic material."
+    }
+  ]
+}
