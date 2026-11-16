@@ -22,6 +22,10 @@ Plant cells and animal cells both have a **cell membrane**, **cytoplasm**, a **n
 - They have **no chloroplasts**, because animals do not photosynthesise.
 - They have **small vacuoles** or none at all.
 
+![A labelled plant cell: cell wall, cell membrane, chloroplast, nucleus, large vacuole, cytoplasm and mitochondrion](plant-cell.webp)
+
+![A labelled animal cell: cell membrane, cytoplasm, nucleus, mitochondrion and small vacuole](animal-cell.webp)
+
 ## Where is the nucleus?
 
 In an animal cell the nucleus is usually near the centre. In a plant cell the large vacuole pushes the nucleus to the side.

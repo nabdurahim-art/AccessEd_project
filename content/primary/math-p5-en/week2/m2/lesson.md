@@ -25,6 +25,8 @@ Twenty pupils chose their favourite fruit. After counting the tally marks, the f
 
 Check the total: 8 + 6 + 4 + 2 = 20. All twenty pupils are counted.
 
+![A tally chart of favourite fruit: banana 8, mango 6, avocado 4, orange 2](tally-chart.webp)
+
 ## Drawing a bar chart
 
 A **bar chart** shows the frequencies as bars.
@@ -35,6 +37,8 @@ A **bar chart** shows the frequencies as bars.
 - Draw one bar for each group. The **height** of the bar is the frequency.
 - Make every bar the same width, and leave a gap between bars.
 - Last, give the chart a title and label both lines.
+
+![A bar chart of favourite fruit. The bars show banana 8, mango 6, avocado 4 and orange 2](bar-chart.webp)
 
 ## Reading a bar chart
 

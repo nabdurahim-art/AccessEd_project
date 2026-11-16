@@ -22,11 +22,15 @@ A line that crosses two parallel lines is called a **transversal**. It makes ang
 
 **Co-interior angles** are between the two parallel lines, on the same side of the transversal. They make the shape of the letter **C**. They are not equal. They add up to 180°.
 
+![A line crosses two parallel lines. Three drawings mark the corresponding angles, the alternate angles and the co-interior angles](parallel-angles.webp)
+
 ## Angles in a triangle
 
 The three angles of any triangle add up to **180°**. Cut the three corners off a paper triangle and put them side by side. They make a straight line.
 
 ## Example
+
+![A triangle with angles of 60 degrees and 70 degrees and one unknown angle](triangle.webp)
 
 A triangle has angles of 60° and 70°. Find the third angle.
 

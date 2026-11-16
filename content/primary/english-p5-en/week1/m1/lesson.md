@@ -15,6 +15,8 @@ These time words tell you a sentence is about the past:
 - two days ago
 - on Sunday (the Sunday that has gone)
 
+![A time line. Last week and yesterday are before now, in the past. Example: I played football yesterday](past.webp)
+
 ## Regular verbs: add -ed
 
 Most verbs are **regular**. To make the past simple, add **-ed**.

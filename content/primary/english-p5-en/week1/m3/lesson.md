@@ -15,6 +15,8 @@ The future is the time that has not come yet. These time words tell you a senten
 
 Today you will learn three ways to talk about plans and wishes.
 
+![A time line. Tomorrow and next year are after now, in the future. Example: I am going to play tomorrow](future.webp)
+
 ## Going to
 
 Use **going to** for a plan you have already decided.

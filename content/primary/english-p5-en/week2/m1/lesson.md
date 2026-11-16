@@ -23,6 +23,8 @@ Examples:
 - Lake Kivu is **deeper than** Lake Muhazi.
 - My brother is **taller than** me.
 
+![Two girls stand side by side. Keza is 1.50 metres tall and Aline is 1.42 metres tall. Keza is taller than Aline](taller.webp)
+
 ## Three spelling rules
 
 - The adjective ends in **e**: add only **-r**. Wide becomes **wider**. Large becomes **larger**.

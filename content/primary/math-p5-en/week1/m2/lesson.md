@@ -16,6 +16,8 @@ Angles that sit next to each other on a straight line add up to **180°**. They 
 
 If one angle is 130°, the other is 180 - 130 = 50°.
 
+![Two angles on a straight line, 130 degrees and 50 degrees, add up to 180 degrees](straight-line.webp)
+
 ## Angles at a point
 
 All the angles that go round one point add up to **360°**. That is one full turn.
@@ -23,6 +25,8 @@ All the angles that go round one point add up to **360°**. That is one full tur
 ## Opposite angles
 
 When two straight lines cross, they make four angles. The angles that face each other are called **opposite angles**. Opposite angles are **equal**.
+
+![Two lines cross and make four angles: 50 degrees, 130 degrees, 50 degrees and 130 degrees. The angles that face each other are equal](crossing-lines.webp)
 
 ## Example
 
