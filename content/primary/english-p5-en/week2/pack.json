@@ -1,0 +1,26 @@
+{
+  "title": "Week 2: Comparing things",
+  "week_number": 2,
+  "modules": [
+    {
+      "key": "m1",
+      "title": "Comparing two things: -er than",
+      "duration_min": 10
+    },
+    {
+      "key": "m2",
+      "title": "More, better, worse",
+      "duration_min": 10
+    },
+    {
+      "key": "m3",
+      "title": "The most of all: -est and \"the most\"",
+      "duration_min": 10
+    },
+    {
+      "key": "recap",
+      "title": "Week 2 recap: comparing things",
+      "duration_min": 10
+    }
+  ]
+}

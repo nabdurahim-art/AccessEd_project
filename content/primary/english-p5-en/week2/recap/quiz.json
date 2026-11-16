@@ -1,0 +1,105 @@
+{
+  "pass_mark": 70,
+  "questions": [
+    {
+      "prompt": "Choose the correct word: A motorbike is ____ than a bicycle.",
+      "options": [
+        "more faster",
+        "fast",
+        "faster"
+      ],
+      "correct_index": 2,
+      "explanation": "To compare two things with a short adjective, add -er: faster than. We never use more with -er."
+    },
+    {
+      "prompt": "Choose the correct word: Yesterday we ____ football after school.",
+      "options": [
+        "playing",
+        "played",
+        "play"
+      ],
+      "correct_index": 1,
+      "explanation": "Yesterday is in the past, so the verb takes -ed: played."
+    },
+    {
+      "prompt": "What is the comparative of 'hot'?",
+      "options": [
+        "more hot",
+        "hotter",
+        "hoter"
+      ],
+      "correct_index": 1,
+      "explanation": "Hot ends in one vowel and one consonant, so the t doubles: hotter."
+    },
+    {
+      "prompt": "Choose the correct words: A taxi is ____ than a bus.",
+      "options": [
+        "more expensive",
+        "the most expensive",
+        "expensiver"
+      ],
+      "correct_index": 0,
+      "explanation": "Expensive is long, so the comparative is more expensive than. The most expensive is for one against all the others."
+    },
+    {
+      "prompt": "Choose the correct word: Last Sunday I ____ to church with my family.",
+      "options": [
+        "goed",
+        "went",
+        "go"
+      ],
+      "correct_index": 1,
+      "explanation": "Go is irregular: went."
+    },
+    {
+      "prompt": "What is the comparative of 'bad'?",
+      "options": [
+        "worse",
+        "the worst",
+        "badder"
+      ],
+      "correct_index": 0,
+      "explanation": "Bad becomes worse when comparing two things. The worst is the superlative."
+    },
+    {
+      "prompt": "Choose the correct words: The Nyabarongo is ____ river in Rwanda.",
+      "options": [
+        "longer",
+        "the most long",
+        "the longest"
+      ],
+      "correct_index": 2,
+      "explanation": "It is compared with all the rivers in Rwanda, so use the superlative: the longest."
+    },
+    {
+      "prompt": "Choose the correct word: They ____ going to plant trees tomorrow.",
+      "options": [
+        "am",
+        "is",
+        "are"
+      ],
+      "correct_index": 2,
+      "explanation": "They goes with are: they are going to."
+    },
+    {
+      "prompt": "Which sentence is correct?",
+      "options": [
+        "This is the most best book in the library.",
+        "This is the goodest book in the library.",
+        "This is the best book in the library."
+      ],
+      "correct_index": 2,
+      "explanation": "Good is irregular: the best. We never add most to best."
+    },
+    {
+      "prompt": "Choose the correct word: He would like to ____ a pilot.",
+      "options": [
+        "is",
+        "was",
+        "be"
+      ],
+      "correct_index": 2,
+      "explanation": "After would like to, use the plain verb: be."
+    }
+  ]
+}

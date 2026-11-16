@@ -1,0 +1,26 @@
+{
+  "title": "Week 1: Past and future",
+  "week_number": 1,
+  "modules": [
+    {
+      "key": "m1",
+      "title": "Past simple: regular verbs",
+      "duration_min": 10
+    },
+    {
+      "key": "m2",
+      "title": "Past simple: irregular verbs and time connectors",
+      "duration_min": 10
+    },
+    {
+      "key": "m3",
+      "title": "Future plans: going to, want to, would like to",
+      "duration_min": 10
+    },
+    {
+      "key": "recap",
+      "title": "Week 1 recap: past and future",
+      "duration_min": 10
+    }
+  ]
+}
