@@ -23,13 +23,16 @@ def spoken(md):
     out = []
     for line in md.splitlines():
         t = line.strip()
-        if not t:
+        if not t or t.startswith("!["):  # a picture is not read aloud
             continue
         t = re.sub(r"^#+\s*", "", t)
         t = re.sub(r"^[-*]\s+", "", t)
         t = t.replace("**", "").replace("*", "")
         t = re.sub(r"(\d)\s*RWF", r"\1 Rwandan francs", t)
         t = t.replace(" + ", " plus ").replace(" - ", " minus ").replace(" = ", " equals ").replace(" x ", " times ")
+        t = t.replace(" × ", " times ").replace(" ÷ ", " divided by ")
+        # word endings in grammar lessons are spelled out: "-ed" is read as "E D"
+        t = re.sub(r"(?<![\w-])-([a-z]{1,4})\b", lambda m: " ".join(m.group(1).upper()), t)
         t = t.replace("____", "your name")
         if t and t[-1] not in ".?!:":
             t += "."

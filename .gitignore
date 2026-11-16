@@ -21,3 +21,4 @@ mobile/web-build/
 dist/
 recordings/
 recordings/
+__pycache__/
