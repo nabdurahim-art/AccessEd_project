@@ -1,0 +1,65 @@
+{
+  "pass_mark": 70,
+  "questions": [
+    {
+      "prompt": "Which of these is quantitative data?",
+      "options": [
+        "The race lasted 10 minutes",
+        "The flower is red",
+        "The soup is salty"
+      ],
+      "correct_index": 0,
+      "explanation": "Quantitative data uses numbers: 10 minutes. Salty and red are describing words, so they are qualitative."
+    },
+    {
+      "prompt": "Which of these is qualitative data?",
+      "options": [
+        "The leaves feel soft",
+        "A cat has 4 legs",
+        "The tree is 6 m tall"
+      ],
+      "correct_index": 0,
+      "explanation": "Soft describes a quality with a word. 4 legs and 6 m are numbers, so they are quantitative."
+    },
+    {
+      "prompt": "The number of pupils in a class is...",
+      "options": [
+        "discrete data",
+        "continuous data",
+        "qualitative data"
+      ],
+      "correct_index": 0,
+      "explanation": "You count pupils in whole numbers, so it is discrete. You cannot have half a pupil."
+    },
+    {
+      "prompt": "Which of these is continuous data?",
+      "options": [
+        "The number of books on a shelf",
+        "The number of goals in a match",
+        "The height of a pupil"
+      ],
+      "correct_index": 2,
+      "explanation": "Height is measured and can be any value, like 1.40 m. Goals and books are counted, so they are discrete."
+    },
+    {
+      "prompt": "A farmer writes: 12 hens, 3.5 kg of beans, 2 cows. Which one is continuous data?",
+      "options": [
+        "12 hens",
+        "2 cows",
+        "3.5 kg of beans"
+      ],
+      "correct_index": 2,
+      "explanation": "Mass is measured and can have decimals. Hens and cows are counted in whole numbers."
+    },
+    {
+      "prompt": "Why is the number of cars at the market discrete data?",
+      "options": [
+        "Because cars are big",
+        "Because you count cars in whole numbers",
+        "Because cars can be measured in metres"
+      ],
+      "correct_index": 1,
+      "explanation": "Discrete data is counted and has no values in between. There is no such thing as 10 and a half cars."
+    }
+  ]
+}

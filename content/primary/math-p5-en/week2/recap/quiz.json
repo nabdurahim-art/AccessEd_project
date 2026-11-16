@@ -1,0 +1,105 @@
+{
+  "pass_mark": 70,
+  "questions": [
+    {
+      "prompt": "Which of these is discrete data?",
+      "options": [
+        "The mass of a bag of rice",
+        "The temperature at noon",
+        "The number of eggs in a basket"
+      ],
+      "correct_index": 2,
+      "explanation": "Eggs are counted in whole numbers. Mass and temperature are measured, so they are continuous."
+    },
+    {
+      "prompt": "You bisect an angle of 70°. How big is each part?",
+      "options": [
+        "35°",
+        "140°",
+        "7°"
+      ],
+      "correct_index": 0,
+      "explanation": "Bisect means two equal parts: 70 ÷ 2 = 35. 140° is double, which is the opposite."
+    },
+    {
+      "prompt": "Which of these is qualitative data?",
+      "options": [
+        "The bus is blue",
+        "The bus has 30 seats",
+        "The trip took 2 hours"
+      ],
+      "correct_index": 0,
+      "explanation": "Blue is a describing word. 30 seats and 2 hours are numbers, so they are quantitative."
+    },
+    {
+      "prompt": "A tally shows three full bundles and two more strokes. What is the frequency?",
+      "options": [
+        "5",
+        "32",
+        "17"
+      ],
+      "correct_index": 2,
+      "explanation": "Each bundle is 5: 5 + 5 + 5 + 2 = 17. Writing the 3 and the 2 side by side gives 32, which is wrong."
+    },
+    {
+      "prompt": "Two angles are on a straight line. One is 45°. What is the other?",
+      "options": [
+        "45°",
+        "315°",
+        "135°"
+      ],
+      "correct_index": 2,
+      "explanation": "Angles on a straight line add up to 180°: 180 - 45 = 135. 315 comes from using 360, the rule for a full turn."
+    },
+    {
+      "prompt": "A shop sold 12 sodas on Monday, 15 on Tuesday and 9 on Wednesday. How many is that altogether?",
+      "options": [
+        "15",
+        "27",
+        "36"
+      ],
+      "correct_index": 2,
+      "explanation": "12 + 15 + 9 = 36. 27 leaves out Wednesday, and 15 is only the best day."
+    },
+    {
+      "prompt": "Which graph is best for showing how a baby's mass changes each month?",
+      "options": [
+        "A tally chart only",
+        "A line graph",
+        "A list of names"
+      ],
+      "correct_index": 1,
+      "explanation": "A line graph shows change over time. A tally chart helps you count, but it does not show the change clearly."
+    },
+    {
+      "prompt": "A triangle has angles of 70° and 60°. What is the third angle?",
+      "options": [
+        "130°",
+        "50°",
+        "230°"
+      ],
+      "correct_index": 1,
+      "explanation": "70 + 60 = 130 and 180 - 130 = 50. 130 is only the sum of the two angles you know."
+    },
+    {
+      "prompt": "In a bar chart, the bar for maize is 9 high and the bar for beans is 4 high. How many more is maize than beans?",
+      "options": [
+        "36",
+        "13",
+        "5"
+      ],
+      "correct_index": 2,
+      "explanation": "How many more means subtract: 9 - 4 = 5. Adding gives 13, and multiplying gives 36."
+    },
+    {
+      "prompt": "Two lines cross. One angle is 40°. What is the angle opposite it?",
+      "options": [
+        "40°",
+        "140°",
+        "320°"
+      ],
+      "correct_index": 0,
+      "explanation": "Opposite angles are equal. 140° is the angle next to it on the straight line."
+    }
+  ]
+}

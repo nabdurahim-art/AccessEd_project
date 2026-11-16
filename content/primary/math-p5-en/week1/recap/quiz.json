@@ -1,0 +1,105 @@
+{
+  "pass_mark": 70,
+  "questions": [
+    {
+      "prompt": "Which of these angles is acute?",
+      "options": [
+        "95°",
+        "90°",
+        "35°"
+      ],
+      "correct_index": 2,
+      "explanation": "Acute angles are smaller than 90°. 90° is a right angle and 95° is obtuse."
+    },
+    {
+      "prompt": "You bisect an angle of 150°. How big is each part?",
+      "options": [
+        "75°",
+        "300°",
+        "50°"
+      ],
+      "correct_index": 0,
+      "explanation": "150 ÷ 2 = 75. Bisect means two equal parts, not three, and not double."
+    },
+    {
+      "prompt": "An angle of 45° is bisected. How big is each part?",
+      "options": [
+        "15°",
+        "22.5°",
+        "90°"
+      ],
+      "correct_index": 1,
+      "explanation": "45 ÷ 2 = 22.5. 90° is double 45°, which is the opposite of bisecting."
+    },
+    {
+      "prompt": "Angles on a straight line add up to...",
+      "options": [
+        "90°",
+        "180°",
+        "360°"
+      ],
+      "correct_index": 1,
+      "explanation": "A straight line is a half turn, 180°. 360° is for all the angles round a point."
+    },
+    {
+      "prompt": "Four angles meet at a point. Three of them are 90°, 90° and 100°. What is the fourth?",
+      "options": [
+        "80°",
+        "280°",
+        "100°"
+      ],
+      "correct_index": 0,
+      "explanation": "Angles at a point add up to 360°: 90 + 90 + 100 = 280 and 360 - 280 = 80."
+    },
+    {
+      "prompt": "Two lines cross. One angle is 110°. What is the opposite angle?",
+      "options": [
+        "110°",
+        "70°",
+        "250°"
+      ],
+      "correct_index": 0,
+      "explanation": "Opposite angles are equal. 70° is the angle next to it on the straight line."
+    },
+    {
+      "prompt": "A wall meets the floor at 90°. The wall and the floor are...",
+      "options": [
+        "perpendicular",
+        "alternate",
+        "parallel"
+      ],
+      "correct_index": 0,
+      "explanation": "Lines or surfaces that meet at 90° are perpendicular. Parallel ones never meet."
+    },
+    {
+      "prompt": "A line crosses two parallel lines. One angle is 48°. What is its alternate angle?",
+      "options": [
+        "132°",
+        "42°",
+        "48°"
+      ],
+      "correct_index": 2,
+      "explanation": "Alternate angles (the Z shape) are equal. 132° would be a co-interior angle."
+    },
+    {
+      "prompt": "Two co-interior angles lie between parallel lines. One is 75°. What is the other?",
+      "options": [
+        "75°",
+        "15°",
+        "105°"
+      ],
+      "correct_index": 2,
+      "explanation": "Co-interior angles add up to 180°: 180 - 75 = 105. Taking 75 from 90 gives 15, which uses the wrong rule."
+    },
+    {
+      "prompt": "A triangle has angles of 80° and 45°. What is the third angle?",
+      "options": [
+        "55°",
+        "235°",
+        "125°"
+      ],
+      "correct_index": 0,
+      "explanation": "80 + 45 = 125 and 180 - 125 = 55. 125 is only the sum of the two angles you know."
+    }
+  ]
+}
