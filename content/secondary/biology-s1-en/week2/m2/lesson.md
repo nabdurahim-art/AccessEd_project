@@ -36,6 +36,8 @@ Cells that work hard have many mitochondria. A muscle cell has thousands, becaus
 
 A **vacuole** is a small bag surrounded by a membrane and filled with fluid. It can store water, food or waste products.
 
+![A labelled animal cell: cell membrane, cytoplasm, nucleus, mitochondrion and small vacuole](animal-cell.webp)
+
 ## Example
 
 Which part of the cell would you expect to find in large numbers in the leg muscles of a runner?

@@ -16,6 +16,8 @@ Two special pairs of lines:
 - **Parallel lines** are always the same distance apart and never meet.
 - **Perpendicular lines** meet at 90°.
 
+![A line with an arrow at each end, a line segment with two endpoints, and a ray with one endpoint and one arrow](lines.webp)
+
 ## Angles
 
 An **angle** is formed when two rays or lines meet at a point. The point is called the **vertex**. We measure angles in degrees.
@@ -30,6 +32,8 @@ An **angle** is formed when two rays or lines meet at a point. The point is call
 - A **full turn** is 360°.
 
 You see these every day. A door open a little makes an acute angle. A door pushed wide open makes an obtuse angle. A flat road is a straight angle.
+
+![Six angles: acute 50 degrees, right 90 degrees, obtuse 130 degrees, straight 180 degrees, reflex 250 degrees and a full turn of 360 degrees](angle-types.webp)
 
 ## Example
 

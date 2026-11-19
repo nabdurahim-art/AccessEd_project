@@ -40,6 +40,8 @@ How much did it grow from week 2 to week 3? 25 - 15 = 10 cm. That is the biggest
 
 How much did it grow altogether? 30 - 10 = 20 cm.
 
+![A line graph of the height of a maize plant: 10 cm in week 1, 15 cm in week 2, 25 cm in week 3 and 30 cm in week 4](line-graph.webp)
+
 ## Try it
 
 Use the maize data above.

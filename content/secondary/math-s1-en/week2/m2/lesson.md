@@ -40,6 +40,8 @@ Sum of frequencies: 20
 
 Mean: 66 ÷ 20 = 3.3 marks
 
+![A table that multiplies each mark by its frequency. The total frequency is 20 and the total of mark times frequency is 66, so the mean is 3.3](mean-table.webp)
+
 ## Two mistakes to avoid
 
 - Do not divide by the number of rows. There are 5 rows here but 20 students. Divide by 20.

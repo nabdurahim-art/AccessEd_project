@@ -8,6 +8,7 @@ Folder layout:
   content/<level>/<course>/week1/pack.json    title, week_number, modules [{key, title, duration_min}]
   content/<level>/<course>/week1/m1/lesson.md the lesson text
   content/<level>/<course>/week1/m1/audio.mp3 optional: a spoken version of the lesson (shows a Listen button)
+  content/<level>/<course>/week1/m1/*.webp    optional: pictures, shown where lesson.md says ![what it shows](name.webp)
   content/<level>/<course>/week1/m1/quiz.json optional: pass_mark, questions [{prompt, options, correct_index, explanation}]
 
 Writes dist/<level>-<course>-week<N>.zip and dist/catalog.json. Stops with a list of problems if anything is wrong.
@@ -19,6 +20,9 @@ ROOT = Path(__file__).resolve().parent.parent
 CONTENT, DIST = ROOT / "content", ROOT / "dist"
 LANGS = {"en", "fr", "rw"}
 KEY_RULE = re.compile(r"^[A-Za-z0-9_-]{1,30}$")
+PICTURE = re.compile(r"!\[([^\]]*)\]\(([^)\s]+)\)")
+PICTURE_TYPES = (".webp", ".png", ".jpg", ".jpeg")
+PICTURE_MAX = 100 * 1024
 problems = []
 
 LEVELS = ("primary", "secondary")
@@ -117,7 +121,25 @@ def build_pack(course_dir, course, week_dir):
         check_lesson_text(text, mw)
         entry = {"key": key, "title": m["title"], "order": order, "duration_min": m.get("duration_min", 10),
                  "content_type": "markdown", "body_file": f"{key}/lesson.md"}
-        files[entry["body_file"]] = text.encode("utf-8")
+        # Pictures sit next to lesson.md. Inside the pack they are named <lesson>/<picture>, so the text is pointed there.
+        assets = []
+        for alt, ref in PICTURE.findall(text):
+            pic = week_dir / key / ref
+            if "/" in ref or pic.suffix.lower() not in PICTURE_TYPES:
+                bad(mw, f"picture {ref}: put a .webp, .png or .jpg file next to lesson.md and use only its name")
+            elif not pic.is_file():
+                bad(mw, f"picture {ref}: the file is missing")
+            elif pic.stat().st_size > PICTURE_MAX:
+                bad(mw, f"picture {ref}: over 100 KB, make it smaller")
+            elif not alt.strip():
+                bad(mw, f"picture {ref}: say what it shows inside the square brackets, for learners who cannot see it")
+            elif f"{key}/{ref}" not in files:
+                files[f"{key}/{ref}"] = pic.read_bytes()
+                assets.append({"path": f"{key}/{ref}", "type": "image", "alt": alt.strip()})
+        if assets:
+            entry["assets"] = assets
+        packed_text = PICTURE.sub(lambda p: f"![{p.group(1)}]({key}/{p.group(2)})" if "/" not in p.group(2) else p.group(0), text)
+        files[entry["body_file"]] = packed_text.encode("utf-8")
         audio = week_dir / key / "audio.mp3"
         if audio.is_file():
             if audio.stat().st_size > 2 * 1024 * 1024:

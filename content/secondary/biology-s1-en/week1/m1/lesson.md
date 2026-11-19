@@ -36,6 +36,8 @@ Here is a key for four animals: a goat, a hen, a tilapia and an earthworm.
 
 Suppose your animal has no legs and has fins. Step 1 sends you to Step 3. Step 3 tells you it is a tilapia.
 
+![A key drawn as a tree. Legs and feathers lead to hen, legs and fur to goat, no legs and fins to tilapia, no legs and no fins to earthworm](key.webp)
+
 ## Try it
 
 Use the key above.

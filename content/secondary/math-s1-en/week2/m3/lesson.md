@@ -40,6 +40,8 @@ Data: 4, 10, 6, 8
 - The two middle values are 6 and 8.
 - Median = (6 + 8) ÷ 2 = 7
 
+![The ordered values 3, 3, 5, 7, 9 with the middle value 5 marked, and the ordered values 4, 6, 8, 10 with the two middle values 6 and 8 marked](median.webp)
+
 ## Which average should you use?
 
 - The **mean** uses every value. One very big or very small value can pull it away from the rest.

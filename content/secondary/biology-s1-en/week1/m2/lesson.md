@@ -24,6 +24,8 @@ A **species** is a group of organisms that can breed with one another and produc
 
 To remember the order, use the first letters, K P C O F G S: **K**ind **P**eople **C**an **O**ften **F**ind **G**ood **S**olutions.
 
+![Seven levels from the largest group to the smallest: kingdom, phylum, class, order, family, genus, species](levels.webp)
+
 ## Why common names are a problem
 
 The same animal has different names in different languages: inka, cow, vache. Scientists in different countries need one name that everyone understands.
