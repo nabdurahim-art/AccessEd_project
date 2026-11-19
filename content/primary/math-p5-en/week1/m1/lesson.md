@@ -13,6 +13,8 @@ An **angle** is the opening between two lines that meet at a point. We measure a
 - An **obtuse angle** is bigger than 90° but smaller than 180°.
 - A **straight angle** is 180°. It looks like a straight line.
 
+![Four angles: an acute angle of 50 degrees, a right angle of 90 degrees, an obtuse angle of 130 degrees and a straight angle of 180 degrees](angle-types.webp)
+
 ## Measuring with a protractor
 
 - First, put the centre of the protractor on the point where the two lines meet.
@@ -31,6 +33,8 @@ Bisecting helps us make new angles:
 - Bisect 45° and you get 22.5° (twenty-two and a half degrees).
 - Bisect 60° and you get 30°.
 - Bisect 30° and you get 15°.
+
+![A dotted line cuts a 90 degree angle into two angles of 45 degrees, and a 60 degree angle into two angles of 30 degrees](bisect.webp)
 
 ## Example
 

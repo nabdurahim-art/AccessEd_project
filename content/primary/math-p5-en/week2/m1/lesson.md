@@ -38,6 +38,8 @@ Your friend says: "I have 3 goats and they are brown." Which part of that senten
 
 A quick test: ask yourself, "Do I count it or do I measure it?"
 
+![A chart: data is qualitative or quantitative, and quantitative data is discrete or continuous](kinds-of-data.webp)
+
 ## Example
 
 Sort these: 7 mangoes, 2.5 kg of rice, the mango is sweet.

@@ -42,6 +42,8 @@ Three features are used to decide the kingdom: the **structure of the body**, th
 - They are the smallest and simplest organisms.
 - Example: bacteria.
 
+![A chart of the five kingdoms, Animalia, Plantae, Fungi, Protoctista and Monera, with their main features and one example each](five-kingdoms.webp)
+
 ## Example
 
 To which kingdom does a mushroom belong?

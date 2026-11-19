@@ -117,9 +117,9 @@ two days ago.
 
 on Sunday (the Sunday that has gone).
 
-Regular verbs: add -ed.
+Regular verbs: add E D.
 
-Most verbs are regular. To make the past simple, add -ed.
+Most verbs are regular. To make the past simple, add E D.
 
 play becomes played.
 
@@ -139,9 +139,9 @@ She helped her mother in the garden last week.
 
 Three spelling rules.
 
-The verb ends in e: add only -d. Live becomes lived. Dance becomes danced.
+The verb ends in e: add only D. Live becomes lived. Dance becomes danced.
 
-The verb ends in a consonant and y: change y to -ied. Study becomes studied. Carry becomes carried.
+The verb ends in a consonant and y: change y to I E D. Study becomes studied. Carry becomes carried.
 
 A short verb ends in one vowel and one consonant: double the last letter. Stop becomes stopped. Plan becomes planned.
 
@@ -149,7 +149,7 @@ Be careful: play becomes played, not plaied, because there is a vowel before the
 
 After "did" and "did not".
 
-After did or did not, use the plain verb with no -ed.
+After did or did not, use the plain verb with no E D.
 
 She did not play football yesterday.
 
@@ -161,13 +161,13 @@ Put the verb in the past simple: Yesterday I (wash) my uniform.
 
 Wash is a regular verb.
 
-Add -ed: washed.
+Add E D: washed.
 
 Yesterday I washed my uniform.
 
 Try it.
 
-Last night we (watch) a football match. Hint: add -ed.
+Last night we (watch) a football match. Hint: add E D.
 
 She (study) English last year. Hint: the verb ends in a consonant and y.
 
@@ -175,7 +175,7 @@ Check your answers: watched, studied.
 
 Think back.
 
-Tell a friend two things you did last weekend. Use two verbs that end in -ed.
+Tell a friend two things you did last weekend. Use two verbs that end in E D.
 
 ### Past simple: irregular verbs and time connectors
 File name: `primary-english-p5-en-week1-m2.m4a` (or .mp3, .wav, .ogg)
@@ -188,7 +188,7 @@ Which sounds right: "I goed to school" or "I went to school"?
 
 Irregular verbs.
 
-Some verbs do not take -ed. They change in their own way. We call them irregular verbs. You learn them one by one.
+Some verbs do not take E D. They change in their own way. We call them irregular verbs. You learn them one by one.
 
 go becomes went.
 
@@ -342,7 +342,7 @@ Week 1 recap: past and future.
 
 The three big ideas.
 
-Idea one: regular verbs in the past. For things that are finished, add -ed: played, helped, cleaned. After did or did not, use the plain verb.
+Idea one: regular verbs in the past. For things that are finished, add E D: played, helped, cleaned. After did or did not, use the plain verb.
 
 Idea two: irregular verbs and connectors. Some verbs change in their own way: went, met, got, ate, came. Use was with I, he, she and it. Use were with you, we and they. First, Then, After that and Finally show the order.
 
@@ -385,7 +385,7 @@ Next week you will learn how to compare people, places and things.
 ### Comparing two things: -er than
 File name: `primary-english-p5-en-week2-m1.m4a` (or .mp3, .wav, .ogg)
 
-Comparing two things: -er than.
+Comparing two things: E R than.
 
 Think first.
 
@@ -395,7 +395,7 @@ Comparative adjectives.
 
 An adjective is a describing word: tall, big, cheap, fast.
 
-To compare two people, places or things, we use the comparative. For short adjectives, add -er and then use the word than.
+To compare two people, places or things, we use the comparative. For short adjectives, add E R and then use the word than.
 
 tall becomes taller.
 
@@ -419,17 +419,17 @@ My brother is taller than me.
 
 Three spelling rules.
 
-The adjective ends in e: add only -r. Wide becomes wider. Large becomes larger.
+The adjective ends in e: add only R. Wide becomes wider. Large becomes larger.
 
 A short adjective ends in one vowel and one consonant: double the last letter. Big becomes bigger. Hot becomes hotter. Thin becomes thinner.
 
-The adjective ends in a consonant and y: change y to -ier. Heavy becomes heavier. Easy becomes easier.
+The adjective ends in a consonant and y: change y to I E R. Heavy becomes heavier. Easy becomes easier.
 
 Two mistakes to avoid.
 
 Do not forget than. "A bus is bigger a motorbike" is wrong.
 
-Do not use more with -er. "More taller" is wrong. Say taller.
+Do not use more with E R. "More taller" is wrong. Say taller.
 
 Example.
 
@@ -441,7 +441,7 @@ A cow is heavier than a goat.
 
 Try it.
 
-A bicycle is (cheap) than a car. Hint: add -er.
+A bicycle is (cheap) than a car. Hint: add E R.
 
 The market is (wide) than the bridge. Hint: wide already ends in e.
 
@@ -449,7 +449,7 @@ Check your answers: cheaper, wider.
 
 Think back.
 
-Compare two things in the room where you are now. Use -er and than.
+Compare two things in the room where you are now. Use E R and than.
 
 ### More, better, worse
 File name: `primary-english-p5-en-week2-m2.m4a` (or .mp3, .wav, .ogg)
@@ -464,7 +464,7 @@ Long adjectives use "more".
 
 Some adjectives are long. They have three or more beats when you say them: ex-pen-sive, beau-ti-ful, com-for-ta-ble, dan-ger-ous.
 
-Long adjectives do not take -er. Put more in front, and use than after.
+Long adjectives do not take E R. Put more in front, and use than after.
 
 An aeroplane is more expensive than a bus.
 
@@ -474,9 +474,9 @@ This road is more dangerous than that one.
 
 Two mistakes to avoid.
 
-Do not add -er to a long adjective. "Expensiver" is wrong.
+Do not add E R to a long adjective. "Expensiver" is wrong.
 
-Do not use more and -er together. "More cheaper" is wrong. Say cheaper.
+Do not use more and E R together. "More cheaper" is wrong. Say cheaper.
 
 Irregular comparatives.
 
@@ -527,7 +527,7 @@ Which is better for you: studying in the morning or in the evening? Say why, usi
 ### The most of all: -est and "the most"
 File name: `primary-english-p5-en-week2-m3.m4a` (or .mp3, .wav, .ogg)
 
-The most of all: -est and "the most".
+The most of all: E S T and "the most".
 
 Think first.
 
@@ -537,7 +537,7 @@ Superlative adjectives.
 
 The comparative compares two things. The superlative compares one thing with all the others in a group.
 
-For short adjectives, put the in front and add -est.
+For short adjectives, put the in front and add E S T.
 
 tall becomes the tallest.
 
@@ -547,7 +547,7 @@ high becomes the highest.
 
 fast becomes the fastest.
 
-The spelling rules are the same as for -er.
+The spelling rules are the same as for E R.
 
 big becomes the biggest.
 
@@ -581,7 +581,7 @@ Two mistakes to avoid.
 
 Do not forget the. Say "the tallest boy", not "tallest boy".
 
-Do not use most and -est together. "The most tallest" is wrong.
+Do not use most and E S T together. "The most tallest" is wrong.
 
 Example.
 
@@ -612,11 +612,11 @@ Week 2 recap: comparing things.
 
 The three big ideas.
 
-Idea one: -er than. To compare two things with a short adjective, add -er and use than: taller than, bigger than, heavier than.
+Idea one: E R than. To compare two things with a short adjective, add E R and use than: taller than, bigger than, heavier than.
 
 Idea two: more, better, worse. Long adjectives take more: more expensive than. Five adjectives are irregular: better, worse, farther, more, less.
 
-Idea three: the -est and the most. To compare one thing with all the others, use the superlative: the tallest, the most beautiful, the best.
+Idea three: the E S T and the most. To compare one thing with all the others, use the superlative: the tallest, the most beautiful, the best.
 
 Real-life challenge: going to town.
 
@@ -780,7 +780,7 @@ An angle is 120°. Bisect it.
 
 Two equal parts, so divide by 2.
 
-120 ÷ 2 equals 60.
+120 divided by 2 equals 60.
 
 Each part is 60°.
 
@@ -931,7 +931,7 @@ Check your work.
 
 Top angle: 40 plus 40 equals 80, and 180 minus 80 equals 100°.
 
-Each half: 100 ÷ 2 equals 50°.
+Each half: 100 divided by 2 equals 50°.
 
 Right side: the floor beam is a straight line, so 180 minus 90 equals 90°.
 
@@ -1984,7 +1984,7 @@ h plus o plus t equals hot.
 
 Word families.
 
-Change only the first letter and you get a new word. These words all end in -at:
+Change only the first letter and you get a new word. These words all end in A T:
 
 cat.
 
@@ -2255,17 +2255,17 @@ Sum of the interior angles.
 
 The interior angles are the angles inside the polygon. For a polygon with n sides:
 
-Sum of interior angles equals (n minus 2) × 180°.
+Sum of interior angles equals (n minus 2) times 180°.
 
 Why? From one corner you can cut any polygon into triangles. You always get 2 fewer triangles than sides, and each triangle has 180°.
 
-Triangle: (3 minus 2) × 180 equals 180°.
+Triangle: (3 minus 2) times 180 equals 180°.
 
-Quadrilateral: (4 minus 2) × 180 equals 360°.
+Quadrilateral: (4 minus 2) times 180 equals 360°.
 
-Pentagon: (5 minus 2) × 180 equals 540°.
+Pentagon: (5 minus 2) times 180 equals 540°.
 
-Hexagon: (6 minus 2) × 180 equals 720°.
+Hexagon: (6 minus 2) times 180 equals 720°.
 
 Sum of the exterior angles.
 
@@ -2275,11 +2275,11 @@ Regular polygons.
 
 A regular polygon has all sides equal and all angles equal.
 
-Each interior angle equals sum of interior angles ÷ n.
+Each interior angle equals sum of interior angles divided by n.
 
-Each exterior angle equals 360° ÷ n.
+Each exterior angle equals 360° divided by n.
 
-For a regular hexagon: each interior angle is 720 ÷ 6 equals 120°, and each exterior angle is 360 ÷ 6 equals 60°. Notice that 120 plus 60 equals 180, because the two angles sit on a straight line.
+For a regular hexagon: each interior angle is 720 divided by 6 equals 120°, and each exterior angle is 360 divided by 6 equals 60°. Notice that 120 plus 60 equals 180, because the two angles sit on a straight line.
 
 Example.
 
@@ -2314,7 +2314,7 @@ Idea one: lines and types of angles. A segment has two endpoints, a ray has one,
 
 Idea two: angle facts. Angles on a straight line add up to 180°. Angles at a point add up to 360°. Vertically opposite, corresponding and alternate angles are equal. Co-interior angles add up to 180°.
 
-Idea three: polygons. The interior angles add up to (n minus 2) × 180°. The exterior angles add up to 360°. In a regular polygon, divide by n to find one angle.
+Idea three: polygons. The interior angles add up to (n minus 2) times 180°. The exterior angles add up to 360°. In a regular polygon, divide by n to find one angle.
 
 Real-life challenge: the tiler.
 
@@ -2330,11 +2330,11 @@ Work it out before you read on.
 
 Check your work.
 
-Hexagon: (6 minus 2) × 180 equals 720, and 720 ÷ 6 equals 120°.
+Hexagon: (6 minus 2) times 180 equals 720, and 720 divided by 6 equals 120°.
 
 Three tiles: 120 plus 120 plus 120 equals 360°. Angles at a point add up to 360°, so there is no gap.
 
-Pentagon: (5 minus 2) × 180 equals 540, and 540 ÷ 5 equals 108°. Three tiles give 324°, which leaves a gap of 36°. Four tiles give 432°, which is too much. So pentagons do not work.
+Pentagon: (5 minus 2) times 180 equals 540, and 540 divided by 5 equals 108°. Three tiles give 324°, which leaves a gap of 36°. Four tiles give 432°, which is too much. So pentagons do not work.
 
 You used all three lessons in one problem. Well done for trying.
 
@@ -2424,7 +2424,7 @@ What is the mean?
 
 The mean is the average. It is the value each one would have if the total were shared out equally.
 
-Mean equals sum of all the values ÷ number of values.
+Mean equals sum of all the values divided by number of values.
 
 Example one: raw data.
 
@@ -2434,33 +2434,33 @@ Sum: 12 plus 15 plus 9 plus 18 plus 21 equals 75.
 
 Number of values: 5.
 
-Mean: 75 ÷ 5 equals 15 sodas per day.
+Mean: 75 divided by 5 equals 15 sodas per day.
 
 The mean from a frequency table.
 
 When values repeat, use the frequency table. Multiply each value by its frequency, add the answers, then divide by the total frequency.
 
-Mean equals sum of (value × frequency) ÷ sum of frequencies.
+Mean equals sum of (value times frequency) divided by sum of frequencies.
 
 Example two: frequency table.
 
 Twenty students took a test marked out of 5.
 
-Mark 1, frequency 2: 1 × 2 equals 2.
+Mark 1, frequency 2: 1 times 2 equals 2.
 
-Mark 2, frequency 3: 2 × 3 equals 6.
+Mark 2, frequency 3: 2 times 3 equals 6.
 
-Mark 3, frequency 6: 3 × 6 equals 18.
+Mark 3, frequency 6: 3 times 6 equals 18.
 
-Mark 4, frequency 5: 4 × 5 equals 20.
+Mark 4, frequency 5: 4 times 5 equals 20.
 
-Mark 5, frequency 4: 5 × 4 equals 20.
+Mark 5, frequency 4: 5 times 4 equals 20.
 
-Sum of value × frequency: 2 plus 6 plus 18 plus 20 plus 20 equals 66.
+Sum of value times frequency: 2 plus 6 plus 18 plus 20 plus 20 equals 66.
 
 Sum of frequencies: 20.
 
-Mean: 66 ÷ 20 equals 3.3 marks.
+Mean: 66 divided by 20 equals 3.3 marks.
 
 Two mistakes to avoid.
 
@@ -2472,7 +2472,7 @@ Finding a missing value.
 
 The mean of 4 numbers is 10. Three of them are 8, 12 and 9. Find the fourth.
 
-The total must be 4 × 10 equals 40.
+The total must be 4 times 10 equals 40.
 
 The three known numbers add up to 29.
 
@@ -2541,7 +2541,7 @@ In order: 4, 6, 8, 10.
 
 The two middle values are 6 and 8.
 
-Median equals (6 plus 8) ÷ 2 equals 7.
+Median equals (6 plus 8) divided by 2 equals 7.
 
 Which average should you use?
 
@@ -2596,7 +2596,7 @@ A student says: "Most of us scored above the mean." Is that true?
 
 Check your work.
 
-Sum: 12 plus 15 plus 9 plus 15 plus 18 plus 10 plus 15 plus 14 plus 9 equals 117. Mean: 117 ÷ 9 equals 13.
+Sum: 12 plus 15 plus 9 plus 15 plus 18 plus 10 plus 15 plus 14 plus 9 equals 117. Mean: 117 divided by 9 equals 13.
 
 In order: 9, 9, 10, 12, 14, 15, 15, 15, 18. The fifth value is the median: 14.
 

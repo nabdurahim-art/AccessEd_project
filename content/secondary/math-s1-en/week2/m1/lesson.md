@@ -42,6 +42,8 @@ Cumulative frequencies: 2, then 2 + 3 = 5, then 5 + 6 = 11, then 11 + 5 = 16, th
 
 How many students scored 3 or less? Read the cumulative frequency at mark 3: **11 students**.
 
+![A frequency table for marks 1 to 5 with tally marks, frequencies 2, 3, 6, 5, 4 and cumulative frequencies 2, 5, 11, 16, 20](frequency-table.webp)
+
 ## Try it
 
 Use the test data above.

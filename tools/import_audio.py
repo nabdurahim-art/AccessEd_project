@@ -6,14 +6,20 @@ Put recordings in recordings/ named  <course>-week<N>-<lesson>.<ext>, for exampl
 then run:
     python3 tools/import_audio.py
 Each one becomes content/<level>/<course>/week<N>/<lesson>/audio.mp3 (the name starts with primary- or secondary-) (mono, small). Needs ffmpeg.
+For smaller files (a computer voice still sounds clear):  python3 tools/import_audio.py --bitrate 32k
 After that: python3 tools/build_packs.py, then tools/publish.py.
 """
-import re, shutil, subprocess, sys
+import argparse, re, shutil, subprocess, sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 REC = ROOT / "recordings"
 NAME = re.compile(r"^(?P<level>primary|secondary)-(?P<course>.+)-week(?P<week>\d+)-(?P<mod>[A-Za-z0-9_]+)\.(m4a|mp3|wav|ogg|aac|opus|webm|amr|flac)$", re.I)
+
+ap = argparse.ArgumentParser()
+ap.add_argument("--bitrate", default="48k", help="size of the sound, e.g. 48k (default) or 32k (smaller)")
+ap.add_argument("--only", help="import only recordings whose name contains this text")
+a = ap.parse_args()
 
 if not shutil.which("ffmpeg"):
     sys.exit("ffmpeg is not installed. Run: sudo apt install ffmpeg")
@@ -22,7 +28,7 @@ if not REC.is_dir():
 
 done = bad = 0
 for f in sorted(REC.iterdir()):
-    if not f.is_file() or f.name.startswith("."):
+    if not f.is_file() or f.name.startswith(".") or (a.only and a.only not in f.name):
         continue
     m = NAME.match(f.name)
     if not m:
@@ -37,7 +43,7 @@ for f in sorted(REC.iterdir()):
     out = lesson_dir / "audio.mp3"
     # speech clean-up: remove low rumble, even out the volume, mono, 48 kbps
     r = subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-i", str(f), "-af", "highpass=f=80,loudnorm=I=-16:TP=-1.5",
-                        "-ac", "1", "-ar", "44100", "-b:a", "48k", str(out)])
+                        "-ac", "1", "-ar", "44100", "-b:a", a.bitrate, str(out)])
     if r.returncode != 0:
         print(f"FAIL  {f.name}: ffmpeg could not read it")
         bad += 1

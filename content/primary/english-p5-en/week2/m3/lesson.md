@@ -51,6 +51,8 @@ Keza is 1.50 metres tall. Aline is 1.42 metres tall. Jane is 1.38 metres tall.
 - Keza is **the tallest**. That compares her with all of them.
 - Jane is **the shortest**.
 
+![Three girls stand side by side. Keza, 1.50 metres, is the tallest. Jane, 1.38 metres, is the shortest](tallest.webp)
+
 ## Try it
 
 - Friday was (hot) day of the week. Hint: double the t and do not forget the.

@@ -27,6 +27,8 @@ Why? From one corner you can cut any polygon into triangles. You always get 2 fe
 - Pentagon: (5 - 2) × 180 = 540°
 - Hexagon: (6 - 2) × 180 = 720°
 
+![A quadrilateral cut into 2 triangles, a pentagon cut into 3 triangles and a hexagon cut into 4 triangles](polygon-triangles.webp)
+
 ## Sum of the exterior angles
 
 An **exterior angle** is made when you extend one side of the polygon. The exterior angles of **any** polygon add up to **360°**.

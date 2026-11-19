@@ -18,11 +18,15 @@ A line that crosses two parallel lines is called a **transversal**.
 - **Alternate angles** are equal. They are between the parallel lines, on opposite sides of the transversal. Look for the letter Z.
 - **Co-interior angles** add up to **180°**. They are between the parallel lines, on the same side of the transversal. Look for the letter C.
 
+![A transversal crosses two parallel lines. Three drawings mark the corresponding angles, the alternate angles and the co-interior angles](parallel-angles.webp)
+
 ## Always give a reason
 
 In geometry you write the fact you used, in brackets, next to each step.
 
 ## Example one
+
+![Three angles meet at a point: 120 degrees, 95 degrees and an unknown angle a](angles-at-a-point.webp)
 
 Three angles meet at a point: 120°, 95° and a. Find a.
 

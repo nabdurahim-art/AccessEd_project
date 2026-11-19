@@ -34,6 +34,8 @@ In multicellular organisms, cells work together in levels.
 
 So the order from smallest to largest is: cell, tissue, organ, organism.
 
+![Four boxes joined by arrows: cell, tissue, organ, organism](cell-to-organism.webp)
+
 ## Example
 
 Is a bacterium unicellular or multicellular?
