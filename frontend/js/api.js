@@ -37,6 +37,10 @@ export const register = ({ username, password, full_name, email, phone_number })
 };
 export const login = (identifier, password) =>
   request('/auth/login', { method: 'POST', body: { identifier, password }, auth: false });
+export const resetPassword = (identifier, code, new_password) =>
+  request('/auth/reset-password', { method: 'POST', body: { identifier, code, new_password }, auth: false });
+export const createResetCode = (identifier) =>
+  request('/auth/reset-code', { method: 'POST', body: { identifier } });
 export const getMe = () => request('/auth/me');
 export const getSummary = () => request('/progress/summary');
 

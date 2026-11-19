@@ -301,3 +301,9 @@ a.btn { text-decoration: none; }
 .admin-line { align-items: center; flex-wrap: nowrap; }
 .admin-meta { display: flex; flex-direction: column; min-width: 0; }
 .admin-meta small { color: var(--muted); font-weight: 400; }
+
+/* forgot password + reset tool + install */
+.forgot { text-align: right; margin: -6px 0 12px; font-size: 15px; }
+.forgot a { color: var(--primary); font-weight: 700; }
+.form-ok { background: var(--primary-soft); color: var(--primary); font-weight: 700; padding: 10px 12px; border-radius: 12px; margin: 0 0 12px; }
+.reset-code { display: inline-block; margin: 6px 0; font: 700 28px/1.2 ui-monospace, Menlo, Consolas, monospace; letter-spacing: 4px; user-select: all; }

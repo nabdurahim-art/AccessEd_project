@@ -136,3 +136,18 @@ CREATE TABLE user_badges (
 CREATE INDEX idx_modules_pack   ON modules (pack_id);
 CREATE INDEX idx_attempts_user  ON quiz_attempts (user_id);
 CREATE INDEX idx_attempts_quiz  ON quiz_attempts (quiz_id);
+
+-- Password reset codes. An admin makes a short code for a learner who forgot the
+-- password; the learner uses it once to choose a new password. Only a hash of the
+-- code is kept, so a database copy never shows a usable code.
+CREATE TABLE IF NOT EXISTS password_resets (
+    reset_id    UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id     UUID        NOT NULL REFERENCES users (user_id) ON DELETE CASCADE,
+    code_hash   CHAR(64)    NOT NULL,
+    expires_at  TIMESTAMPTZ NOT NULL,
+    used_at     TIMESTAMPTZ,
+    attempts    INTEGER     NOT NULL DEFAULT 0,
+    created_by  UUID        REFERENCES users (user_id) ON DELETE SET NULL,
+    created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+CREATE INDEX IF NOT EXISTS idx_password_resets_user ON password_resets (user_id);
