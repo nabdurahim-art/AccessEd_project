@@ -15,14 +15,17 @@ applyTheme();
 // Ask the browser to keep downloaded lessons even when the phone is low on space.
 if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => {});
 
-// "Install" button: the browser tells us when installing is possible.
-let installEvent = null;
+// "Install" help. Chrome on Android gives us an install event (caught early in index.html).
+// iPhone and iPad never do, so we show the steps instead. Same for browsers that stay silent.
 const isInstalled = () => window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault(); installEvent = e;
-  if (currentName() === 'profile') screens.profile();
-});
-window.addEventListener('appinstalled', () => { installEvent = null; if (currentName() === 'profile') screens.profile(); });
+const ua = navigator.userAgent || '';
+const isIos = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+const isInApp = /FBAN|FBAV|Instagram|Line\/|MicroMessenger|; wv\)|WhatsApp|Snapchat|TikTok/i.test(ua); // in-app browsers cannot install
+const installEvent = () => window.__installEvent || null;
+const REDRAW_FOR_INSTALL = ['profile', 'welcome', 'auth', ''];
+const redrawInstall = () => { if (REDRAW_FOR_INSTALL.includes(currentName())) route(); };
+window.addEventListener('install-ready', redrawInstall);
+window.addEventListener('appinstalled', () => { window.__installEvent = null; redrawInstall(); });
 
 const $app = document.getElementById('app');
 const $banner = document.getElementById('banner');
@@ -130,7 +133,7 @@ function route() {
   const tab = tabsNow().includes(name);
   const inside = tab || LEARNER_ONLY.includes(name) || ['admin', 'content', 'edit', 'profile'].includes(name);
   if (!signedIn && inside) return go('welcome');
-  if (signedIn && (name === 'welcome' || name === 'auth')) return go(homeFor());
+  if (signedIn && (name === 'welcome' || name === 'auth' || name === 'forgot')) return go(homeFor());
   if (signedIn && adminMode() && LEARNER_ONLY.includes(name)) return go('content'); // admins see the admin screens
   if (signedIn && !isAdmin() && ['admin', 'content', 'edit'].includes(name)) return go('home');
 
@@ -146,7 +149,30 @@ window.addEventListener('hashchange', route);
 window.addEventListener('session-expired', () => { store.clearSession(); pending = 0; go('welcome'); route(); });
 
 /* ---------- screens ---------- */
-const form = { mode: 'register', name: '', username: '', password: '', contact: '', submitted: false, busy: false, error: '' };
+// The install box: a button when the browser allows it, otherwise the steps to follow.
+function installHTML() {
+  if (isInstalled()) return '';
+  let body;
+  if (installEvent() && !isInApp) {
+    return `<div class="note">${icon('shield', 22)}<span>${esc(t('installHint'))}</span></div>
+      <div class="photo-actions"><button class="btn btn--primary" id="install-btn">${esc(t('installApp'))}</button></div>`;
+  }
+  if (isInApp) body = t('installInApp');
+  else if (isIos) body = t('installIos');
+  else body = t('installMenu');
+  return `<div class="note">${icon('shield', 22)}<span><b>${esc(t('installHow'))}</b><br>${esc(body)}</span></div>`;
+}
+function bindInstall() {
+  const btn = $app.querySelector('#install-btn');
+  if (!btn) return;
+  btn.addEventListener('click', async () => {
+    const ev = installEvent(); window.__installEvent = null;
+    if (ev) { ev.prompt(); await ev.userChoice.catch(() => {}); }
+    route();
+  });
+}
+
+const form = { notice: '', mode: 'register', name: '', username: '', password: '', contact: '', submitted: false, busy: false, error: '' };
 
 const learn = createLearnScreens({ $app, t, esc, icon, go, nav, store, lang: () => lang, afterSave, reroute: () => route() });
 
@@ -170,7 +196,9 @@ const screens = {
         <div class="stack">
           ${LANGUAGES.map((l) => `<button class="btn ${l.code === lang ? 'btn--primary' : 'btn--outline'}" data-lang="${l.code}">${l.label}</button>`).join('')}
         </div>
+        <div class="stack" style="margin-top:18px">${installHTML()}</div>
       </div>`;
+    bindInstall();
     $app.querySelectorAll('[data-lang]').forEach((b) =>
       b.addEventListener('click', () => { setLanguage(b.dataset.lang); go('auth'); }));
   },
@@ -214,9 +242,13 @@ const screens = {
           <input id="contact" value="${esc(form.contact)}" placeholder="${esc(t('contactHint'))}" inputmode="email" autocapitalize="none">
         </div>
         <div class="note">${icon('shield', 22)}<span>${esc(t('sharedPhone'))}</span></div>` : ''}
+      ${form.notice ? `<p class="form-ok" role="status">${esc(form.notice)}</p>` : ''}
       ${form.error ? `<p class="form-error" role="alert">${esc(form.error)}</p>` : ''}
+      ${reg ? '' : `<p class="forgot"><a href="#/forgot" id="forgot-link">${esc(t('forgotLink'))}</a></p>`}
       <button class="btn btn--primary" id="submit" ${form.busy ? 'disabled' : ''}>${esc(reg ? t('registerFree') : t('login'))}</button>
-      <p class="footer-note">${esc(t('logoutHint'))}</p>`;
+      <p class="footer-note">${esc(t('logoutHint'))}</p>
+      <div class="stack" style="margin-top:14px">${installHTML()}</div>`;
+    bindInstall();
 
     $app.querySelectorAll('[data-mode]').forEach((b) => b.addEventListener('click', () => {
       form.mode = b.dataset.mode; form.error = ''; form.submitted = false; screens.auth();
@@ -238,6 +270,27 @@ const screens = {
     const contact = $app.querySelector('#contact');
     if (contact) contact.addEventListener('input', (e) => { form.contact = e.target.value; });
     $app.querySelector('#submit').addEventListener('click', submitAuth);
+  },
+
+  forgot() {
+    const f = forgotForm;
+    $app.innerHTML = `
+      <a class="back" href="#/auth" id="back-login">${icon('back', 20)} ${esc(t('backToLogin'))}</a>
+      <h1>${esc(t('forgotTitle'))}</h1>
+      <p class="muted">${esc(t('forgotIntro'))}</p>
+      <div class="field"><label for="f-who">${esc(t('resetWho'))}</label>
+        <input id="f-who" value="${esc(f.who)}" autocomplete="username" autocapitalize="none" autocorrect="off"></div>
+      <div class="field"><label for="f-code">${esc(t('resetCode'))}</label>
+        <input id="f-code" value="${esc(f.code)}" placeholder="${esc(t('resetCodeHint'))}" autocapitalize="characters" autocorrect="off" spellcheck="false"></div>
+      <div class="field ${f.pwErr ? 'has-error' : ''}"><label for="f-pw">${esc(t('newPassword'))}</label>
+        <input id="f-pw" type="password" value="${esc(f.pw)}" autocomplete="new-password">
+        ${f.pwErr ? `<div class="msg">${esc(t('passwordError', { min: MIN_PASSWORD }))}</div>` : ''}</div>
+      ${f.error ? `<p class="form-error" role="alert">${esc(f.error)}</p>` : ''}
+      <button class="btn btn--primary" id="f-submit" ${f.busy ? 'disabled' : ''}>${esc(t('resetSubmit'))}</button>`;
+    $app.querySelector('#f-who').addEventListener('input', (e) => { f.who = e.target.value; });
+    $app.querySelector('#f-code').addEventListener('input', (e) => { f.code = e.target.value; });
+    $app.querySelector('#f-pw').addEventListener('input', (e) => { f.pw = e.target.value; });
+    $app.querySelector('#f-submit').addEventListener('click', submitReset);
   },
 
   async progress() {
@@ -298,8 +351,8 @@ const screens = {
       </div>
       <p class="small muted">${esc(t('photoHint'))}</p>
       <p class="form-error" id="photo-msg" role="alert" hidden></p>
-      ${installEvent && !isInstalled() ? `<div class="note">${icon('shield', 22)}<span>${esc(t('installHint'))}</span></div>
-        <div class="photo-actions"><button class="btn btn--primary" id="install-btn">${esc(t('installApp'))}</button></div>` : ''}
+      ${installHTML()}
+      ${adminMode() ? resetToolHTML() : ''}
       <h2>${esc(t('appearance'))}</h2>
       <div class="segment" role="group" aria-label="${esc(t('appearance'))}">
         ${THEMES.map((m) => `<button data-theme-pick="${m}" aria-pressed="${m === theme}">${esc(t(themeNames[m]))}</button>`).join('')}
@@ -314,12 +367,8 @@ const screens = {
     $app.querySelectorAll('[data-theme-pick]').forEach((b) =>
       b.addEventListener('click', () => { setTheme(b.dataset.themePick); screens.profile(); }));
 
-    const installBtn = $app.querySelector('#install-btn');
-    if (installBtn) installBtn.addEventListener('click', async () => {
-      const ev = installEvent; installEvent = null;
-      if (ev) { ev.prompt(); await ev.userChoice.catch(() => {}); }
-      screens.profile();
-    });
+    bindInstall();
+    if (adminMode()) bindResetTool();
 
     const input = $app.querySelector('#photo-input');
     const msg = $app.querySelector('#photo-msg');
@@ -346,6 +395,53 @@ const screens = {
     if (swap) swap.addEventListener('click', () => { store.setView(adminMode() ? 'learner' : 'admin'); go(adminMode() ? 'content' : 'home'); });
   },
 };
+
+const forgotForm = { who: '', code: '', pw: '', pwErr: false, busy: false, error: '' };
+
+async function submitReset() {
+  const f = forgotForm;
+  f.error = ''; f.pwErr = false;
+  if (!f.who.trim() || !f.code.trim() || !f.pw) { f.error = t('resetNeed'); return screens.forgot(); }
+  if (f.pw.length < MIN_PASSWORD || f.pw.length > MAX_PASSWORD) { f.pwErr = true; return screens.forgot(); }
+  f.busy = true; screens.forgot();
+  try {
+    await api.resetPassword(f.who.trim(), f.code.trim(), f.pw);
+    form.mode = 'login'; form.username = f.who.trim(); form.password = ''; form.error = ''; form.submitted = false;
+    form.notice = t('resetDone');
+    f.who = f.code = f.pw = ''; f.busy = false;
+    go('auth');
+  } catch (e) {
+    f.busy = false;
+    if (!(e instanceof api.ApiError)) f.error = t('errGeneric');
+    else if (e.status === 0) f.error = t('errNetwork');
+    else if (e.status === 400 || e.status === 429) f.error = e.message;
+    else f.error = t('errGeneric');
+    screens.forgot();
+  }
+}
+
+// Admin tool on the Account screen: make a one-time code for a learner who forgot the password.
+function resetToolHTML() {
+  return `<h2>${esc(t('adminResetTitle'))}</h2>
+    <p class="small muted">${esc(t('adminResetHint'))}</p>
+    <div class="field"><input id="rc-who" aria-label="${esc(t('resetWho'))}" placeholder="${esc(t('resetWho'))}" autocapitalize="none" autocorrect="off"></div>
+    <button class="btn btn--outline" id="rc-make">${esc(t('makeCode'))}</button>
+    <div id="rc-out" aria-live="polite"></div>`;
+}
+function bindResetTool() {
+  const who = $app.querySelector('#rc-who'), out = $app.querySelector('#rc-out'), btn = $app.querySelector('#rc-make');
+  btn.addEventListener('click', async () => {
+    if (!who.value.trim()) return;
+    btn.disabled = true; out.innerHTML = '';
+    try {
+      const r = await api.createResetCode(who.value.trim());
+      out.innerHTML = `<div class="note"><span><b>${esc(t('codeFor', { name: r.username }))}</b><br><span class="reset-code">${esc(r.code)}</span><br>${esc(t('codeNote'))}</span></div>`;
+    } catch (e) {
+      const msg = !(e instanceof api.ApiError) ? t('errGeneric') : e.status === 0 ? t('errNetwork') : e.status === 403 ? t('adminOnly') : e.message;
+      out.innerHTML = `<p class="form-error" role="alert">${esc(msg)}</p>`;
+    } finally { btn.disabled = false; }
+  });
+}
 
 /* ---------- actions ---------- */
 function setLanguage(code) {

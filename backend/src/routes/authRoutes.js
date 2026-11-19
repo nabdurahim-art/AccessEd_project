@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const rateLimit = require('express-rate-limit');
 const authController = require('../controllers/authController');
-const { authenticateToken } = require('../middleware/authMiddleware');
+const { authenticateToken, requireAdmin } = require('../middleware/authMiddleware');
 
 // Counts only failed logins. Many learners can share one network at the centre.
 const loginLimiter = rateLimit({
@@ -23,8 +23,19 @@ const registerLimiter = rateLimit({
   message: { error: 'Too many sign-ups from this network. Try again later.' },
 });
 
+// Wrong codes count here, so a code cannot be guessed from one network.
+const resetLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 20,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: 'Too many tries. Try again in 15 minutes.' },
+});
+
 router.post('/register', registerLimiter, authController.registerUser);
 router.post('/login', loginLimiter, authController.loginUser);
+router.post('/reset-password', resetLimiter, authController.resetPassword);
+router.post('/reset-code', authenticateToken, requireAdmin, authController.createResetCode);
 router.get('/me', authenticateToken, authController.getMe);
 
 module.exports = router;

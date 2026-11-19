@@ -1,5 +1,6 @@
 const argon2 = require('argon2');
 const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
 const db = require('../config/database');
 const { USERNAME_RULE, EMAIL_RULE, isBlank, normalizePhone, conflictMessage } = require('../utils/identity');
 
@@ -166,8 +167,108 @@ const getMe = async (req, res) => {
   }
 };
 
+// ---- Forgotten password ----
+// There is no email or SMS service, so an admin (facilitator) makes a one-time
+// code for the learner. The learner types it with a new password.
+const RESET_HOURS = 24;
+const RESET_MAX_ATTEMPTS = 5;
+// No 0/O or 1/I/L, so a code read out loud or copied by hand is not mixed up.
+const CODE_CHARS = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';
+
+const makeCode = () => {
+  let code = '';
+  for (let i = 0; i < 8; i++) code += CODE_CHARS[crypto.randomInt(CODE_CHARS.length)];
+  return code;
+};
+const normalizeCode = (c) => String(c || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
+const hashCode = (c) => crypto.createHash('sha256').update(normalizeCode(c)).digest('hex');
+
+const findByIdentifier = async (identifier) => {
+  const id = String(identifier).trim();
+  const r = await db.query(
+    `SELECT user_id, username FROM users
+     WHERE username = $1 OR email = $2 OR phone_number = $1 OR phone_number = $3 LIMIT 1`,
+    [id, id.toLowerCase(), normalizePhone(id)]
+  );
+  return r.rows[0] || null;
+};
+
+// Admin only. Makes a new code (and cancels any older unused ones).
+const createResetCode = async (req, res) => {
+  try {
+    const { identifier } = req.body || {};
+    if (!identifier || typeof identifier !== 'string' || identifier.trim() === '') {
+      return res.status(400).json({ error: 'Give the learner\'s username, email or phone number.' });
+    }
+    const user = await findByIdentifier(identifier);
+    if (!user) return res.status(404).json({ error: 'No account found with that username, email or phone number.' });
+
+    const code = makeCode();
+    await db.query('UPDATE password_resets SET used_at = NOW() WHERE user_id = $1 AND used_at IS NULL', [user.user_id]);
+    const ins = await db.query(
+      `INSERT INTO password_resets (user_id, code_hash, expires_at, created_by)
+       VALUES ($1, $2, NOW() + ($3 || ' hours')::interval, $4) RETURNING expires_at`,
+      [user.user_id, hashCode(code), String(RESET_HOURS), req.user.user_id]
+    );
+    return res.status(201).json({ username: user.username, code, expires_at: ins.rows[0].expires_at });
+  } catch (err) {
+    console.error('Reset code error:', err);
+    return res.status(500).json({ error: 'Internal server error.' });
+  }
+};
+
+// Public. One answer for every failure, so nobody can use it to find out which usernames exist.
+const BAD_CODE = { error: 'The code is wrong or has expired. Ask your facilitator for a new one.' };
+
+const resetPassword = async (req, res) => {
+  try {
+    const { identifier, code, new_password } = req.body || {};
+    if (!identifier || typeof identifier !== 'string' || !code || typeof code !== 'string') {
+      return res.status(400).json({ error: 'Username and code are required.' });
+    }
+    if (typeof new_password !== 'string' || new_password.length < 8 || new_password.length > 100) {
+      return res.status(400).json({ error: 'Password must be between 8 and 100 characters.' });
+    }
+
+    const user = await findByIdentifier(identifier);
+    if (!user) return res.status(400).json(BAD_CODE);
+
+    const r = await db.query(
+      `SELECT reset_id, code_hash, attempts FROM password_resets
+       WHERE user_id = $1 AND used_at IS NULL AND expires_at > NOW()
+       ORDER BY created_at DESC LIMIT 1`,
+      [user.user_id]
+    );
+    const row = r.rows[0];
+    if (!row) return res.status(400).json(BAD_CODE);
+
+    const given = Buffer.from(hashCode(code));
+    const real = Buffer.from(row.code_hash);
+    if (!crypto.timingSafeEqual(given, real)) {
+      // After a few wrong guesses the code is cancelled, so it cannot be guessed.
+      await db.query(
+        `UPDATE password_resets SET attempts = attempts + 1,
+           used_at = CASE WHEN attempts + 1 >= $2 THEN NOW() ELSE used_at END
+         WHERE reset_id = $1`,
+        [row.reset_id, RESET_MAX_ATTEMPTS]
+      );
+      return res.status(400).json(BAD_CODE);
+    }
+
+    const password_hash = await argon2.hash(new_password, HASH_OPTIONS);
+    await db.query('UPDATE users SET password_hash = $1 WHERE user_id = $2', [password_hash, user.user_id]);
+    await db.query('UPDATE password_resets SET used_at = NOW() WHERE user_id = $1 AND used_at IS NULL', [user.user_id]);
+    return res.status(200).json({ message: 'Password changed. You can log in now.' });
+  } catch (err) {
+    console.error('Reset password error:', err);
+    return res.status(500).json({ error: 'Internal server error.' });
+  }
+};
+
 module.exports = {
   registerUser,
   loginUser,
-  getMe
+  getMe,
+  createResetCode,
+  resetPassword
 };
