@@ -41,6 +41,12 @@ export const resetPassword = (identifier, code, new_password) =>
   request('/auth/reset-password', { method: 'POST', body: { identifier, code, new_password }, auth: false });
 export const createResetCode = (identifier) =>
   request('/auth/reset-code', { method: 'POST', body: { identifier } });
+export const requestReset = (identifier) =>
+  request('/auth/reset-request', { method: 'POST', body: { identifier }, auth: false });
+export const getSupport = () => request('/auth/support', { auth: false });
+export const getResetRequests = () => request('/auth/reset-requests');
+export const codeForRequest = (id) => request(`/auth/reset-requests/${encodeURIComponent(id)}/code`, { method: 'POST' });
+export const dismissResetRequest = (id) => request(`/auth/reset-requests/${encodeURIComponent(id)}/dismiss`, { method: 'POST' });
 export const getMe = () => request('/auth/me');
 export const getSummary = () => request('/progress/summary');
 

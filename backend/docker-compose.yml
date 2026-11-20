@@ -35,6 +35,8 @@ services:
       JWT_SECRET: ${JWT_SECRET:?Set JWT_SECRET in the .env file (32+ characters)}
       # Leave empty when the web app and the API share one address (Nginx).
       CORS_ORIGIN: ${CORS_ORIGIN:-}
+      # Phone or WhatsApp number shown on the forgot-password screen. Leave empty to show nothing.
+      SUPPORT_CONTACT: ${SUPPORT_CONTACT:-}
       PACKS_DIR: /app/storage/packs
       PORT: 5000
     volumes:
