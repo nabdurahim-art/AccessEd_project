@@ -309,3 +309,10 @@ a.btn { text-decoration: none; }
 .forgot a { color: var(--primary); font-weight: 700; }
 .form-ok { background: var(--primary-soft); color: var(--primary); font-weight: 700; padding: 10px 12px; border-radius: 12px; margin: 0 0 12px; }
 .reset-code { display: inline-block; margin: 6px 0; font: 700 28px/1.2 ui-monospace, Menlo, Consolas, monospace; letter-spacing: 4px; user-select: all; }
+
+/* Learners waiting for a reset code (admin, Account screen) */
+.rq { background: var(--surface); border: 1px solid var(--line, #dfe5ee); border-radius: 12px; padding: 12px; margin: 0 0 10px; }
+.rq .photo-actions { margin-top: 8px; }
+.rq .btn--sm { width: auto; min-height: 36px; padding: 0 14px; font-size: 14px; }
+.rq-out:empty { display: none; }
+a.note { text-decoration: none; color: inherit; }

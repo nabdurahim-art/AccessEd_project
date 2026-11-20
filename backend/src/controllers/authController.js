@@ -210,6 +210,9 @@ const createResetCode = async (req, res) => {
        VALUES ($1, $2, NOW() + ($3 || ' hours')::interval, $4) RETURNING expires_at`,
       [user.user_id, hashCode(code), String(RESET_HOURS), req.user.user_id]
     );
+    await db.query(
+      `UPDATE reset_requests SET status = 'done', handled_by = $2, handled_at = NOW()
+       WHERE user_id = $1 AND status = 'open'`, [user.user_id, req.user.user_id]);
     return res.status(201).json({ username: user.username, code, expires_at: ins.rows[0].expires_at });
   } catch (err) {
     console.error('Reset code error:', err);
@@ -258,9 +261,107 @@ const resetPassword = async (req, res) => {
     const password_hash = await argon2.hash(new_password, HASH_OPTIONS);
     await db.query('UPDATE users SET password_hash = $1 WHERE user_id = $2', [password_hash, user.user_id]);
     await db.query('UPDATE password_resets SET used_at = NOW() WHERE user_id = $1 AND used_at IS NULL', [user.user_id]);
+    await db.query(`UPDATE reset_requests SET status = 'done', handled_at = NOW() WHERE user_id = $1 AND status = 'open'`, [user.user_id]);
     return res.status(200).json({ message: 'Password changed. You can log in now.' });
   } catch (err) {
     console.error('Reset password error:', err);
+    return res.status(500).json({ error: 'Internal server error.' });
+  }
+};
+
+// ---- "I forgot my password" requests ----
+// Public. A learner who cannot log in asks for a reset code. The answer is the same
+// whether or not the account exists, so this cannot be used to find out who has one.
+const REQUEST_SENT = { message: 'Request sent. Your facilitator will contact you with a reset code.' };
+
+const requestReset = async (req, res) => {
+  try {
+    const { identifier, note } = req.body || {};
+    if (!identifier || typeof identifier !== 'string' || identifier.trim() === '' || identifier.length > 255) {
+      return res.status(400).json({ error: 'Type your username, email or phone number.' });
+    }
+    const cleanNote = typeof note === 'string' && note.trim() ? note.trim().slice(0, 200) : null;
+    const user = await findByIdentifier(identifier);
+    if (user) {
+      await db.query(
+        `INSERT INTO reset_requests (user_id, note) VALUES ($1, $2)
+         ON CONFLICT (user_id) WHERE status = 'open'
+         DO UPDATE SET created_at = NOW(), note = COALESCE(EXCLUDED.note, reset_requests.note)`,
+        [user.user_id, cleanNote]
+      );
+    }
+    return res.status(200).json(REQUEST_SENT);
+  } catch (err) {
+    console.error('Reset request error:', err);
+    return res.status(500).json({ error: 'Internal server error.' });
+  }
+};
+
+// Public. The phone or WhatsApp number to show on the forgot-password screen (set SUPPORT_CONTACT in .env).
+const getSupport = (req, res) => {
+  const contact = String(process.env.SUPPORT_CONTACT || '').trim().slice(0, 120);
+  return res.status(200).json({ support_contact: contact });
+};
+
+// Admin only. The learners who are waiting for a code, oldest first.
+const listResetRequests = async (req, res) => {
+  try {
+    const r = await db.query(
+      `SELECT q.request_id, q.note, q.created_at, u.username, u.full_name, u.email, u.phone_number
+       FROM reset_requests q JOIN users u ON u.user_id = q.user_id
+       WHERE q.status = 'open' ORDER BY q.created_at ASC LIMIT 100`
+    );
+    return res.status(200).json({ requests: r.rows });
+  } catch (err) {
+    console.error('List reset requests error:', err);
+    return res.status(500).json({ error: 'Internal server error.' });
+  }
+};
+
+const UUID_RULE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+// Admin only. Makes the code for one request and closes it.
+const codeForRequest = async (req, res) => {
+  try {
+    const id = String(req.params.id || '');
+    if (!UUID_RULE.test(id)) return res.status(400).json({ error: 'The request id is not valid.' });
+    const q = await db.query(
+      `SELECT q.user_id, u.username, u.full_name, u.email, u.phone_number
+       FROM reset_requests q JOIN users u ON u.user_id = q.user_id
+       WHERE q.request_id = $1 AND q.status = 'open'`, [id]);
+    if (q.rows.length === 0) return res.status(404).json({ error: 'That request is already closed.' });
+    const row = q.rows[0];
+
+    const code = makeCode();
+    await db.query('UPDATE password_resets SET used_at = NOW() WHERE user_id = $1 AND used_at IS NULL', [row.user_id]);
+    const ins = await db.query(
+      `INSERT INTO password_resets (user_id, code_hash, expires_at, created_by)
+       VALUES ($1, $2, NOW() + ($3 || ' hours')::interval, $4) RETURNING expires_at`,
+      [row.user_id, hashCode(code), String(RESET_HOURS), req.user.user_id]
+    );
+    await db.query(`UPDATE reset_requests SET status = 'done', handled_by = $2, handled_at = NOW() WHERE request_id = $1`, [id, req.user.user_id]);
+    return res.status(201).json({
+      username: row.username, full_name: row.full_name, email: row.email, phone_number: row.phone_number,
+      code, expires_at: ins.rows[0].expires_at
+    });
+  } catch (err) {
+    console.error('Code for request error:', err);
+    return res.status(500).json({ error: 'Internal server error.' });
+  }
+};
+
+// Admin only. Close a request without making a code (for example, the learner remembered).
+const dismissRequest = async (req, res) => {
+  try {
+    const id = String(req.params.id || '');
+    if (!UUID_RULE.test(id)) return res.status(400).json({ error: 'The request id is not valid.' });
+    const r = await db.query(
+      `UPDATE reset_requests SET status = 'dismissed', handled_by = $2, handled_at = NOW()
+       WHERE request_id = $1 AND status = 'open' RETURNING request_id`, [id, req.user.user_id]);
+    if (r.rows.length === 0) return res.status(404).json({ error: 'That request is already closed.' });
+    return res.status(200).json({ message: 'Request closed.' });
+  } catch (err) {
+    console.error('Dismiss request error:', err);
     return res.status(500).json({ error: 'Internal server error.' });
   }
 };
@@ -270,5 +371,10 @@ module.exports = {
   loginUser,
   getMe,
   createResetCode,
-  resetPassword
+  resetPassword,
+  requestReset,
+  getSupport,
+  listResetRequests,
+  codeForRequest,
+  dismissRequest
 };

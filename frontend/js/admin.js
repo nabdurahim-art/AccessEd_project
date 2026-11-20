@@ -163,9 +163,19 @@ export function createAdminScreen({ $app, t, esc, icon, nav, store }) {
       return;
     }
     $app.innerHTML = `<h1>${esc(t('contentTitle'))}</h1>
+      <div id="rq-banner"></div>
       <a class="btn btn--primary admin-cta" href="#/edit/new">${esc(t('newPack'))}</a>
       <div id="published"><p class="muted">${esc(t('loading'))}</p></div>`;
     drawPublished(id);
+    // Tell the admin when learners are waiting for a reset code.
+    if (navigator.onLine) {
+      api.getResetRequests().then(({ requests }) => {
+        const box = $app.querySelector('#rq-banner');
+        if (alive(id) && box && requests.length) {
+          box.innerHTML = `<a class="note" href="#/profile"><span><b>${esc(t('rqBanner', { n: requests.length }))}</b><br>${esc(t('rqBannerHint'))}</span></a>`;
+        }
+      }).catch(() => {});
+    }
   }
 
   return { admin, content };

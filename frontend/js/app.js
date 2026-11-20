@@ -280,6 +280,11 @@ const screens = {
       <p class="muted">${esc(t('forgotIntro'))}</p>
       <div class="field"><label for="f-who">${esc(t('resetWho'))}</label>
         <input id="f-who" value="${esc(f.who)}" autocomplete="username" autocapitalize="none" autocorrect="off"></div>
+      <button class="btn btn--outline" id="f-ask" ${f.askBusy ? 'disabled' : ''}>${esc(t('askCode'))}</button>
+      ${f.asked ? `<p class="form-ok" role="status">${esc(t('askSent'))}</p>` : ''}
+      ${f.askError ? `<p class="form-error" role="alert">${esc(f.askError)}</p>` : ''}
+      <p class="small muted" id="support"></p>
+      <h2>${esc(t('haveCode'))}</h2>
       <div class="field"><label for="f-code">${esc(t('resetCode'))}</label>
         <input id="f-code" value="${esc(f.code)}" placeholder="${esc(t('resetCodeHint'))}" autocapitalize="characters" autocorrect="off" spellcheck="false"></div>
       <div class="field ${f.pwErr ? 'has-error' : ''}"><label for="f-pw">${esc(t('newPassword'))}</label>
@@ -291,6 +296,8 @@ const screens = {
     $app.querySelector('#f-code').addEventListener('input', (e) => { f.code = e.target.value; });
     $app.querySelector('#f-pw').addEventListener('input', (e) => { f.pw = e.target.value; });
     $app.querySelector('#f-submit').addEventListener('click', submitReset);
+    $app.querySelector('#f-ask').addEventListener('click', askReset);
+    showSupport();
   },
 
   async progress() {
@@ -396,7 +403,38 @@ const screens = {
   },
 };
 
-const forgotForm = { who: '', code: '', pw: '', pwErr: false, busy: false, error: '' };
+const forgotForm = { who: '', code: '', pw: '', pwErr: false, busy: false, error: '', asked: false, askBusy: false, askError: '' };
+
+// The number to call or message when a learner cannot reach the app. The admin sets it on the server.
+let supportContact = null;
+function showSupport() {
+  const draw = () => {
+    const el = $app.querySelector('#support');
+    if (el) el.textContent = supportContact ? t('supportLine', { contact: supportContact }) : '';
+  };
+  if (supportContact !== null) return draw();
+  if (!navigator.onLine) return;
+  api.getSupport().then((r) => { supportContact = (r && r.support_contact) || ''; draw(); }).catch(() => {});
+}
+
+// Tells the admin that this learner needs a reset code.
+async function askReset() {
+  const f = forgotForm;
+  f.askError = ''; f.asked = false;
+  if (!f.who.trim()) { f.askError = t('askNeedName'); return screens.forgot(); }
+  f.askBusy = true; screens.forgot();
+  try {
+    await api.requestReset(f.who.trim());
+    f.asked = true;
+  } catch (e) {
+    if (!(e instanceof api.ApiError)) f.askError = t('errGeneric');
+    else if (e.status === 0) f.askError = t('errNetwork');
+    else if (e.status === 400 || e.status === 429) f.askError = e.message;
+    else f.askError = t('errGeneric');
+  }
+  f.askBusy = false;
+  screens.forgot();
+}
 
 async function submitReset() {
   const f = forgotForm;
@@ -422,13 +460,59 @@ async function submitReset() {
 
 // Admin tool on the Account screen: make a one-time code for a learner who forgot the password.
 function resetToolHTML() {
-  return `<h2>${esc(t('adminResetTitle'))}</h2>
+  return `<h2>${esc(t('resetRequestsTitle'))} <span class="tag" id="rq-count" hidden></span></h2>
+    <div id="rq-list" aria-live="polite"><p class="small muted">${esc(t('loading'))}</p></div>
+    <h2>${esc(t('adminResetTitle'))}</h2>
     <p class="small muted">${esc(t('adminResetHint'))}</p>
     <div class="field"><input id="rc-who" aria-label="${esc(t('resetWho'))}" placeholder="${esc(t('resetWho'))}" autocapitalize="none" autocorrect="off"></div>
     <button class="btn btn--outline" id="rc-make">${esc(t('makeCode'))}</button>
     <div id="rc-out" aria-live="polite"></div>`;
 }
+// The learners who asked for a code: the admin makes the code and gives it to them.
+function bindResetRequests() {
+  const box = $app.querySelector('#rq-list'), count = $app.querySelector('#rq-count');
+  if (!box) return;
+  const msgOf = (e) => (!(e instanceof api.ApiError) ? t('errGeneric') : e.status === 0 ? t('errNetwork') : e.message);
+  const load = async () => {
+    if (!navigator.onLine) { box.innerHTML = `<p class="small muted">${esc(t('needOnline'))}</p>`; return; }
+    try {
+      const { requests } = await api.getResetRequests();
+      count.hidden = !requests.length; count.textContent = requests.length;
+      if (!requests.length) { box.innerHTML = `<p class="small muted">${esc(t('noRequests'))}</p>`; return; }
+      box.innerHTML = requests.map((q) => {
+        const contact = q.phone_number ? `<a href="tel:${esc(q.phone_number)}">${esc(q.phone_number)}</a>` : (q.email ? esc(q.email) : esc(t('noContact')));
+        return `<div class="rq" data-id="${esc(q.request_id)}">
+          <b>${esc(q.full_name)}</b> <span class="muted">@${esc(q.username)}</span><br>
+          <span class="small">${contact}${q.phone_number && q.email ? ' · ' + esc(q.email) : ''}</span><br>
+          <span class="small muted">${esc(new Date(q.created_at).toLocaleString())}</span>
+          <div class="photo-actions"><button class="btn btn--primary btn--sm" data-rq-code>${esc(t('makeCode'))}</button>
+          <button class="btn btn--outline btn--sm" data-rq-close>${esc(t('closeRequest'))}</button></div>
+          <div class="rq-out" aria-live="polite"></div></div>`;
+      }).join('');
+      box.querySelectorAll('.rq').forEach((row) => {
+        const out = row.querySelector('.rq-out');
+        row.querySelector('[data-rq-code]').addEventListener('click', async (ev) => {
+          ev.target.disabled = true;
+          try {
+            const r = await api.codeForRequest(row.dataset.id);
+            row.innerHTML = `<div class="note"><span><b>${esc(t('codeFor', { name: r.username }))}</b><br><span class="reset-code">${esc(r.code)}</span><br>${esc(t('codeNote'))}</span></div>`;
+            const left = box.querySelectorAll('.rq [data-rq-code]').length;
+            count.hidden = !left; count.textContent = left;
+          } catch (e) { ev.target.disabled = false; out.innerHTML = `<p class="form-error" role="alert">${esc(msgOf(e))}</p>`; }
+        });
+        row.querySelector('[data-rq-close]').addEventListener('click', async (ev) => {
+          ev.target.disabled = true;
+          try { await api.dismissResetRequest(row.dataset.id); await load(); }
+          catch (e) { ev.target.disabled = false; out.innerHTML = `<p class="form-error" role="alert">${esc(msgOf(e))}</p>`; }
+        });
+      });
+    } catch (e) { box.innerHTML = `<p class="form-error" role="alert">${esc(msgOf(e))}</p>`; }
+  };
+  load();
+}
+
 function bindResetTool() {
+  bindResetRequests();
   const who = $app.querySelector('#rc-who'), out = $app.querySelector('#rc-out'), btn = $app.querySelector('#rc-make');
   btn.addEventListener('click', async () => {
     if (!who.value.trim()) return;
