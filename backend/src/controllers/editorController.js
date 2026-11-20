@@ -7,6 +7,7 @@
 //   POST /content/admin/lessons            save a pack written in the editor
 //   GET  /content/admin/packs/:id/source   load a published pack to edit it
 //   DELETE /content/admin/packs/:id/lessons/:key   delete a published lesson, even if learners have progress on it
+//   DELETE /content/admin/packs/:id                delete a whole published pack, even if learners have progress on it
 //
 // Nothing new is stored in the database for this. The pack zip is the one
 // place where the lessons live, and editing a pack reads it back.
@@ -224,4 +225,48 @@ const deleteLesson = async (req, res) => {
   }
 };
 
-module.exports = { uploadAudio, saveLessons, getPackSource, deleteLesson };
+/**
+ * DELETE /content/admin/packs/:packId
+ *
+ * Removes a whole pack: its lessons, quizzes and every learner's progress on
+ * them (the database deletes those because they point at the pack). If the
+ * course has no other pack left, the empty course is removed too, so it no
+ * longer shows on learners' screens. Points and badges already earned stay.
+ * Phones that already downloaded the pack keep their copy until the learner
+ * removes it.
+ */
+const deletePack = async (req, res) => {
+  const packId = Number(req.params.packId);
+  if (!Number.isInteger(packId) || packId < 1) return res.status(400).json({ error: 'The pack id is not valid.' });
+  const client = await db.pool.connect();
+  let fileName = null;
+  try {
+    await client.query('BEGIN');
+    const found = await client.query('SELECT course_id, title, file_path FROM content_packs WHERE pack_id = $1 FOR UPDATE', [packId]);
+    if (found.rows.length === 0) { await client.query('ROLLBACK'); return res.status(404).json({ error: 'Pack not found.' }); }
+    const { course_id: courseId, title, file_path: filePath } = found.rows[0];
+    fileName = filePath;
+    const affected = await client.query(
+      `SELECT COUNT(DISTINCT up.user_id)::int AS learners
+       FROM modules m JOIN user_progress up ON up.module_id = m.module_id WHERE m.pack_id = $1`, [packId]);
+    await client.query('DELETE FROM content_packs WHERE pack_id = $1', [packId]);
+    const left = await client.query('SELECT 1 FROM content_packs WHERE course_id = $1 LIMIT 1', [courseId]);
+    let courseRemoved = false;
+    if (left.rows.length === 0) {
+      await client.query('DELETE FROM courses WHERE course_id = $1', [courseId]);
+      courseRemoved = true;
+    }
+    await client.query('COMMIT');
+    // The pack file is no longer needed. A failure here does not matter: the pack is already gone.
+    const full = resolvePackFile(fileName);
+    if (full) fs.unlink(full, () => {});
+    return res.status(200).json({ message: 'Pack deleted.', title, course_removed: courseRemoved, learners_with_progress: affected.rows[0].learners });
+  } catch (err) {
+    try { await client.query('ROLLBACK'); } catch (e) { /* already rolled back */ }
+    return sendPublishError(res, err);
+  } finally {
+    client.release();
+  }
+};
+
+module.exports = { uploadAudio, saveLessons, getPackSource, deleteLesson, deletePack };
