@@ -66,10 +66,22 @@ export function createAdminScreen({ $app, t, esc, icon, nav, store }) {
             <b>${esc(c.title)}</b> <span class="tag">${esc(c.language)}</span>
             ${c.packs.map((p) => `<div class="admin-line"><div class="admin-meta"><span>${esc(p.title)}</span>
               <small>${esc(t('version', { v: p.version }))} · ${esc(t('lessonsCount', { n: p.lessons }))} · ${p.size_kb} KB</small></div>
-              <a class="btn btn--outline btn--sm" href="#/edit/${p.pack_id}">${esc(t('editPack'))}</a></div>`).join('')}
+              <span class="admin-actions"><a class="btn btn--outline btn--sm" href="#/edit/${p.pack_id}">${esc(t('editPack'))}</a>
+              <button class="btn btn--outline btn--sm btn--danger" data-del-pack="${p.pack_id}" data-title="${esc(c.title + ': ' + p.title)}">${esc(t('deletePack'))}</button></span></div>`).join('')}
           </div>`).join('') : '';
       };
       box.innerHTML = `<p class="muted">${esc(t('contentSummary', { c: withPacks.length, p: packs }))}</p>` + group('primary') + group('secondary');
+      box.querySelectorAll('[data-del-pack]').forEach((b) => b.addEventListener('click', async () => {
+        if (!window.confirm(t('deletePackConfirm', { title: b.dataset.title }))) return;
+        b.disabled = true;
+        try {
+          await api.deletePack(b.dataset.delPack);
+          if (alive(id)) { await drawPublished(id); box.insertAdjacentHTML('afterbegin', `<p class="form-ok">${esc(t('packDeleted'))}</p>`); }
+        } catch (e) {
+          b.disabled = false;
+          if (alive(id)) box.insertAdjacentHTML('afterbegin', `<p class="form-error">${esc(failText(e))}</p>`);
+        }
+      }));
     } catch (e) {
       if (alive(id)) box.innerHTML = `<p class="form-error">${esc(failText(e))}</p>`;
     }
