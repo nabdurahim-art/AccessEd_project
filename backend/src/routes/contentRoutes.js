@@ -33,5 +33,6 @@ router.post('/admin/audio', authenticateToken, requireAdmin,
   editorController.uploadAudio);
 router.post('/admin/lessons', authenticateToken, requireAdmin, editorController.saveLessons);
 router.get('/admin/packs/:packId/source', authenticateToken, requireAdmin, editorController.getPackSource);
+router.delete('/admin/packs/:packId/lessons/:key', authenticateToken, requireAdmin, editorController.deleteLesson);
 
 module.exports = router;

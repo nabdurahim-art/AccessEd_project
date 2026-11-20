@@ -6,6 +6,7 @@
 //   POST /content/admin/audio              upload one MP3, get a token back
 //   POST /content/admin/lessons            save a pack written in the editor
 //   GET  /content/admin/packs/:id/source   load a published pack to edit it
+//   DELETE /content/admin/packs/:id/lessons/:key   delete a published lesson, even if learners have progress on it
 //
 // Nothing new is stored in the database for this. The pack zip is the one
 // place where the lessons live, and editing a pack reads it back.
@@ -100,8 +101,8 @@ const saveLessons = async (req, res) => {
       const missing = (existing.manifest.modules || []).filter((m) => !built.keys.includes(m.key));
       if (missing.length > 0) {
         return res.status(400).json({
-          error: `The lesson "${missing[0].title}" is already published and cannot be removed.`,
-          details: missing.map((m) => `Keep the lesson "${m.title}".`)
+          error: `The lesson "${missing[0].title}" is already published. To remove it, use "Delete lesson" on that lesson.`,
+          details: missing.map((m) => `Keep the lesson "${m.title}", or delete it with "Delete lesson".`)
         });
       }
     }
@@ -149,4 +150,78 @@ const getPackSource = async (req, res) => {
   }
 };
 
-module.exports = { uploadAudio, saveLessons, getPackSource };
+const KEY_RULE = /^[A-Za-z0-9_-]{1,30}$/;
+
+/**
+ * DELETE /content/admin/packs/:packId/lessons/:key
+ *
+ * Removes one lesson from a published pack, together with its quiz, audio and
+ * pictures, and publishes the smaller pack as a new version so phones update.
+ * Learners' progress and quiz results on that lesson are deleted with it (the
+ * database does this because they point at the lesson). Points and badges
+ * already earned are kept, because they are stored on the learner.
+ * A pack must keep at least one lesson.
+ */
+const deleteLesson = async (req, res) => {
+  const packId = Number(req.params.packId);
+  const key = String(req.params.key || '');
+  if (!Number.isInteger(packId) || packId < 1 || !KEY_RULE.test(key)) {
+    return res.status(400).json({ error: 'The pack id or the lesson key is not valid.' });
+  }
+  try {
+    const found = await db.query('SELECT file_path FROM content_packs WHERE pack_id = $1', [packId]);
+    if (found.rows.length === 0) return res.status(404).json({ error: 'Pack not found.' });
+    const full = resolvePackFile(found.rows[0].file_path);
+    if (!full) return res.status(404).json({ error: 'The pack file is missing on the server.' });
+
+    const zip = new AdmZip(full);
+    const manifestEntry = zip.getEntry('manifest.json');
+    if (!manifestEntry) return res.status(422).json({ error: 'This pack has no manifest.json.' });
+    const manifest = JSON.parse(manifestEntry.getData().toString('utf8'));
+    const modules = Array.isArray(manifest.modules) ? manifest.modules : [];
+    const target = modules.find((m) => m && m.key === key);
+
+    const row = await db.query('SELECT module_id FROM modules WHERE pack_id = $1 AND module_key = $2', [packId, key]);
+    if (!target && row.rows.length === 0) return res.status(404).json({ error: 'That lesson is not in this pack.' });
+    if (target && modules.length <= 1) {
+      return res.status(400).json({ error: 'A pack must keep at least one lesson. Publish a different pack instead of deleting the last lesson.' });
+    }
+
+    let version = null;
+    if (target) {
+      const rest = modules.filter((m) => m !== target).map((m, i) => ({ ...m, order: i + 1 }));
+      const used = new Set(['manifest.json']);
+      rest.forEach((m) => {
+        if (typeof m.body_file === 'string') used.add(m.body_file);
+        if (typeof m.audio === 'string') used.add(m.audio);
+        (Array.isArray(m.assets) ? m.assets : []).forEach((a) => a && typeof a.path === 'string' && used.add(a.path));
+      });
+      const smaller = new AdmZip();
+      zip.getEntries().forEach((e) => {
+        if (e.isDirectory || e.entryName === 'manifest.json') return;
+        if (used.has(e.entryName)) smaller.addFile(e.entryName, e.getData());
+      });
+      smaller.addFile('manifest.json', Buffer.from(JSON.stringify({ ...manifest, modules: rest }, null, 2), 'utf8'));
+      const result = await publishPackBuffer(smaller.toBuffer());
+      version = result.payload.pack.version;
+    }
+
+    // Delete the lesson row. Learners' progress and quiz results go with it.
+    const affected = await db.query(
+      `SELECT COUNT(DISTINCT up.user_id)::int AS learners
+       FROM modules m LEFT JOIN user_progress up ON up.module_id = m.module_id
+       WHERE m.pack_id = $1 AND m.module_key = $2`, [packId, key]);
+    await db.query('DELETE FROM modules WHERE pack_id = $1 AND module_key = $2', [packId, key]);
+
+    return res.status(200).json({
+      message: 'Lesson deleted.',
+      deleted_key: key,
+      version,
+      learners_with_progress: affected.rows[0] ? affected.rows[0].learners : 0
+    });
+  } catch (err) {
+    return sendPublishError(res, err);
+  }
+};
+
+module.exports = { uploadAudio, saveLessons, getPackSource, deleteLesson };

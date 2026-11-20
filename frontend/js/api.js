@@ -118,4 +118,5 @@ async function adminFetch(path, { method = 'GET', json, raw, type } = {}) {
 }
 export const getPackSource = (packId) => adminFetch(`/content/admin/packs/${packId}/source`);
 export const saveLessons = (spec) => adminFetch('/content/admin/lessons', { method: 'POST', json: spec });
+export const deleteLesson = (packId, key) => adminFetch(`/content/admin/packs/${packId}/lessons/${encodeURIComponent(key)}`, { method: 'DELETE' });
 export const uploadAudio = (file) => adminFetch('/content/admin/audio', { method: 'POST', raw: file, type: 'audio/mpeg' });

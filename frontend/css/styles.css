@@ -77,6 +77,7 @@ h2 { font-size: 18px; margin: 20px 0 10px; }
 }
 .btn--primary { background: var(--primary); color: var(--on-primary); }
 .btn--outline { background: transparent; color: var(--primary); }
+.btn--danger { color: var(--error); border-color: var(--error); }
 .btn[disabled] { opacity: .6; cursor: default; }
 .stack > * + * { margin-top: 10px; }
 
