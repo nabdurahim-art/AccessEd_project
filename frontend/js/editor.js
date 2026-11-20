@@ -170,7 +170,9 @@ export function createEditorScreens({ $app, t, esc, icon, nav, store }) {
         <span class="ed-tools">
           <button class="btn btn--outline btn--sm" data-a="up" data-l="${li}" aria-label="${esc(t('moveUp'))}" ${li === 0 ? 'disabled' : ''}>↑</button>
           <button class="btn btn--outline btn--sm" data-a="down" data-l="${li}" aria-label="${esc(t('moveDown'))}" ${li === count - 1 ? 'disabled' : ''}>↓</button>
-          ${published ? '' : `<button class="btn btn--outline btn--sm" data-a="del-lesson" data-l="${li}">${esc(t('removeLesson'))}</button>`}
+          ${published
+            ? (count > 1 ? `<button class="btn btn--outline btn--sm btn--danger" data-a="del-published" data-l="${li}">${esc(t('deleteLesson'))}</button>` : '')
+            : `<button class="btn btn--outline btn--sm" data-a="del-lesson" data-l="${li}">${esc(t('removeLesson'))}</button>`}
         </span></div>
       ${published ? `<p class="hint">${esc(t('publishedKeep'))}</p>` : ''}
       ${field(t('lessonTitle'), `${base}.title`, l.title)}
@@ -299,7 +301,33 @@ export function createEditorScreens({ $app, t, esc, icon, nav, store }) {
     if (alive(me)) render(true);
   }
 
+  // Deletes a published lesson on the server, with learners' progress on it, then reloads the pack.
+  async function deletePublished(li) {
+    const me = st;
+    const l = me.spec.lessons[li];
+    if (!l || !l.key || me.busy) return;
+    const ok = window.confirm(t('deleteLessonConfirm', { title: l.title || t('lessonN', { n: li + 1 }) }) + (me.dirty ? '\n\n' + t('deleteLessonUnsaved') : ''));
+    if (!ok) return;
+    me.busy = true; me.msg = null; me.flash = null;
+    render();
+    try {
+      const r = await api.deleteLesson(me.id, l.key);
+      const src = await api.getPackSource(me.id);
+      dropDraft(me.id);
+      if (!alive(me)) return;
+      me.spec = fromSource(src);
+      me.dirty = false;
+      me.previews = {};
+      me.flash = { ok: true, text: `${t('lessonDeleted')} ${r.version ? '(' + t('version', { v: r.version }) + ')' : ''}` };
+    } catch (e) {
+      me.msg = failMsg(e);
+    }
+    me.busy = false;
+    if (alive(me)) render(true);
+  }
+
   const ACTIONS = {
+    'del-published': (d) => deletePublished(+d.l),
     level: (d) => { st.spec.course.level = d.v; touched(); render(); },
     'add-lesson': () => setLessons((ls) => ls.push(blankLesson())),
     'del-lesson': (d) => setLessons((ls) => ls.splice(+d.l, 1)),
