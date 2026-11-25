@@ -110,3 +110,19 @@ The progress and quiz scores are stored locally and automatically synchronized w
 
 
 
+&#x20;AccessEd installation
+
+AccessEd can be accessed here: https://accessed.abdurahim.tech and installed on the learner’s respective devices
+
+Installation :
+
+1.Open AccessEd website using the browser
+
+2\. Tap the three-dots once the website has opened
+
+3\. Select “add to home screen” or “install app” accordingly
+
+
+
+
+
