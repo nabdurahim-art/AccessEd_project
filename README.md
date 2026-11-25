@@ -92,3 +92,21 @@ Entering optional email and phone login credentials during registration.
 
 
 
+3\. How AccessEd Works
+
+A learner accesses AccessEd via the browser and registers to create an account and from then, they login as usual using their credentials.
+
+
+
+The level chooses the level of education (primary or secondary) of which they want to keep up with and downloads a lesson pack( a compressed ZIP file containing the modules of the lessons and quizzes) while still connected to the internet.
+
+
+
+Once they have downloaded the packs, lessons, quizzes and other learning resources can then be accessed offline
+
+
+
+The progress and quiz scores are stored locally and automatically synchronized with the server when the learner connects to the internet again.
+
+
+
