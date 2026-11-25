@@ -290,4 +290,46 @@ Password security: Argon2id
 Authentication: JSON Web Tokens(JWT)
 API: REST APIs
 
+8. Running AccessEd locally 
+
+Requirements:
+- Git
+- Docker compose
+- Docker
+
+Installation steps:
+
+Cloning the repository
+
+
+git clone https://github.com/abdurahim-art/AccessED_project.git
+cd AccessEd_project/backend
+
+Creating the environment file:
+
+Cp .env.example .env
+
+Generate secure values for the required environment variables:
+
+openssl rand -hex 16
+openssl rand -hex 32
+Use the generated values for DB_PASSWORD and JWT_SECRET in the .env file
+
+Start the application:
+
+Docker compose -f docker-compose.yml -f docker-compose.web.yml up -d —build
+
+Check the API:
+
+
+Curl http://localhost:5000/health
+
+For success, the response is:
+
+{“status”:”ok”}
+
+Open the application in your browser:
+
+http://localhost:8080
+
 
