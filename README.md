@@ -1,39 +1,16 @@
-# AccessEd
+Project: AccessEd
 
-AccessEd is a free, phone-first learning app for out-of-school children and youth in Bugesera District, Rwanda. Learners download short lessons while online, study offline, and their progress syncs when they get internet again.
 
-## The Problem
 
-Many learners cannot get steady internet or afford learning materials. Online-only platforms leave them out. In Rwanda, 98% of children start primary school but only 71% finish.
+AccessEd is a free learning platform that is both mobile based and web based, aimed to help the young school drop-outs particularly the youth in Bugesera Rwanda by bringing education closer to them. AccessEd enables access to educational resources through a Progressive Web Application (PWA), allowing the users to download the learning materials or lessons while connected to the internet and continue to access them and study even when offline.
 
-## Our Solution
 
-- Short, interactive lessons in literacy, maths and life skills
-- Download lessons once, study offline
-- Audio support and visual aids
-- Points, streaks and badges to keep learners motivated
-- Progress syncs automatically when the learner is back online
 
-## Tech Stack
+AccessEd brings innovation unlike traditional but digital learning programs that require unbreakable internet connection. It enables continuous learning, access to quizzes, audio content and tracking of the learning progress of the user. Moreover, once the learner is connected back to the internet, there is an automatic synchronization of the progress with the server, ensuring that the learner’s progress when they were offline is not lost.
 
-- **Front end:** HTML, CSS, JavaScript
-- **Back end:** Python with a REST API
-- **Database:** PostgreSQL
-- **Deployment:** Docker
 
-## Project Status
 
-Foundations project (BSc. in Software Engineering, ALU). We are building a prototype and will pilot it with 15-20 learners.
+Live application is here: https://accessed.abdurahim.tech
 
-## Team
-
-| Name | Role |
-|---|---|
-| Nshimiyimana Abdurahim | Project Manager & Requirements Lead |
-| Batsinde Ange Liana | Database Architect & UML Specialist |
-| Elvis Gatunzi Mutangana | Backend Engineer & Systems Architect |
-| Abubakar Hussaina Shehu | Lead Mobile Developer |
-| Ezio Munyengango | UI/UX & Content Designer |
-| Samuel Ishimwe | QA Engineer & Field Evaluator |
 
 
