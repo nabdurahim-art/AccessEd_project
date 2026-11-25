@@ -44,3 +44,51 @@ AccessEd is offered as a PWA, meaning that learners can access it via their web 
 
 
 
+Objectives and features of AccessEd
+
+The main purpose of AccessEd is to establish an accessible, flexible and offline digital learning platform that enables financially incapacitated children and youth to continue learning with no hindrance. 
+
+Below are the key objectives:
+
+Offline learning: AccessEd enables learners to access learning resources or their daily and weekly packs even when offline hence cutting the issues regarding internet connectivity. Each learning pack contains four modules, three learning lessons and one recap with a pass score of 70% of quizzes.
+
+
+
+Providing interactive learning resources aligning with the Rwanda National Board (REB) and NESA programs. AccessEd provides learning resources of primary and secondary levels. For primary, there’s Maths, english, science and social studies, as for secondary, there’s maths, biology, literacy, life skills and other to be gradually added. 
+
+
+
+Downloads: AccessEd enables learners to download the learning resources they need, e.g books so that they can be able to use that at anytime.
+
+
+
+Audio and visual aids: Supporting inclusive and interactive learning through audio narrations in MP3 format, visual aids such as pictures and quizzes.
+
+
+
+Motivational interactions: Introducing features such as strikes, badges and milestone trackers to encourage learners to be consistent with their studies.
+
+
+
+Automatic synchronization of the learner’s progress as well as the quiz scores when online and offline
+
+
+
+Multilingual interactions: AccessEd supports the various standard languages which are Kinyarwanda, English and French. 
+
+
+
+Shared devices’ support: AccessEd allows shared devices to allow easy access of learners while their personal accounts stay secure and usable across different devices.
+
+Others:
+
+Screen modes which can be light or dark
+
+Passcode visibility button
+
+Responsive screen for phones, tablets and computers.
+
+Entering optional email and phone login credentials during registration.
+
+
+
