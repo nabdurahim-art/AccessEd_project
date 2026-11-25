@@ -332,4 +332,34 @@ Open the application in your browser:
 
 http://localhost:8080
 
+9. API OVERVIEW
+
+The API health check is here:
+
+
+https://accessed.abdurahim.tech/api/health
+
+
+The backend provides a REST API under:
+
+/api/v1
+
+Endpoints and their purposes:
+
+GET /health: Checks for the APIs and the availability of the database
+POST /auth/register: Handles the registration of a learner
+POST /auth/login: Handles the authentication of the user
+GET /auth/me: Handles the retrieval of the current user
+GET /content/courses: Lists available courses
+GET /content/courses/ :courseId/packs: Lists the available lesson packs
+POST /content/packs/ :packId/download: Downloads the available and selected lesson pack
+POST /content/packs/check-updates: Checks for the lessons that have been updated
+POST /sync: Handles the synchronization of the learner’s progress and quiz scores
+GET /progress/summary: Handles the retrieval of the leaning progress
+
+The protected endpoints require a valid JWT in the request header:
+
+Authorization : Bearer YOUR_TOKEN
+
+
 
