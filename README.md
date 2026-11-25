@@ -206,5 +206,74 @@ Password verification codes aren’t via SMS or email, and administrators handle
 
 
 
+Project structure
+
+
+
+
+
+AccessEd\_project/
+
+├── backend/
+
+│   ├── src/
+
+│   │   ├── routes/
+
+│   │   ├── controllers/
+
+│   │   ├── middleware/
+
+│   │   └── utils/
+
+│   ├── db/
+
+│   │   ├── schema.sql
+
+│   │   ├── seed.sql
+
+│   │   └── migrations/
+
+│   ├── Dockerfile
+
+│   ├── docker-compose.yml
+
+│   ├── docker-compose.web.yml
+
+│   └── .env.example
+
+├── frontend/
+
+│   ├── index.html
+
+│   ├── manifest.webmanifest
+
+│   ├── sw.js
+
+│   ├── css/
+
+│   ├── js/
+
+│   └── icons/
+
+├── content/
+
+│   ├── primary/
+
+│   └── secondary/
+
+├── tools/
+
+├── deploy/
+
+├── mobile/
+
+├── .github/
+
+├── CONTENT\_README.md
+
+└── AUDIO\_SCRIPTS.md
+
+
 
 
