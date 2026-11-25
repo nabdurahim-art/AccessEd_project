@@ -361,5 +361,15 @@ The protected endpoints require a valid JWT in the request header:
 
 Authorization : Bearer YOUR_TOKEN
 
+10. AccessED deployment
+
+AccessEd is deployed on an Oracle Cloud Ubuntu using Docker Compose
+
+The deployment contains:
+PostgreSQL for the storage of data
+Express for the API’s backend
+Nginx for forwarding the API requests as well as serving the frontend
+And Cloudflare Tunnel for secure public access
+
 
 
