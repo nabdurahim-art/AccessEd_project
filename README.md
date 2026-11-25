@@ -371,5 +371,16 @@ Express for the API’s backend
 Nginx for forwarding the API requests as well as serving the frontend
 And Cloudflare Tunnel for secure public access
 
+11. Quality assurance and testing
+
+Automated testing and integration is done through Github Actions
+During pull requests is when CI workflow does its evaluations to identify problems before modifications are integrated into the main project.
+The checks involve:
+Validation of backend javascript syntax
+Frontend testing that targets phone-side functionality
+Testing application startup for a complete system stack
+These validation checks ensure the high reliability of AccessEd while identifying potential threats during development. 
+On top of the checks, additional validations can be made through registration, authentication, lesson downloads, offline learning and all other components of AccessEd.
+
 
 
