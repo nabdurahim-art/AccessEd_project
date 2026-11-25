@@ -275,5 +275,19 @@ AccessEd\_project/
 └── AUDIO\_SCRIPTS.md
 
 
+7. Technology stack
+
+Frontend: HTML, CSS and Javascript
+Application type: PWA
+Offline storage: Service worker and IndexedDB
+Backend: Express and Node.js 22
+Testing: Github actions
+Public access:  Cloudflare Tunnel together with HTTPS
+Hosting: O oracle Cloud Ubuntu server
+Deployment: Docker compose and Nginx
+Database: PostgreSQL 16
+Password security: Argon2id
+Authentication: JSON Web Tokens(JWT)
+API: REST APIs
 
 
