@@ -112,6 +112,8 @@ The progress and quiz scores are stored locally and automatically synchronized w
 
 &#x20;AccessEd installation
 
+
+
 AccessEd can be accessed here: https://accessed.abdurahim.tech and installed on the learner’s respective devices
 
 Installation :
@@ -121,6 +123,86 @@ Installation :
 2\. Tap the three-dots once the website has opened
 
 3\. Select “add to home screen” or “install app” accordingly
+
+
+
+5\. Administration
+
+
+
+AccessEd has an administrative interface that enables authorised administrators to monitor and coordinate educational contents and user accounts. 
+
+
+
+5.1 Management of learning content
+
+
+
+Administrators create, modify, and publish learning directly through the AccessEd application.
+
+
+
+The course modifier enables:
+
+
+
+Course titles and text.
+
+Audio and visual aid uploads.
+
+Quiz questions and their responses
+
+Final publication of learning packs.
+
+This allows educational content to be managed through the application without requiring administrators to use terminal commands.
+
+Also administrators can also delete individual lessons or the entire learning pack accordingly.
+
+
+
+&#x20;5.2 Password Reset Management
+
+
+
+For security purposes, AccessEd provides the password reset option for learners who have forgotten their passwords.
+
+
+
+Here’s how it works: 
+
+
+
+A learner uses their username and then their email or phone number (depending on what they used for their initial registration) on their “Forgot password” screen.
+
+
+
+The app submits a reset password request. 
+
+Administrators receive and view the requests through their interface. 
+
+
+
+The administrator then prompts and generates an 8 - digits reset code that is sent to the learner.
+
+The learner enters the code and creates a new password.
+
+
+
+Security measures include:
+
+
+
+Verification codes are to be used only once.
+
+Verification codes expire after 24 hours.
+
+Verification codes are stored as SHA-256 hashes
+
+Reset password requests are disqualified after 5 incorrect code trials.
+
+For those who have verified, they are given the interface of entering their new password and then the issue is resolved.
+
+Password verification codes aren’t via SMS or email, and administrators handle password reset requests through their administrative interfaces.
 
 
 
