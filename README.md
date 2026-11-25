@@ -382,5 +382,10 @@ Testing application startup for a complete system stack
 These validation checks ensure the high reliability of AccessEd while identifying potential threats during development. 
 On top of the checks, additional validations can be made through registration, authentication, lesson downloads, offline learning and all other components of AccessEd.
 
+12. Future improvements
+
+In the coming days AccessEd aims to include more lessons than the current ones, and will be reaching a wider population hence improving the issue of learners who have limited access to digital learning. 
+
+
 
 
